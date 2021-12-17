@@ -14,11 +14,11 @@
                         </div>
                     @endif
 
-                    {{-- @forelse ($jobs as $job)
-                        {{ $job->address }}
+                    @forelse ($aircons as $aircon)
+                        {{ $aircon->type }}
                     @empty
                         <h1>no data</h1>
-                    @endforelse --}}
+                    @endforelse
                 </div>
             </div>
         </div>
