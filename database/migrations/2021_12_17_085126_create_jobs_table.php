@@ -14,18 +14,17 @@ class CreateJobsTable extends Migration
     public function up()
     {
         Schema::create('jobs', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('tech_id')->unsigned();
-            $table->integer('aircon_id')->unsigned();
-            $table->foreign('tech_id')
-                ->references('id')
-                ->on('users')
-                ->onDelete('cascade');
 
-            $table->foreign('aircon_id')
-                ->references('id')
-                ->on('aircons')
-                ->onDelete('cascade');
+            $table->id();
+
+            $table->foreignId('order_id')->nullable()
+                    ->constrained()
+                    ->onDelete('cascade');
+
+            /* Technician */
+            $table->foreignId('user_id')->nullable()
+                    ->constrained()
+                    ->onDelete('cascade');
         });
     }
 

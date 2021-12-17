@@ -43,10 +43,12 @@ class User extends Authenticatable
        $this->aircons()->create($attributes);
     }
 
-    // public function jobs()
-    // {
-    //     return $this->hasMany(Job::class);
-    // }
+
+    public function orders()
+    {
+        return $this->belongsToMany(Order::class, 'jobs');
+    }
+
     public function aircons()
     {
         return $this->belongsToMany(Aircon::class, 'orders');

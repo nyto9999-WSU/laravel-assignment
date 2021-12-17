@@ -5,14 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Job extends Model
+class Note extends Model
 {
     use HasFactory;
-
     protected $guarded = [];
 
-    public function notes()
+    public function job()
     {
-        return $this->hasMany(Note::class);
+        return $this->belongsTo(Job::class);
     }
 }

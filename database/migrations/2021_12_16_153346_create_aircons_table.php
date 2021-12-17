@@ -14,7 +14,7 @@ class CreateAirconsTable extends Migration
     public function up()
     {
         Schema::create('aircons', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->string('type');
             $table->timestamps();
         });
