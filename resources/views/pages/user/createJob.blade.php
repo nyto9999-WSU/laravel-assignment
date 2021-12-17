@@ -14,11 +14,12 @@
                         </div>
                     @endif
 
-                    {{-- @forelse ($jobs as $job)
-                        {{ $job->address }}
-                    @empty
-                        <h1>no data</h1>
-                    @endforelse --}}
+                    <form action="{{ route('order.store') }}" method="post">
+                        @csrf
+                            <input type="text" name="type">
+                            <button type="submit">submit</button>
+                    </form>
+
                 </div>
             </div>
         </div>
