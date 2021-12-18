@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\AirConController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -23,5 +24,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 
 Auth::routes();
+
 Route::resource('order', OrderController::class);
-Route::resource('job', JobController::class);
+
+Route::post('/aircon/order/{order}', [AirConController::class, 'store'])->name('aircon.store');
+Route::resource('aircon', AirConController::class)->except(['store']);

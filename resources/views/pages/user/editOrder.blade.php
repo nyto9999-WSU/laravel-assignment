@@ -14,11 +14,6 @@
                         </div>
                     @endif
 
-                    <form action="{{ route('order.store') }}" method="post">
-                        @csrf
-                            <input type="text" name="type">
-                            <button type="submit">submit</button>
-                    </form>
 
                 </div>
             </div>

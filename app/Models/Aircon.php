@@ -9,8 +9,12 @@ class Aircon extends Model
 {
     use HasFactory;
     protected $guarded = [];
-    public function users()
+
+
+    public function orders()
     {
-        return $this->belongsToMany(User::class, 'orders');
+        return $this->belongsToMany(Order::class, 'order_aircons');
     }
+
+
 }

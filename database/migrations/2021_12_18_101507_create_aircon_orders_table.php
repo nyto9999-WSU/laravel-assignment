@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateJobsTable extends Migration
+class CreateAirconOrdersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,20 +13,19 @@ class CreateJobsTable extends Migration
      */
     public function up()
     {
-        Schema::create('jobs', function (Blueprint $table) {
-
+        Schema::create('aircon_order', function (Blueprint $table) {
             $table->id();
 
+            $table->foreignId('aircon_id')->nullable()
+                    ->constrained()
+                    ->onDelete('cascade');
             $table->foreignId('order_id')->nullable()
                     ->constrained()
                     ->onDelete('cascade');
 
-            /* Technician */
-            $table->foreignId('user_id')->nullable()
-                    ->constrained()
-                    ->onDelete('cascade');
         });
     }
+
 
     /**
      * Reverse the migrations.
@@ -35,6 +34,6 @@ class CreateJobsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('jobs');
+        Schema::dropIfExists('aircon_order');
     }
 }

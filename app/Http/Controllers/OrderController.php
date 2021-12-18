@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Aircon;
+use App\Models\Order;
+use App\Models\User;
+use DB;
 
 class OrderController extends Controller
 {
@@ -14,9 +17,11 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $aircons = auth()->user()->aircons;
+        $orders = Order::with('aircons', 'user')
+                        ->where('user_id', auth()->id())
+                        ->get();
 
-        return view('pages.user.index', compact('aircons'));
+        return view('pages.user.currentOrder', compact('orders'));
     }
 
     /**
@@ -26,54 +31,39 @@ class OrderController extends Controller
      */
     public function create()
     {
-        return view('pages.user.createJob');
+        return view('pages.user.addOrder');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
+        $attributes = $this->validateOrder();
+        auth()->user()->orders()->create($attributes);
 
+        $order = Order::orderBy('created_at', 'desc')->first(); // fix need to query with user id
 
-        $attributes = $this->validateAirCon();
-        auth()->user()->addAircon($attributes);
-
-        return back();
+        return view('pages.user.addAircon', compact('order'));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+
+    public function show(Order $order)
     {
-        //
+        abort_if($order->user_id != auth()->id(), 403);
+
+        $order->with('aircons', 'user')
+                ->get();
+
+        return view('pages.user.showOrder', compact('order'));
+
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit($id)
     {
         //
+        return back();
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, $id)
     {
         //
@@ -94,6 +84,13 @@ class OrderController extends Controller
     {
         return request()->validate([
             'type' => ['required']
+        ]);
+    }
+
+    protected function validateOrder()
+    {
+        return request()->validate([
+            'desc' => ['required']
         ]);
     }
 }

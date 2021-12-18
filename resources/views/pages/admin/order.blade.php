@@ -14,11 +14,21 @@
                         </div>
                     @endif
 
-                    @forelse ($aircons as $aircon)
-                        {{ $aircon->type }}
+                    {{-- @forelse ($orders as $order)
+
+                        <li>
+                            Order ID: {{ $order->id }}
+                        </li>
+                        <li>
+                            Order Owner: {{ $order->name }}
+                        </li>
+                        <li>
+                            Order air-con: {{ $order->type }}
+                        </li>
+                        <hr>
                     @empty
-                        <h1>no data</h1>
-                    @endforelse
+
+                    @endforelse --}}
                 </div>
             </div>
         </div>
