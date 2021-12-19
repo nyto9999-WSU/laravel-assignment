@@ -2,6 +2,8 @@
 
 @section('content')
 <div class="container">
+    <h1>Role: {{ Auth::user()->role }}</h1>
+
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
@@ -13,12 +15,15 @@
                             {{ session('status') }}
                         </div>
                     @endif
+                    <h1>Create Order</h1>
+                    <form action="{{ route('order.store') }}" method="post">
+                        @csrf
+                            <label for="desc">description</label>
+                            <input type="text" name="desc">
 
-                    {{-- @forelse ($jobs as $job)
-                        {{ $job->address }}
-                    @empty
-                        <h1>no data</h1>
-                    @endforelse --}}
+                            <button type="submit">submit</button>
+                    </form>
+
                 </div>
             </div>
         </div>

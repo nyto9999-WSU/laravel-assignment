@@ -13,12 +13,22 @@
                             {{ session('status') }}
                         </div>
                     @endif
+                    <h1>Add aircon</h1>
+                    <form action="{{ route('aircon.store', $order) }}" method="post">
+                        @csrf
+                            <label for="type">air-con type</label>
+                            <input type="text" name="type">
+                            <button type="submit">submit</button>
+                    </form>
 
-                    {{-- @forelse ($jobs as $job)
-                        {{ $job->address }}
+                    @forelse ($order->aircons as $aircon)
+                        <li>{{ $aircon->type }}</li>
                     @empty
                         <h1>no data</h1>
-                    @endforelse --}}
+                    @endforelse
+
+
+
                 </div>
             </div>
         </div>
