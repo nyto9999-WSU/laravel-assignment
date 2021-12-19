@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateOrdersTable extends Migration
+class CreateAirconOrdersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,19 @@ class CreateOrdersTable extends Migration
      */
     public function up()
     {
-        Schema::create('orders', function (Blueprint $table) {
+        Schema::create('aircon_order', function (Blueprint $table) {
             $table->id();
-            $table->string('desc');
-            $table->foreignId('user_id')
+
+            $table->foreignId('aircon_id')
                     ->constrained()
                     ->onDelete('cascade');
-            $table->timestamps();
-        });
+            $table->foreignId('order_id')
+                    ->constrained()
+                    ->onDelete('cascade');
 
+        });
     }
+
 
     /**
      * Reverse the migrations.
@@ -31,6 +34,6 @@ class CreateOrdersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('orders');
+        Schema::dropIfExists('aircon_order');
     }
 }

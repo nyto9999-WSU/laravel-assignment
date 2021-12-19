@@ -38,17 +38,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function addAircon($attributes)
+    public function orders()
     {
-       $this->aircons()->create($attributes);
+        return $this->hasMany(Order::class);
     }
 
-    // public function jobs()
-    // {
-    //     return $this->hasMany(Job::class);
-    // }
-    public function aircons()
-    {
-        return $this->belongsToMany(Aircon::class, 'orders');
-    }
+
 }

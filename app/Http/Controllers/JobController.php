@@ -15,10 +15,10 @@ class JobController extends Controller
     {
         // if(auth()->user()->role != 'admin')
         // {
-        //     return view('home');
-        // }
+            //     return view('home');
+            // }
 
-        // $jobs = Job::all();
+            // $jobs = Job::all();
         // return view('home', compact('jobs'));
     }
 
