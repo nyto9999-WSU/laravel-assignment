@@ -25,7 +25,9 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Auth::routes();
 
+
 Route::resource('order', OrderController::class);
+
 
 Route::post('/aircon/order/{order}', [AirConController::class, 'store'])->name('aircon.store');
 Route::resource('aircon', AirConController::class)->except(['store']);

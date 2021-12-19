@@ -17,9 +17,20 @@ class OrderController extends Controller
      */
     public function index()
     {
+        if(auth()->user()->role == "admin")
+        {
+            $orders = Order::with('aircons', 'user')
+            ->get();
+
+            return view('pages.admin.currentOrder', compact('orders'));
+        }
+
+        //role user
+
         $orders = Order::with('aircons', 'user')
                         ->where('user_id', auth()->id())
                         ->get();
+
 
         return view('pages.user.currentOrder', compact('orders'));
     }
@@ -36,6 +47,8 @@ class OrderController extends Controller
 
     public function store(Request $request)
     {
+
+            //switch roles
         $attributes = $this->validateOrder();
         auth()->user()->orders()->create($attributes);
 
@@ -60,7 +73,7 @@ class OrderController extends Controller
     public function edit($id)
     {
         //
-        return back();
+
     }
 
 

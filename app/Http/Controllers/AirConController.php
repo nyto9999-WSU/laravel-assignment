@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\OrderController;
 use App\Models\Aircon;
 use App\Models\Order;
 use App\Models\User;
+use URL;
+use Illuminate\Support\Facades\Redirect;
 
 use function Symfony\Component\String\b;
 
@@ -78,9 +81,10 @@ class AirConController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Order $order)
     {
         //
+
     }
 
     /**
@@ -89,9 +93,9 @@ class AirConController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Aircon $aircon)
     {
-        //
+        // $aircon->delete();
     }
 
     protected function validateAirCon()

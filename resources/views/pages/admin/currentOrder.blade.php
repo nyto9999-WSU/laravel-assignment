@@ -16,9 +16,7 @@
                         </div>
                     @endif
                     <table class="table">
-
                         @forelse ($orders as $order)
-                        @if ($order->aircons->count())
                             <tr>
                                 <th>Order</th>
                                 <th>Owner</th>
@@ -31,17 +29,20 @@
                                 <td>{{ $order->desc }}</td>
                                 <td>
                                         @forelse ($order->aircons as $aircon)
-                                            <li>
-                                                {{ $aircon->type }} <br>
-                                            </li>
+                                        <form action="{{ route('aircon.destroy', $aircon) }}" method="post">
+                                            @method('DELETE')
+                                            @csrf
+                                                {{ $aircon->type }}
+                                                <button type="submit">Delete</button>
+                                        </form>
                                         @empty
 
                                         @endforelse
                                 </td>
-                            </tr>
-                        @endif
 
+                            </tr>
                         @empty
+                            <h1>no data</h1>
                         @endforelse
                     </table>
                 </div>

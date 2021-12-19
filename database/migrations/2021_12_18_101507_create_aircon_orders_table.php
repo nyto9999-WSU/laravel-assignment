@@ -16,10 +16,10 @@ class CreateAirconOrdersTable extends Migration
         Schema::create('aircon_order', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('aircon_id')->nullable()
+            $table->foreignId('aircon_id')
                     ->constrained()
                     ->onDelete('cascade');
-            $table->foreignId('order_id')->nullable()
+            $table->foreignId('order_id')
                     ->constrained()
                     ->onDelete('cascade');
 

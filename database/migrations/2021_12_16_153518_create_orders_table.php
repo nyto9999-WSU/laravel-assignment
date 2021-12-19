@@ -16,7 +16,7 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->string('desc');
-            $table->foreignId('user_id')->nullable()
+            $table->foreignId('user_id')
                     ->constrained()
                     ->onDelete('cascade');
             $table->timestamps();

@@ -24,8 +24,10 @@
                     @forelse ($order->aircons as $aircon)
                         <li>{{ $aircon->type }}</li>
                     @empty
-
+                        <h1>no data</h1>
                     @endforelse
+
+
 
                 </div>
             </div>
