@@ -17,7 +17,7 @@ use App\Http\Controllers\AirConController;
 Route::get('/', function () {
     return view('welcome');
 });
-//tonyadsd
+//tonyadsds
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
