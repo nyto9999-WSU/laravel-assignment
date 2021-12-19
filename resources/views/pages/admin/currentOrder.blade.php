@@ -24,17 +24,14 @@
                                 <th>Air-con Type</th>
                             </tr>
                             <tr>
-                                <td>{{ $order->id }}</td>
+                                <td><a href={{ route('order.show', $order->id) }}>{{ $order->id }}</a></td>
                                 <td>{{ $order->user->name }}</td>
                                 <td>{{ $order->desc }}</td>
                                 <td>
                                         @forelse ($order->aircons as $aircon)
-                                        <form action="{{ route('aircon.destroy', $aircon) }}" method="post">
-                                            @method('DELETE')
-                                            @csrf
-                                                {{ $aircon->type }}
-                                                <button type="submit">Delete</button>
-                                        </form>
+                                            <li>
+                                                <a href={{ route('aircon.show', [$aircon,$order]) }}>{{ $aircon->type }}</a>
+                                            </li>
                                         @empty
 
                                         @endforelse
