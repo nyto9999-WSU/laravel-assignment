@@ -7,6 +7,8 @@ use App\Http\Controllers\OrderController;
 use App\Models\Aircon;
 use App\Models\Order;
 use App\Models\User;
+use App\Models\AirconOrder;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 use URL;
 use Illuminate\Support\Facades\Redirect;
 
@@ -48,7 +50,6 @@ class AirConController extends Controller
         $order = Order::find($order->id);
         $order->aircons()->create($attributes);
 
-
         return view('pages.user.addAircon',compact('order'));
     }
 
@@ -58,9 +59,14 @@ class AirConController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Aircon $aircon, Order $order)
     {
-        //
+
+        abort_unless($order->user_id == auth()->id() || auth()->user()->role == "admin", 403);
+
+        return view('pages.admin.showAircon', compact('aircon'));
+
+
     }
 
     /**

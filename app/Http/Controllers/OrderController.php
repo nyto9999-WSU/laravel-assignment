@@ -25,13 +25,11 @@ class OrderController extends Controller
             return view('pages.admin.currentOrder', compact('orders'));
         }
 
-        //role user
 
+        //role user
         $orders = Order::with('aircons', 'user')
                         ->where('user_id', auth()->id())
                         ->get();
-
-
         return view('pages.user.currentOrder', compact('orders'));
     }
 
@@ -60,6 +58,15 @@ class OrderController extends Controller
 
     public function show(Order $order)
     {
+        if(auth()->user()->role == "admin")
+        {
+            $order->with('aircons', 'user')
+            ->get();
+
+            return view('pages.user.showOrder', compact('order'));
+        }
+
+
         abort_if($order->user_id != auth()->id(), 403);
 
         $order->with('aircons', 'user')

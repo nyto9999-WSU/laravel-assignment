@@ -32,10 +32,12 @@
                                 <td>
                                         @forelse ($order->aircons as $aircon)
                                             <li>
-                                                {{ $aircon->type }} <br>
+                                                <a href={{ route('aircon.show', [$aircon,$order]) }}>
+                                                    {{ $aircon->type }}
+                                                </a>
                                             </li>
                                         @empty
-
+                                                <h1>nodata</h1>
                                         @endforelse
                                 </td>
                             </tr>
