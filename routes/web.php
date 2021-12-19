@@ -22,7 +22,7 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-//I add a route hereddddsf
+//I add a route hereddddsfsss
 Auth::routes();
 
 
