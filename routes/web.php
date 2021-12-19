@@ -22,12 +22,11 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-//I add a route hereddddsfssssdf
+//I add a route hereddddsfssssdffd
 Auth::routes();
 
 
 Route::resource('order', OrderController::class);
-
 
 
 
