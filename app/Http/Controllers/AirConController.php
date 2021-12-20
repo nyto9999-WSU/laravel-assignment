@@ -6,10 +6,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\OrderController;
 use App\Models\Aircon;
 use App\Models\Order;
-use App\Models\User;
-use Illuminate\Database\Eloquent\Relations\Pivot;
-use URL;
-use Illuminate\Support\Facades\Redirect;
 
 use function Symfony\Component\String\b;
 
