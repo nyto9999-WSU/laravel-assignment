@@ -109,4 +109,5 @@ class AirConController extends Controller
             'type' => ['required']
         ]);
     }
+
 }
