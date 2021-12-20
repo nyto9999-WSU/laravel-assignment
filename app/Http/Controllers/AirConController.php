@@ -60,9 +60,12 @@ class AirConController extends Controller
      */
     public function show(Aircon $aircon, Order $order)
     {
+
         abort_unless($order->user_id == auth()->id() || auth()->user()->role == "admin", 403);
 
         return view('pages.admin.showAircon', compact('aircon'));
+
+
     }
 
     /**
