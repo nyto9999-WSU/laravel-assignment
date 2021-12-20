@@ -19,8 +19,8 @@ class OrderController extends Controller
     {
         if(auth()->user()->role == "admin")
         {
-            $orders = Order::with('aircons', 'user')
-            ->get();
+            $orders = Order::with('aircons', 'user')->get();
+
 
             return view('pages.admin.currentOrder', compact('orders'));
         }
