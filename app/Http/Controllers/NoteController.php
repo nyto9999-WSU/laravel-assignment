@@ -9,7 +9,7 @@ use App\Http\Requests\UpdateNoteRequest;
 class NoteController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the resource.dd
      *
      * @return \Illuminate\Http\Response
      */
