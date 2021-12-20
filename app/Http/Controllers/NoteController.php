@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateNoteRequest;
 class NoteController extends Controller
 {
     /**
+
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -16,6 +17,7 @@ class NoteController extends Controller
     public function index()
     {
         //
+        return back();
     }
 
     /**
