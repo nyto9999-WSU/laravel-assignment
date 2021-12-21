@@ -16,11 +16,13 @@
                         </div>
                     @endif
                     <h1>Create Order</h1>
+
+                    TODO:Fill #8 all data based on our client-request-form
                     <form action="{{ route('order.store') }}" method="post">
                         @csrf
                             <label for="desc">description</label>
                             <input type="text" name="desc">
-
+                            //TODO: here
                             <button type="submit">submit</button>
                     </form>
 

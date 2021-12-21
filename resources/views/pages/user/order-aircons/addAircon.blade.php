@@ -21,11 +21,30 @@
                             <button type="submit">submit</button>
                     </form>
 
+                    TODO: #7 Fill all data based on below "<th>"
                     @forelse ($order->aircons as $aircon)
-                        <li>{{ $aircon->type }}</li>
+                        <table>
+                            <th>Model Number</th>
+                            <th>Equipment Type</th>
+                            <th>Issue</th>
+
+                            <tr>
+                                <td>
+                                    //TODO:Model number
+                                </td>
+                                <td>
+                                    {{ $aircon->type }}
+                                </td>
+                                <td>
+                                    //TODO:Issue
+                                </td>
+                            </tr>
+                        </table>
                     @empty
                         <h1>no data</h1>
                     @endforelse
+
+                    <button type="submit">Send Email confirmation</button>
 
 
 

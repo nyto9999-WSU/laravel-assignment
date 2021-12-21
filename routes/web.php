@@ -17,19 +17,12 @@ use App\Http\Controllers\AirConController;
 Route::get('/', function () {
     return view('welcome');
 });
-//tonyadsdssssss
-Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 //I add a route hereddd
 Auth::routes();
-
-
 Route::resource('order', OrderController::class);
-
-
-
 Route::get('/aircon/{aircon}/order{order}/', [AirConController::class, 'show'])->name('aircon.show');
 Route::post('/aircon/order/{order}', [AirConController::class, 'store'])->name('aircon.store');
 Route::resource('aircon', AirConController::class)->except(['store', 'show']);
