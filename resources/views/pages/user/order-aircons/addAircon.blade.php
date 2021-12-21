@@ -16,27 +16,29 @@
                     <h1>Add aircon</h1>
                     <form action="{{ route('aircon.store', $order) }}" method="post">
                         @csrf
-                            <label for="type">air-con type</label>
-                            <input type="text" name="type">
+                            <label for="equipment_type">air-con type</label>
+                            <input type="text" name="equipment_type">
+                            <!--TODO: fill inputs based on Aircon cols-->
                             <button type="submit">submit</button>
                     </form>
 
-                    TODO: #7 Fill all data based on below "<th>"
+                    <!-TODO: #7 Fill all data based on below th tag-->
                     @forelse ($order->aircons as $aircon)
-                        <table>
+                        <table class="table">
                             <th>Model Number</th>
                             <th>Equipment Type</th>
                             <th>Issue</th>
 
                             <tr>
                                 <td>
-                                    //TODO:Model number
+                                    <!--TODO: model number-->
                                 </td>
                                 <td>
-                                    {{ $aircon->type }}
+                                    <!--TODO: this quipment_type should be a dropdown-->
+                                    {{ $aircon->equipment_type }}
                                 </td>
                                 <td>
-                                    //TODO:Issue
+                                    <!--TODO: issue-->
                                 </td>
                             </tr>
                         </table>
@@ -44,7 +46,6 @@
                         <h1>no data</h1>
                     @endforelse
 
-                    <button type="submit">Send Email confirmation</button>
 
 
 

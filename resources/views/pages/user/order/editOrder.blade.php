@@ -17,16 +17,15 @@
 
 
                     @endif
-                    TODO:fill all data based on client-request-form for this edit page
                     <form action="{{ route('order.update', $order) }}" method="post">
                         @csrf
                         @method('PATCH')
 
-                        TODO:This is example
-                        <label for="desc">Description</label>
-                        <input type="text" name="desc" placeholder="{{ $order->desc }}">
+                        <!--TODO:This is example-->
+                        <label for="extra_note">Extra_note</label>
+                        <input type="text" name="extra_note" placeholder="{{ $order->extra_note }}">
 
-                        TODO: every input with a label
+                        <!--TODO: wite your code here-->
                         <button type="submit">Edit</button>
                     </form>
 

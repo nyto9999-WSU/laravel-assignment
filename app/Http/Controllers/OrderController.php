@@ -107,17 +107,20 @@ class OrderController extends Controller
         return back();
     }
 
+
+    //validation area
     protected function validateAirCon()
     {
         return request()->validate([
-            'type' => ['required']
+            'equipment_type' => ['required']
         ]);
     }
 
     protected function validateOrder()
     {
         return request()->validate([
-            'desc' => ['required']
+            'extra_note' => ['required'],
+            'prefer_date' => ['required']
         ]);
     }
 }

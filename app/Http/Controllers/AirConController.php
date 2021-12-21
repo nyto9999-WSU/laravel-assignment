@@ -102,7 +102,7 @@ class AirConController extends Controller
     protected function validateAirCon()
     {
         return request()->validate([
-            'type' => ['required']
+            'equipment_type' => ['required']
         ]);
     }
 
