@@ -14,14 +14,16 @@ class CreateAirconOrdersTable extends Migration
     public function up()
     {
         Schema::create('aircon_order', function (Blueprint $table) {
-            $table->id();
+
+            $table->foreignId('order_id')
+                    ->constrained()
+                    ->onDelete('cascade');
 
             $table->foreignId('aircon_id')
                     ->constrained()
                     ->onDelete('cascade');
-            $table->foreignId('order_id')
-                    ->constrained()
-                    ->onDelete('cascade');
+
+
 
         });
     }
