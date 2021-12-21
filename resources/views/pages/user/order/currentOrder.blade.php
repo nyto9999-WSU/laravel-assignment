@@ -24,21 +24,35 @@
                                 <th>Owner</th>
                                 <th>Description</th>
                                 <th>Air-con Type</th>
+                                <th>Edit</th>
+                                <th>Cancel</th>
                             </tr>
                             <tr>
-                                <td>{{ $order->id }}</td>
+                                <td>
+                                    <a href="{{ route('order.edit', $order) }}">{{ $order->id }}</a>
+                                </td>
                                 <td>{{ $order->user->name }}</td>
                                 <td>{{ $order->desc }}</td>
                                 <td>
-                                        @forelse ($order->aircons as $aircon)
-                                            <li>
-                                                <a href={{ route('aircon.show', [$aircon,$order]) }}>
-                                                    {{ $aircon->type }}
-                                                </a>
-                                            </li>
-                                        @empty
-                                                <h1>nodata</h1>
-                                        @endforelse
+                                    @forelse ($order->aircons as $aircon)
+                                        <li>
+                                            <a href={{ route('aircon.show', [$aircon,$order]) }}>
+                                                {{ $aircon->type }}
+                                            </a>
+                                        </li>
+                                    @empty
+                                            <h1>nodata</h1>
+                                    @endforelse
+                                </td>
+                                <td>
+                                    <a href="{{ route('order.edit', $order) }}" class="btn btn-primary">Edit</a>
+                                </td>
+                                <td>
+                                    <form action="{{ route('order.destroy', $order) }}" method="post">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit">Cancel</button>
+                                    </form>
                                 </td>
                             </tr>
                         @endif

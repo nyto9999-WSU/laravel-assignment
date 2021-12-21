@@ -45,7 +45,7 @@ class AirConController extends Controller
         $order = Order::find($order->id);
         $order->aircons()->create($attributes);
 
-        return view('pages.user.addAircon',compact('order'));
+        return view('pages.user.order-aircons.addAircon',compact('order'));
     }
 
     /**
@@ -59,7 +59,7 @@ class AirConController extends Controller
 
         abort_unless($order->user_id == auth()->id() || auth()->user()->role == "admin", 403);
 
-        return view('pages.admin.showAircon', compact('aircon'));
+        return view('pages.admin.order-aircons.showAircon', compact('aircon'));
 
 
     }

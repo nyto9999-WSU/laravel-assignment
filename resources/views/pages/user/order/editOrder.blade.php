@@ -14,8 +14,17 @@
                         <div class="alert alert-success" role="alert">
                             {{ session('status') }}
                         </div>
-                    @endif
 
+
+                    @endif
+                    <!-PUT|PATCH | order/{order}| order.update-->
+                    <form action="{{ route('order.update', $order) }}" method="post">
+                        @csrf
+                        @method('PATCH')
+                        <label for="desc">Description</label>
+                        <input type="text" name="desc" placeholder="{{ $order->desc }}">
+                        <button type="submit">Edit</button>
+                    </form>
 
                 </div>
             </div>

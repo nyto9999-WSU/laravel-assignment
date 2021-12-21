@@ -22,7 +22,7 @@ class OrderController extends Controller
             $orders = Order::with('aircons', 'user')->get();
 
 
-            return view('pages.admin.currentOrder', compact('orders'));
+            return view('pages.admin.order.currentOrder', compact('orders'));
         }
 
 
@@ -30,7 +30,7 @@ class OrderController extends Controller
         $orders = Order::with('aircons', 'user')
                         ->where('user_id', auth()->id())
                         ->get();
-        return view('pages.user.currentOrder', compact('orders'));
+        return view('pages.user.order.currentOrder', compact('orders'));
     }
 
     /**
@@ -40,7 +40,7 @@ class OrderController extends Controller
      */
     public function create()
     {
-        return view('pages.user.addOrder');
+        return view('pages.user.order.addOrder');
     }
 
     public function store(Request $request)
@@ -52,7 +52,7 @@ class OrderController extends Controller
 
         $order = Order::orderBy('created_at', 'desc')->first(); // fix need to query with user id
 
-        return view('pages.user.addAircon', compact('order'));
+        return view('pages.user.order-aircons.addAircon', compact('order'));
     }
 
 
@@ -63,7 +63,7 @@ class OrderController extends Controller
             $order->with('aircons', 'user')
             ->get();
 
-            return view('pages.user.showOrder', compact('order'));
+            return view('pages.user.order.showOrder', compact('order'));
         }
 
 
@@ -72,21 +72,26 @@ class OrderController extends Controller
         $order->with('aircons', 'user')
                 ->get();
 
-        return view('pages.user.showOrder', compact('order'));
+        return view('pages.user.order.showOrder', compact('order'));
 
     }
 
 
-    public function edit($id)
+    public function edit(Order $order)
     {
         //
-
+        return view('pages.user.order.editOrder', compact('order'));
     }
 
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Order $order)
     {
         //
+        $attributes = $this->validateOrder();
+
+        $order->update($attributes);
+
+        return $this->index();
     }
 
     /**
@@ -95,9 +100,11 @@ class OrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Order $order)
     {
         //
+        $order->delete();
+        return back();
     }
 
     protected function validateAirCon()
