@@ -31,13 +31,13 @@
                                 <td>
                                     <a href="{{ route('order.edit', $order) }}">{{ $order->id }}</a>
                                 </td>
-                                <td>{{ $order->user->name }}</td>
-                                <td>{{ $order->desc }}</td>
+                                <td>{{ $order->name }}</td>
+                                <td>{{ $order->extra_note }}</td>
                                 <td>
                                     @forelse ($order->aircons as $aircon)
                                         <li>
                                             <a href={{ route('aircon.show', [$aircon,$order]) }}>
-                                                {{ $aircon->type }}
+                                                {{ $aircon->equipment_type }}
                                             </a>
                                         </li>
                                     @empty

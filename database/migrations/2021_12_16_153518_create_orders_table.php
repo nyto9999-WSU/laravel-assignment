@@ -15,7 +15,24 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->string('desc');
+
+
+            $table->string('name')->nullable();
+            $table->string('email')->nullable();
+            $table->string('mobile_number')->nullable();
+            $table->string('no_of_unit')->nullable();
+            $table->string('install_address')->nullable();
+            $table->string('state')->nullable();
+            $table->string('suburb')->nullable();
+            $table->string('postcode')->nullable();
+            $table->date('prefer_date')->nullable();
+            $table->string('prefer_time')->nullable();
+            $table->string('domestic_commercial')->nullable();
+            $table->string('extra_note')->nullable();
+
+
+
+
             $table->foreignId('user_id')
                     ->constrained()
                     ->onDelete('cascade');

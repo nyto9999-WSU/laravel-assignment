@@ -38,8 +38,8 @@
                             </td>
                         </tr>
                     </table> --}}
-                    <h1>{{ $aircon->id }}</h1>
-                    <h1>{{ $aircon->type }}</h1>
+                    <h1>ID:{{ $aircon->id }}</h1>
+                    <h1>Type:{{ $aircon->equipment_type }}</h1>
                 </div>
             </div>
         </div>
