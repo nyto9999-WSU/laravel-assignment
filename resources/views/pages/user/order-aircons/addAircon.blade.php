@@ -4,9 +4,10 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
+            <h1>addAircon.blade</h1>
+
             <div class="card">
                 <div class="card-header">{{ __('Dashboard') }}</div>
-
                 <div class="card-body">
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">
@@ -20,6 +21,7 @@
                             <input type="text" name="equipment_type">
                             <!--TODO: fill inputs based on Aircon cols-->
                             <button type="submit">submit</button>
+                            <small>aircon.store, $order</small>
                     </form>
 
                     <!-TODO: #7 Fill all data based on below th tag-->

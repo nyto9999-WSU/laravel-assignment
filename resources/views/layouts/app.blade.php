@@ -35,7 +35,7 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('order.index') }}">Requested Job</a>
                             </li>
-                        @elseif (Auth::user()->role == 'user')
+                        @elseif (!Auth::user()->isAdmin())
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('order.create') }}">Create Order</a>
                             </li>

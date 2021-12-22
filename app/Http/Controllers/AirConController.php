@@ -59,7 +59,7 @@ class AirConController extends Controller
 
         abort_unless($order->user_id == auth()->id() || auth()->user()->role == "admin", 403);
 
-        return view('pages.admin.order-aircons.showAircon', compact('aircon'));
+        return view('pages.user.order-aircons.showAirconDetails', compact('aircon'));
 
 
     }

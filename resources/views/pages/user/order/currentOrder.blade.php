@@ -2,7 +2,8 @@
 
 @section('content')
 <div class="container">
-    <h1>Role: {{ Auth::user()->role }}</h1>
+    <h1>Role: {{ Auth::user()->roleName() }}</h1>
+    <h1>currentOrder.blade</h1>
 
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -22,9 +23,10 @@
                             <tr>
                                 <th>Order</th>
                                 <th>Owner</th>
-                                <th>Description</th>
+                                <th>Extra Note</th>
+                                <th>Prefer Date</th>
                                 <th>Air-con Type</th>
-                                <th>Edit</th>
+                                <th>E Dit</th>
                                 <th>Cancel</th>
                             </tr>
                             <tr>
@@ -33,7 +35,9 @@
                                 </td>
                                 <td>{{ $order->name }}</td>
                                 <td>{{ $order->extra_note }}</td>
+                                <td>{{ $order->prefer_date }}</td>
                                 <td>
+                                    <small>aircon.show</small>
                                     @forelse ($order->aircons as $aircon)
                                         <li>
                                             <a href={{ route('aircon.show', [$aircon,$order]) }}>
@@ -45,13 +49,13 @@
                                     @endforelse
                                 </td>
                                 <td>
-                                    <a href="{{ route('order.edit', $order) }}" class="btn btn-primary">Edit</a>
+                                    <a href="{{ route('order.edit', $order) }}" class="btn btn-primary">order.edit</a>
                                 </td>
                                 <td>
                                     <form action="{{ route('order.destroy', $order) }}" method="post">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit">Cancel</button>
+                                        <button type="submit">order.destory</button>
                                     </form>
                                 </td>
                             </tr>

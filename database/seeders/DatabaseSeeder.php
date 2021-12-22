@@ -15,22 +15,20 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(10)->create();
-        DB::table('users')->insert([
-            'name' => 'admin',
-            'email' =>'admin@gmail.com',
-            'role' => 'admin',
-            'password' => Hash::make('chen0606'),
-            'created_at' => now(),
-            'updated_at' => now()
+
+        DB::table('roles')->insert([
+            'name' => 'user'
+        ]);
+        DB::table('roles')->insert([
+            'name' => 'admin'
+        ]);
+        DB::table('roles')->insert([
+            'name' => 'technician'
         ]);
 
-        DB::table('users')->insert([
-            'name' => 'user',
-            'email' =>'user@gmail.com',
-            'role' => 'user',
-            'password' => Hash::make('chen0606'),
-            'created_at' => now(),
-            'updated_at' => now()
-        ]);
+
+
+
+
     }
 }
