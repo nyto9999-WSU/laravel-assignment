@@ -68,7 +68,6 @@ class OrderController extends Controller
 
 
         abort_if($order->user_id != auth()->id(), 403);
-
         $order->with('aircons', 'user')
                 ->get();
 
@@ -79,15 +78,13 @@ class OrderController extends Controller
 
     public function edit(Order $order)
     {
-        //
         return view('pages.user.order.editOrder', compact('order'));
     }
 
 
     public function update(Request $request, Order $order)
     {
-        //
-        $attributes = $this->validateOrder();
+        $attributes = $this->validateEditOrder(); //line 108
 
         $order->update($attributes);
 
@@ -102,7 +99,6 @@ class OrderController extends Controller
      */
     public function destroy(Order $order)
     {
-        //
         $order->delete();
         return back();
     }
@@ -121,6 +117,12 @@ class OrderController extends Controller
         return request()->validate([
             'extra_note' => ['required'],
             'prefer_date' => ['required']
+        ]);
+    }
+    protected function validateEditOrder()
+    {
+        return request()->validate([
+            'extra_note' => ['required'],
         ]);
     }
 }

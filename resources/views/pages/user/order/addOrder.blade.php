@@ -18,7 +18,8 @@
 
 @section('content')
 <div class="container">
-    <h1>Role: {{ Auth::user()->role }}</h1>
+    <h1>Role: {{ Auth::user()->roleName() }}</h1>
+    <h1>addOrder.blade</h1>
 
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -56,6 +57,7 @@
 
 
                             <button type="submit">submit</button>
+                            <small>order.store</small>
                     </form>
 
                 </div>
