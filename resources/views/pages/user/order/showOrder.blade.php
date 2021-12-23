@@ -16,7 +16,7 @@
                         </div>
                     @endif
 
-                    TODO: Yuhsuan
+                    TODO:
                     <table class="table">
                         <tr>
                             <th>Order</th>

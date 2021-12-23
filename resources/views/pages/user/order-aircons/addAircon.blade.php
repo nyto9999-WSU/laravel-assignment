@@ -9,38 +9,31 @@
             <div class="card">
                 <div class="card-header">{{ __('Dashboard') }}</div>
                 <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
                     <h1>Add aircon</h1>
                     <form action="{{ route('aircon.store', $order) }}" method="post">
                         @csrf
-                            <label for="equipment_type">air-con type</label>
-                            <input type="text" name="equipment_type">
-                            <!--TODO: fill inputs based on Aircon cols-->
-                            <button type="submit">submit</button>
-                            <small>aircon.store, $order</small>
+                        <label for="equipment_type">air-con type</label>
+                        <input type="text" name="equipment_type">
+
+                        <!--TODO: fill inputs based on Aircon cols-->
+                        <button type="submit">aircon.store</button>
                     </form>
 
-                    <!-TODO: #7 Fill all data based on below th tag-->
                     @forelse ($order->aircons as $aircon)
                         <table class="table">
                             <th>Model Number</th>
                             <th>Equipment Type</th>
                             <th>Issue</th>
-
                             <tr>
                                 <td>
-                                    <!--TODO: model number-->
+                                    <!--model number-->
                                 </td>
                                 <td>
-                                    <!--TODO: this quipment_type should be a dropdown-->
+                                    <!-- this quipment_type should be a dropdown-->
                                     {{ $aircon->equipment_type }}
                                 </td>
                                 <td>
-                                    <!--TODO: issue-->
+                                    <!-- issue-->
                                 </td>
                             </tr>
                         </table>
