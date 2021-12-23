@@ -17,11 +17,9 @@ class OrderController extends Controller
      */
     public function index()
     {
-        if(auth()->user()->role == "admin")
+        if(auth()->user()->isAdmin())
         {
             $orders = Order::with('aircons', 'user')->get();
-
-
             return view('pages.admin.order.currentOrder', compact('orders'));
         }
 
@@ -46,11 +44,12 @@ class OrderController extends Controller
     public function store(Request $request)
     {
 
+        //change
             //switch roles
         $attributes = $this->validateOrder();
         auth()->user()->orders()->create($attributes);
 
-        $order = Order::orderBy('created_at', 'desc')->first(); // fix need to query with user id
+        $order = Order::orderBy('created_at', 'desc')->first(); //FIXME: Need more accurate query
 
         return view('pages.user.order-aircons.addAircon', compact('order'));
     }
@@ -58,7 +57,7 @@ class OrderController extends Controller
 
     public function show(Order $order)
     {
-        if(auth()->user()->role == "admin")
+        if(Auth::user()->isAdmin())
         {
             $order->with('aircons', 'user')
             ->get();
@@ -67,7 +66,7 @@ class OrderController extends Controller
         }
 
 
-        abort_if($order->user_id != auth()->id(), 403);
+        abort_if($order->user_id != Auth::id(), 403);
         $order->with('aircons', 'user')
                 ->get();
 
@@ -84,7 +83,7 @@ class OrderController extends Controller
 
     public function update(Request $request, Order $order)
     {
-        $attributes = $this->validateEditOrder(); //line 108
+        $attributes = $this->validateEditOrder();
 
         $order->update($attributes);
 

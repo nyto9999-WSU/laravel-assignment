@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\OrderController;
 use App\Models\Aircon;
 use App\Models\Order;
 
@@ -30,7 +29,6 @@ class AirConController extends Controller
     {
         //
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -57,11 +55,9 @@ class AirConController extends Controller
     public function show(Aircon $aircon, Order $order)
     {
 
-        abort_unless($order->user_id == auth()->id() || auth()->user()->role == "admin", 403);
+        abort_unless($order->user_id == auth()->id() || auth()->user()->isAdmin(), 403);
 
         return view('pages.user.order-aircons.showAirconDetails', compact('aircon'));
-
-
     }
 
     /**

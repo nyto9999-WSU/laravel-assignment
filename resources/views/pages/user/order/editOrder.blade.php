@@ -26,7 +26,7 @@
                         <label for="extra_note">Extra_note</label>
                         <input type="text" name="extra_note" placeholder="{{ $order->extra_note }}">
 
-                        <!--TODO: wite your code here-->
+                        <!--TODO:  code here-->
                         <button type="submit">Edit</button>
                     </form>
 

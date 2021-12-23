@@ -3,15 +3,15 @@
 @push('css')
     <link href="{{ asset('css/datepicker.css') }}" rel="stylesheet">
 @endpush
-@push('js')
+@push('js')//laravel layout
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
     <script type="text/javascript">
         $(function(){
-            $('#datepicker').datepicker({
-                format: 'yyyy/mm/dd'
-            });
+            //在後端改FIX:ME
+            $('#datepicker').datepicker({format: 'yyyy/mm/dd'});
+            $('#datepicker').datepicker("setDate", new Date());
         });
     </script>
 @endpush
@@ -27,39 +27,31 @@
                 <div class="card-header">{{ __('Dashboard') }}</div>
 
                 <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
                     <h1>Create Order</h1>
 
-                    <!--TODO:Fill #8 all data based on our client-request-form-->
+                    <!--TODO: fill data here-->
                     <form action="{{ route('order.store') }}" method="post">
                         @csrf
 
-
-                            <!--TODO: fill data here-->
-
-                            <!--Datepicker-->
-                            <div class="input-group date" id="datepicker">
-                                <input type="text" class="form-control" name="prefer_date" id="date"/>
-                                <span class="input-group-append">
-                                    <span class="input-group-text bg-light d-block">
-                                        <i class="fa fa-calendar"></i>
-                                    </span>
+                        <!--Datepicker-->
+                        {{-- FIXME:  current date --}}
+                        <div class="input-group date" id="datepicker">
+                            <input type="text" class="form-control" name="prefer_date" id="date"/>
+                            <span class="input-group-append">
+                                <span class="input-group-text bg-light d-block">
+                                    <i class="fa fa-calendar"></i>
                                 </span>
-                            </div>
+                            </span>
+                        </div>
 
-                            <!--Extra Note-->
-                            <label for="extra_note">Extra Note</label>
-                            <input type="text" name="extra_note">
+                        <!--Extra Note-->
+                        <label for="extra_note">Extra Note</label>
+                        <input type="text" name="extra_note">
 
 
-                            <button type="submit">submit</button>
-                            <small>order.store</small>
+                        <button type="submit">submit</button>
+                        <small>order.store</small>
                     </form>
-
                 </div>
             </div>
         </div>
