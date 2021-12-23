@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <h1>Role: {{ Auth::user()->roleName() }}</h1>
+        <h1>Role: {{ Auth::user()->getRole() }}</h1>
         <h1>showAirconDetails.blade</h1>
         <div class="col-md-8">
             <div class="card">

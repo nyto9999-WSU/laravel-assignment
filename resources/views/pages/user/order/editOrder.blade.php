@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <h1>Role: {{ Auth::user()->roleName() }}</h1>
+    <h1>Role: {{ Auth::user()->getRole() }}</h1>
     <h1>editOrder.blade</h1>
     <div class="row justify-content-center">
         <div class="col-md-8">

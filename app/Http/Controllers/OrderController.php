@@ -44,8 +44,6 @@ class OrderController extends Controller
     public function store(Request $request)
     {
 
-        //change
-            //switch roles
         $attributes = $this->validateOrder();
         auth()->user()->orders()->create($attributes);
 
@@ -60,7 +58,7 @@ class OrderController extends Controller
         if(Auth::user()->isAdmin())
         {
             $order->with('aircons', 'user')
-            ->get();
+                  ->get();
 
             return view('pages.user.order.showOrder', compact('order'));
         }
@@ -68,7 +66,7 @@ class OrderController extends Controller
 
         abort_if($order->user_id != Auth::id(), 403);
         $order->with('aircons', 'user')
-                ->get();
+              ->get();
 
         return view('pages.user.order.showOrder', compact('order'));
 

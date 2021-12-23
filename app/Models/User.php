@@ -18,6 +18,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $guarded = [];
+
     //mod
     /**
      * The attributes that should be hidden for serialization.
@@ -51,13 +52,12 @@ class User extends Authenticatable
 
 
 
-
     public function isAdmin()
     {
        return $this->role->name == 'admin';
     }
 
-    public function roleName()
+    public function getRole()
     {
         return $this->role->name;
     }
