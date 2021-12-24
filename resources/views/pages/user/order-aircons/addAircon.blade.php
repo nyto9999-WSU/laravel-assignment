@@ -47,7 +47,7 @@
                             </td>
                             <td>
                                 {{-- Delete Aircon --}}
-                                <form action="{{ route('aircon.destroy', $aircon) }}" method="post">
+                                <form action="{{ route('aircon.destroy', [$aircon, $order]) }}" method="post">
                                     @method('DELETE')
                                     @csrf
                                     <button type="submit">

@@ -1,39 +1,27 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<form action="{{ route('aircon.store', $order) }}" method="post">
+    @csrf
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {{--inputs... --}}
 
-    <title>Integrate Bootstrap Datepicker in Laravel </title>
+    <button type="submit">aircon.store</button>
+</form>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/css/bootstrap-datetimepicker.min.css">
-</head>
-
-<body>
-   <div class="container mt-5" style="max-width: 450px">
-        <h2 class="mb-4">Laravel Bootstrap Datepicker Demo</h2>
-
-        <div class="form-group">
-            <div class='input-group date' id='datetimepicker'>
-            <input type='text' class="form-control" />
-            <span class="input-group-addon">
-              <span class="glyphicon glyphicon-calendar"></span>
-            </span>
-            </div>
-        </div>
-   </div>
-</body>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/js/bootstrap-datetimepicker.min.js"></script>
-
-    <script type="text/javascript">
-        $(function() {
-           $('#datetimepicker').datetimepicker();
-        });
-    </script>
-</html>
+@forelse ($order->aircons as $aircon)
+    <table class="table">
+        <th>Model Number</th>
+            {{-- th.. --}}
+        <tr>
+            {{-- td... --}}
+            <td>
+                {{-- Delete Aircon --}}
+                <form action="{{ route('aircon.destroy', $aircon) }}" method="post">
+                    @method('DELETE')
+                    @csrf
+                    {{-- button submit --}}
+                </form>
+            </td>
+        </tr>
+    </table>
+@empty
+    <h1>no data</h1>
+@endforelse

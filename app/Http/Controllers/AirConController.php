@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Aircon;
 use App\Models\Order;
-
+use View;
 use function Symfony\Component\String\b;
 
 class AirConController extends Controller
@@ -92,9 +92,15 @@ class AirConController extends Controller
      */
     public function destroy(Aircon $aircon)
     {
-        FIXME:
+        FIXME:/* Create a custom delete route */
+        dd($aircon);
+    }
+
+    public function delete(Aircon $aircon, Order $order)
+    {
         $aircon->delete();
-        return back();
+        $order = Order::find($order->id);
+        return view('pages.user.order-aircons.addAircon', compact('order'));
     }
 
     protected function validateAirCon()
