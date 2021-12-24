@@ -4,7 +4,6 @@
 <div class="container">
     <h1>Role: {{ Auth::user()->getRole() }}</h1>
     <h1>currentOrder.blade</h1>
-
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">

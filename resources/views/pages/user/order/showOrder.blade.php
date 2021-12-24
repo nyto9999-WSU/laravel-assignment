@@ -15,7 +15,6 @@
                             {{ session('status') }}
                         </div>
                     @endif
-
                     TODO:
                     <table class="table">
                         <tr>
