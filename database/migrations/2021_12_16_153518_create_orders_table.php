@@ -29,14 +29,11 @@ class CreateOrdersTable extends Migration
             $table->string('prefer_time')->nullable();
             $table->string('domestic_commercial')->nullable();
             $table->string('extra_note')->nullable();
-
-
-
+            $table->string('status')->default('Booked');
+            $table->timestamps();
 
             $table->foreignId('user_id')
-                    ->constrained()
-                    ->onDelete('cascade');
-            $table->timestamps();
+                    ->constrained();
         });
 
     }

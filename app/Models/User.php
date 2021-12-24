@@ -49,6 +49,17 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class);
     }
 
+    // public function aircons()
+    // {
+    //     return $this->hasMany(Aircon::class);
+    // }
+
+
+    public function jobs()
+    {
+        return $this->belongsToMany(User::class, 'order_id', 'id');
+    }
+
 
 
 

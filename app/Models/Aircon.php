@@ -14,8 +14,12 @@ class Aircon extends Model
 
     public function orders()
     {
-        return $this->belongsToMany(Order::class, 'order_aircons');
+        return $this->belongsToMany(Order::class);
     }
 
+    // public function user()
+    // {
+    //     return $this->belongsTo(User::class);
+    // }
 
 }

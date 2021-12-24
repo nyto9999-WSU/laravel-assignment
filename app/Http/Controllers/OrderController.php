@@ -43,7 +43,6 @@ class OrderController extends Controller
 
     public function store(Request $request)
     {
-
         $attributes = $this->validateOrder();
         auth()->user()->orders()->create($attributes);
 
@@ -112,8 +111,18 @@ class OrderController extends Controller
     protected function validateOrder()
     {
         return request()->validate([
-            'extra_note' => ['required'],
-            'prefer_date' => ['required']
+            'name' => ['nullable'],
+            'email' => ['nullable'],
+            'mobile_number' => ['nullable'],
+            'no_of_unit' => ['nullable'],
+            'install_address' => ['nullable'],
+            'state' => ['nullable'],
+            'suburb' => ['nullable'],
+            'postcode' => ['nullable'],
+            'prefer_date' => ['nullable'],
+            'prefer_time' => ['nullable'],
+            'domestic_commercial' => ['nullable'],
+            'extra_note' => ['nullable'],
         ]);
     }
     protected function validateEditOrder()
