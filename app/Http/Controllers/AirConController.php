@@ -17,7 +17,7 @@ class AirConController extends Controller
      */
     public function index()
     {
-        //
+        return view('pages.user.order-aircons.addAircon');
     }
 
     /**
@@ -37,13 +37,13 @@ class AirConController extends Controller
      */
     public function store(Request $request, Order $order)
     {
-        //
+        $order = Order::find($order->id);
+
         $attributes = $this->validateAirCon();
 
-        $order = Order::find($order->id);
         $order->aircons()->create($attributes);
 
-        return view('pages.user.order-aircons.addAircon',compact('order'));
+        return view('pages.user.order-aircons.addAircon', compact('order'));
     }
 
     /**
@@ -92,14 +92,21 @@ class AirConController extends Controller
      */
     public function destroy(Aircon $aircon)
     {
-        // $aircon->delete();
+        FIXME:
+        $aircon->delete();
+        return back();
     }
 
     protected function validateAirCon()
     {
+        if (!empty(request()->other_type)) {
+            request()->merge(['equipment_type' => request()->other_type]);
+        }
+
         return request()->validate([
-            'equipment_type' => ['required']
+            'model_number' => ['nullable'],
+            'equipment_type' => ['nullable'],
+            'issue' => ['nullable'],
         ]);
     }
-
 }

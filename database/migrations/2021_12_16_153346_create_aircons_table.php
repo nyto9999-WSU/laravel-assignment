@@ -15,7 +15,6 @@ class CreateAirconsTable extends Migration
     {
         Schema::create('aircons', function (Blueprint $table) {
             $table->id();
-
             $table->string('model_number')->nullable();
             $table->string('equipment_type')->nullable();
             $table->string('issue')->nullable();
