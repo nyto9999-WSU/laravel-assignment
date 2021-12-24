@@ -2,9 +2,8 @@
 
 @section('content')
 <div class="container">
-    <h1>Role: {{ Auth::user()->roleName() }}</h1>
+    <h1>Role: {{ Auth::user()->getRole() }}</h1>
     <h1>currentOrder.blade</h1>
-
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
@@ -45,7 +44,7 @@
                                             </a>
                                         </li>
                                     @empty
-                                            <h1>nodata</h1>
+                                        <h1>nodata</h1>
                                     @endforelse
                                 </td>
                                 <td>

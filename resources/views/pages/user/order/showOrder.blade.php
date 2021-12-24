@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <h1>Role: {{ Auth::user()->roleName() }}</h1>
+            <h1>Role: {{ Auth::user()->getRole() }}</h1>
             <h1>showOrder.blade</h1>
             <div class="card">
                 <div class="card-header">{{ __('Dashboard') }}</div>
@@ -15,7 +15,6 @@
                             {{ session('status') }}
                         </div>
                     @endif
-
                     TODO:
                     <table class="table">
                         <tr>

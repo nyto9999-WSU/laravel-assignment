@@ -90,5 +90,5 @@
         </main>
     </div>
 </body>
-    @stack('js')//section
+    @stack('js')
 </html>
