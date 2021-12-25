@@ -18,7 +18,6 @@
                             <th>Completed Date</th>
                             <th>Technician</th>
                             <th>Status</th>
-                            <th>Edit</th>
                             <th>Cancel</th>
                         </tr>
                         <tr>
@@ -35,6 +34,8 @@
                                 @empty
                                     N/A
                                 @endforelse
+                                {{--TODO: all aircons --}}
+                                <li>All</li>
                             </td>
                             {{-- Requested date --}}
                             <td>{{ $order->prefer_date }}</td>
@@ -45,9 +46,6 @@
                             {{-- Technician --}}
                             <td>N/A</td>
                             <td>{{ $order->status }}</td>
-                            <td>
-                                <a href="{{ route('order.edit', $order) }}" class="btn btn-primary">order.edit</a>
-                            </td>
                             <td>
                                 <form action="{{ route('order.destroy', $order) }}" method="post">
                                     @csrf

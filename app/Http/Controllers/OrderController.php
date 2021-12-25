@@ -43,6 +43,8 @@ class OrderController extends Controller
 
     public function store(Request $request)
     {
+        dd($request->all());
+
         $attributes = $this->validateOrder();
         auth()->user()->orders()->create($attributes);
 
@@ -54,7 +56,7 @@ class OrderController extends Controller
 
     public function show(Order $order)
     {
-        if(Auth::user()->isAdmin())
+        if(auth()->user()->isAdmin())
         {
             $order->with('aircons', 'user')
                   ->get();
