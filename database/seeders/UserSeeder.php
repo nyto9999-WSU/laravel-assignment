@@ -1,10 +1,12 @@
 <?php
 
 namespace Database\Seeders;
-
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use App\Models\User;
+use Illuminate\Support\Str;
+
 class UserSeeder extends Seeder
 {
     /**
@@ -19,6 +21,7 @@ class UserSeeder extends Seeder
             'email' =>'admin@gmail.com',
             'role_id' => 2,
             'password' => Hash::make('chen0606'),
+            'remember_token' => Str::random(10),
             'created_at' => now(),
             'updated_at' => now()
         ]);
@@ -32,5 +35,7 @@ class UserSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now()
         ]);
+
+        User::factory(10)->create();
     }
 }
