@@ -90,16 +90,10 @@ class AirConController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Aircon $aircon)
-    {
-        FIXME:/* Create a custom delete route */
-        dd($aircon);
-    }
 
-    public function delete(Aircon $aircon, Order $order)
+    public function destroy(Aircon $aircon, Order $order)
     {
         $aircon->delete();
-        $order = Order::find($order->id);
         return view('pages.user.order-aircons.addAircon', compact('order'));
     }
 
