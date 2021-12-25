@@ -17,6 +17,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('order.index') }}">Requested Job</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('rolePermission.index') }}">Role & Permission</a>
+                        </li>
                     @else
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('order.create') }}">Create Order</a>

@@ -8,7 +8,6 @@
             <div class="col-md-8">
 
                 <table class="table">
-
                     @forelse ($orders as $order)
                         <tr>
                             <th>Order</th>

@@ -36,17 +36,10 @@
                         <th>Issue</th>
                         <th>Cancel</th>
                         <tr>
+                            <td>{{ $aircon->model_number }}</td>
+                            <td>{{ $aircon->equipment_type }}</td>
+                            <td>{{ $aircon->issue }}</td>
                             <td>
-                                {{ $aircon->model_number }}
-                            </td>
-                            <td>
-                                {{ $aircon->equipment_type }}
-                            </td>
-                            <td>
-                                {{ $aircon->issue }}
-                            </td>
-                            <td>
-                                {{-- Delete Aircon --}}
                                 <form action="{{ route('aircon.destroy', [$aircon, $order]) }}" method="post">
                                     @method('DELETE')
                                     @csrf
