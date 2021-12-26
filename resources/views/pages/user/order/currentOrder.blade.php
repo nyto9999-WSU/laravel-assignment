@@ -8,17 +8,17 @@
             <div class="col-md-8">
 
                 <table class="table">
+                    <tr>
+                        <th>Order</th>
+                        <th>Model</th>
+                        <th>Requested Date</th>
+                        <th>Assigned Date</th>
+                        <th>Completed Date</th>
+                        <th>Technician</th>
+                        <th>Status</th>
+                        <th>Cancel</th>
+                    </tr>
                     @forelse ($orders as $order)
-                        <tr>
-                            <th>Order</th>
-                            <th>Model</th>
-                            <th>Requested Date</th>
-                            <th>Assigned Date</th>
-                            <th>Completed Date</th>
-                            <th>Technician</th>
-                            <th>Status</th>
-                            <th>Cancel</th>
-                        </tr>
                         <tr>
                             <td>
                                 <a href="{{ route('order.edit', $order) }}">{{ $order->id }}</a>

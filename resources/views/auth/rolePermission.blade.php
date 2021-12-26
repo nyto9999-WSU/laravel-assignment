@@ -25,14 +25,13 @@
                         <tr>
                             <th scope="row">{{ $user->id }}</th>
                             <td>{{ $user->name }}</td>
-                            <td>{{ $user->getRole() }}</td>
                             <td>
                                 <form action="{{ route('rolePermission.update', $user) }}" method="POST">
                                     @method('PATCH')
                                     @csrf
 
                                     <select class="" name="action" onchange="this.form.submit()">
-                                        <option>Switch Role</option>
+                                        <option disabled selected value>{{ $user->getRole() }}</option>
                                         <option value="user">User</option>
                                         <option value="technician">Technician</option>
                                         <option value="admin">Admin</option>
@@ -59,3 +58,4 @@
 
     </div>
 @endsection
+

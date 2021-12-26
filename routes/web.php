@@ -41,4 +41,4 @@ Route::patch('role-permission/{user}/edit', [RolePermissionController::class, 'u
 Route::delete('role-permission/{user}/destroy', [RolePermissionController::class, 'destroy'])->name('rolePermission.destroy');
 
 
-/* Forget password */
+/* Dashboard */
