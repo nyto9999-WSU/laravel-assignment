@@ -7,6 +7,7 @@ use App\Models\Aircon;
 use App\Models\Order;
 use App\Models\User;
 use DB;
+use Illuminate\Support\Carbon;
 
 class OrderController extends Controller
 {
@@ -31,11 +32,7 @@ class OrderController extends Controller
         return view('pages.user.order.currentOrder', compact('orders'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
         return view('pages.user.order.addOrder');
@@ -63,8 +60,7 @@ class OrderController extends Controller
             return view('pages.user.order.showOrder', compact('order'));
         }
 
-
-        abort_if($order->user_id != Auth::id(), 403);
+        abort_if($order->user_id != auth()->id(), 403);
         $order->with('aircons', 'user')
               ->get();
 
@@ -85,7 +81,7 @@ class OrderController extends Controller
 
         $order->update($attributes);
 
-        return $this->index();
+        return $this->edit($order);
     }
 
     /**
@@ -105,7 +101,7 @@ class OrderController extends Controller
     protected function validateAirCon()
     {
         return request()->validate([
-            'equipment_type' => ['required']
+            'equipment_type' => ['nullable']
         ]);
     }
 
@@ -126,10 +122,11 @@ class OrderController extends Controller
             'extra_note' => ['nullable'],
         ]);
     }
+
     protected function validateEditOrder()
     {
         return request()->validate([
-            'extra_note' => ['required'],
+            'extra_note' => ['nullable'],
         ]);
     }
 }

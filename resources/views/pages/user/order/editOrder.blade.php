@@ -7,6 +7,8 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <small>order.update</small>
+
+                {{-- TODO: change current input type --}}
                 <form action="{{ route('order.update', $order) }}" method="post">
                     @csrf
                     @method('PATCH')

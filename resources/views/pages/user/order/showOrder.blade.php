@@ -7,31 +7,109 @@
                 <h1>Role: {{ Auth::user()->getRole() }}</h1>
                 <h1>showOrder.blade</h1>
                 <table class="table">
+
+                    {{-- order_id --}}
                     <tr>
-                        <th>Order</th>
-                        <th>Owner</th>
-                        <th>Description</th>
-                        <th>Air-con Type</th>
-                    </tr>
-                    <tr>
+                        <td>Order</td>
                         <td>{{ $order->id }}</td>
+                    </tr>
 
-                        <td>{{ $order->user->name }}</td>
 
-                        <td>{{ $order->desc }}</td>
-
+                    {{-- model_number --}}
+                    <tr>
+                        <td>Model Number</td>
                         <td>
                             @forelse ($order->aircons as $aircon)
                                 <li>
-                                    {{ $aircon->type }} <br>
+                                    <a href="{{ route('aircon.show', [$aircon, $order]) }}">{{ $aircon->model_number }}</a>
                                 </li>
                             @empty
 
                             @endforelse
                         </td>
                     </tr>
+
+                    {{-- domestic_commercial --}}
+                    <tr>
+                        <td>Domestic Commercial</td>
+                        <td>{{ $order->domestic_commercial }}</td>
+                    </tr>
+
+                    {{-- FIXME: --}}
+                    <tr>
+                        <td>Technician</td>
+                        <td>Unfinished</td>
+                    </tr>
+
+                    {{-- extra_note --}}
+                    <tr>
+                        <td>Description</td>
+                        <td>{{ $order->extra_note }}</td>
+                    </tr>
+
+                    {{-- status --}}
+                    <tr>
+                        <td>Status</td>
+                        <td>{{ $order->status }}</td>
+                    </tr>
+
+                    {{-- name --}}
+                    <tr>
+                        <td>Owner</td>
+                        <td>{{ $order->name }}</td>
+                    </tr>
+
+                    {{-- email --}}
+                    <tr>
+                        <td>Email Address</td>
+                        <td>{{ $order->email }}</td>
+                    </tr>
+
+                    {{-- install_address --}}
+                    <tr>
+                        <td>Installation Address</td>
+                        <td>{{ $order->install_address }}</td>
+                    </tr>
+
+                    {{-- state --}}
+                    <tr>
+                        <td>State</td>
+                        <td>{{ $order->state }}</td>
+                    </tr>
+
+                    {{-- suburb --}}
+                    <tr>
+                        <td>Suburb</td>
+                        <td>{{ $order->suburb }}</td>
+                    </tr>
+
+                    {{-- postcode --}}
+                    <tr>
+                        <td>Postcode</td>
+                        <td>{{ $order->postcode }}</td>
+                    </tr>
+
+                    {{-- created_at --}}
+                    <tr>
+                        <td>Requested Date</td>
+                        <td>{{ $order->created_at }}</td>
+                    </tr>
+
+                    {{-- FIXME: --}}
+                    <tr>
+                        <td>Assigned Date</td>
+                        <td>Unfinished</td>
+                    </tr>
+
+                    {{-- FIXME:Completed Date --}}
+                    <tr>
+                        <td>Completed Date</td>
+                        <td>Unfinished</td>
+                    </tr>
+
                 </table>
 
+                <a href="{{ route('order.edit', $order) }}" class="btn btn-primary">order.edit</a>
             </div>
         </div>
     </div>

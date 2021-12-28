@@ -5,15 +5,14 @@
         <h1>Role: {{ Auth::user()->getRole() }}</h1>
         <h1>currentOrder.blade</h1>
         <div class="row justify-content-center">
-            <div class="col-md-8">
-
                 <table class="table">
                     <tr>
                         <th>Order</th>
-                        <th>Model</th>
-                        <th>Requested Date</th>
-                        <th>Assigned Date</th>
-                        <th>Completed Date</th>
+                        <th style="">Model</th>
+                        <th style="">show</th>
+                        <th style="width: 13.2%">Requested Date</th>
+                        <th style="width: 12.2%">Assigned Date</th>
+                        <th style="width: 12.2%">Completed Date</th>
                         <th>Technician</th>
                         <th>Status</th>
                         <th>Cancel</th>
@@ -21,21 +20,30 @@
                     @forelse ($orders as $order)
                         <tr>
                             <td>
-                                <a href="{{ route('order.edit', $order) }}">{{ $order->id }}</a>
+                                <a href="{{ route('order.show', $order) }}">{{ $order->id }}</a>
                             </td>
                             <td>
                                 @forelse ($order->aircons as $aircon)
                                     <li>
                                         <a href={{ route('aircon.show', [$aircon, $order]) }}>
-                                            {{ $aircon->id }}
+                                            {{ $aircon->model_number }}
                                         </a>
                                     </li>
                                 @empty
                                     N/A
                                 @endforelse
-                                {{--TODO: all aircons --}}
-                                <li>All</li>
+                                {{-- TODO:show all aircon details --}}
+                                <a href="">all</a>
                             </td>
+                            <td>
+                                <span class="position-relative">
+                                    all models info
+                                    <span class="ms-3 position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                        {{ $order->aircons->count() }}
+                                    </span>
+                                </span>
+                            </td>
+
                             {{-- Requested date --}}
                             <td>{{ $order->prefer_date }}</td>
                             {{-- Assigned date --}}

@@ -14,10 +14,19 @@
                             <a class="nav-link" href="{{ route('order.index') }}">Requested Job</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="{{ route('order.index') }}">Assigned Job(not yet)</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('order.index') }}">Completed Job(not yet)</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="{{ route('rolePermission.index') }}">Role & Permission</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('home') }}">Dashboards</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('home') }}">View Job(not yet)</a>
                         </li>
                     @else
                         <li class="nav-item">
