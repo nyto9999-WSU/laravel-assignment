@@ -8,6 +8,8 @@ use App\Models\User;
 use App\Models\Role;
 use App\Models\Order;
 use Carbon\Carbon;
+use Rappasoft\LaravelAuthenticationLog\Models\AuthenticationLog;
+
 class HomeController extends Controller
 {
     /**
@@ -28,10 +30,8 @@ class HomeController extends Controller
 
     public function index()
     {
-
+        /* Order quantity yearly */
         $roles = Role::withCount('users')->get();
-
-
         $months = array();
         $year = Carbon::now()->format('Y');
         for ($x = 1; $x <= 12; $x++) {
@@ -41,9 +41,23 @@ class HomeController extends Controller
             $months[] = $count;
         }
 
+        /* Registered User Number */
+        $users = User::all();
+        $users = $users->reverse();
 
-        // $date = date('M', $orders->all()[0]->created_at->timestamp);
 
-        return view('home', compact('roles', 'months'));
+        /* login history */
+        $authLog = AuthenticationLog::all();
+        $logs = array();
+        for($x = $authLog->count()-1; $x >= 1; $x--)
+        {
+            if($authLog[$x]->login_at != null)
+            {
+                $u = User::find($authLog[$x]->authenticatable_id);
+                $logs[] = 'Name: ' .$u->name. '    Log: ' .$authLog[$x]->login_at->toDateTimeString();
+            }
+        }
+
+        return view('home', compact('roles', 'months', 'users', 'logs'));
     }
 }

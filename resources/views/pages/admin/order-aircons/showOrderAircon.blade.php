@@ -13,31 +13,7 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    {{-- <table class="table">
-                        <tr>
-                            <th>Ordeddddr</th>
-                            <th>Owner</th>
-                            <th>Description</th>
-                            <th>Air-con Type</th>
-                        </tr>
-                        <tr>
-                            <td>{{ $order->id }}</td>
 
-                            <td>{{ $order->user->name }}</td>
-
-                            <td>{{ $order->desc }}</td>
-
-                            <td>
-                                @forelse ($order->aircons as $aircon)
-                                    <li>
-                                        {{ $aircon->type }} <br>
-                                    </li>
-                                @empty
-
-                                @endforelse
-                            </td>
-                        </tr>
-                    </table> --}}
                     <h1>ID:{{ $aircon->id }}</h1>
                     <h1>Type:{{ $aircon->equipment_type }}</h1>
                 </div>

@@ -60,6 +60,8 @@ class AirConController extends Controller
         return view('pages.user.order-aircons.showAirconDetails', compact('aircon'));
     }
 
+    /* TODO:Show all aircons details */
+
     /**
      * Show the form for editing the specified resource.
      *

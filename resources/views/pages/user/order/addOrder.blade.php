@@ -8,6 +8,7 @@
             <div class="col-md-8">
                 <h1>Create Order</h1>
 
+                {{-- TODO: change current input type --}}
                 <form action="{{ route('order.store') }}" method="post">
                     @csrf
 
