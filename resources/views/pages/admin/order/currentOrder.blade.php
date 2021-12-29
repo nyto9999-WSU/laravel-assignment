@@ -24,7 +24,7 @@
                         <tr>
                             {{-- assign button --}}
                             <td>
-                                <a href="http://" class="btn btn-primary">
+                                <a href="{{ route('job.assignJobToTechnician' , $order->id) }}" class="btn btn-primary">
                                     <i class="bi bi-pen"></i>
                                 </a>
                             </td>

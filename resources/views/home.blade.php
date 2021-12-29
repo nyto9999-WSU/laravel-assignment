@@ -46,19 +46,19 @@
                 <div class="col-md-12 p-0 mt-2">
                     <div class="card">
                         <div class="card-header">
-                            Equipment Type (Unfinished)
+                            Equipment Type
                         </div>
                         <div id="type_chart" class=""></div>
                     </div>
                 </div>
 
-                {{-- Yearly Order --}}
+                {{-- monthly Order --}}
                 <div class="card mt-2" style="">
                     <div class="card-header">
-                        Yearly Order
+                        monthly Order
                     </div>
                     <ul class="list-group list-group-flush">
-                        <div class="list-group-item" id="yearly_order"></div>
+                        <div class="list-group-item" id="monthly_order"></div>
                     </ul>
                 </div>
 
@@ -146,7 +146,7 @@
     <script type="text/javascript">
         google.charts.load('current', {'packages':['corechart']});
         google.charts.setOnLoadCallback(todayJobs);
-        google.charts.setOnLoadCallback(yearlyOrder);
+        google.charts.setOnLoadCallback(monthlyOrder);
         google.charts.setOnLoadCallback(weeklyCompletedJob);
         google.charts.setOnLoadCallback(typeChart);
 
@@ -155,7 +155,7 @@
             var data = google.visualization.arrayToDataTable([
                 ['string', '', { role: 'style' }],
                 ['Angel',22, '#5F7C9E'],
-                ['Jay', 6, '#5F7C9E'],
+                ['Jay', 6, '#EB9E00'],
                 ['Lee', 5, '#5F7C9E'],
                 ['Chen', 4, '#5F7C9E'],
             ]);
@@ -206,8 +206,8 @@
             chart.draw(data, options);
         }
 
-        /* Yearly Order */
-        function yearlyOrder() {
+        /* monthly Order */
+        function monthlyOrder() {
             var data = new google.visualization.DataTable();
             data.addColumn('string', 'Months');
             data.addColumn('number', 'Jobs');
@@ -215,18 +215,11 @@
             data.addRows([
 
                 @php
-                    echo "['Jan', ".$months[0]."],";
-                    echo "['Feb', ".$months[1]."],";
-                    echo "['Mar', ".$months[2]."],";
-                    echo "['Apr', ".$months[3]."],";
-                    echo "['May', ".$months[4]."],";
-                    echo "['Jun', ".$months[5]."],";
-                    echo "['Jul', ".$months[6]."],";
-                    echo "['Aug', ".$months[7]."],";
-                    echo "['Sep', ".$months[8]."],";
-                    echo "['Oct', ".$months[9]."],";
-                    echo "['Nov', ".$months[10]."],";
-                    echo "['Dec', ".$months[11]."],";
+                    $months = array('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec');
+                    for($i = 0; $i < 12 ; $i++)
+                    {
+                        echo "['.$months[$i].', ".$monthlyOrders[$i]."],";
+                    }
                 @endphp
 
             ]);
@@ -243,18 +236,21 @@
                 backgroundColor: 'transparent',
             };
 
-            var chart = new google.visualization.LineChart(document.getElementById('yearly_order'));
+            var chart = new google.visualization.LineChart(document.getElementById('monthly_order'));
             chart.draw(data, options);
         }
 
         function typeChart() {
             var opacity = 'opacity: 0.4';
             var data = google.visualization.arrayToDataTable([
-                ['year', 'Ducted System', 'Package Unit', 'Watercool Unit', 'Mini VRF',
-                'Spilt System', 'Other', { role: 'style' } ],
-                ['2019', 16, 12, 21, 20, 6, 9, ''],
-                ['2020', 16, 22, 3, 2, 2, 9, ''],
-                ['2021', 28, 19, 29, 30, 12, 13, '']
+                ['year', 'Ducted System', 'Mini VRF', 'Package', 'Spilt System',
+                'Watercool Unit', 'Other', { role: 'style' } ],
+                @php
+                    for($y = 0; $y<3; $y++)
+                    {
+                        echo "[".$typeChart[$y*7].", ".$typeChart[$y*7+1].", ".$typeChart[$y*7+2].", ".$typeChart[$y*7+3].", ".$typeChart[$y*7+4].", ".$typeChart[$y*7+5].", ".$typeChart[$y*7+6].", ''],";
+                    }
+                @endphp
             ]);
             var options = {
                 legend: { position: 'top', maxLines: 3 },

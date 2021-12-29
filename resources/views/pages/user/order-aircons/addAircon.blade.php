@@ -15,8 +15,14 @@
                     <input type="text" name="model_number">
 
                     {{-- equipment_type --}}
-                    <label for="equipment_type">air-con type</label>
-                    <input type="text" name="equipment_type">
+                    <select class="" name="equipment_type">
+                        <option disabled selected value>Equipment Type</option>
+                        <option value="ducted system">Ducted System</option>
+                        <option value="package unit">package unit</option>
+                        <option value="watercool unit">watercool</option>
+                        <option value="mini VRF">mini VRF</option>
+                        <option value="spilt system">spilt system</option>
+                    </select>
 
                     {{-- other_type --}}
                     <label for="other_type">Other Type</label>

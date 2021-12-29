@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Aircon extends Model
 {
-    public $timestamps = false;
     use HasFactory;
     protected $guarded = [];
 

@@ -37,6 +37,7 @@ class AirConController extends Controller
      */
     public function store(Request $request, Order $order)
     {
+
         $order = Order::find($order->id);
 
         $attributes = $this->validateAirCon();
@@ -105,9 +106,11 @@ class AirConController extends Controller
             request()->merge(['equipment_type' => request()->other_type]);
         }
 
+
         return request()->validate([
             'model_number' => ['nullable'],
             'equipment_type' => ['nullable'],
+            'other_type' => ['nullable'],
             'issue' => ['nullable'],
         ]);
     }

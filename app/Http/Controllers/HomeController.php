@@ -9,6 +9,7 @@ use App\Models\Role;
 use App\Models\Order;
 use Carbon\Carbon;
 use Rappasoft\LaravelAuthenticationLog\Models\AuthenticationLog;
+
 class HomeController extends Controller
 {
     /**
@@ -29,36 +30,80 @@ class HomeController extends Controller
 
     public function index(Request $request)
     {
+        $currentYear = Carbon::now()->format('Y');
 
 
-        /* Order quantity yearly */
+        /* dashboard registered user role */
         $roles = Role::withCount('users')->get();
-        $months = array();
-        $year = Carbon::now()->format('Y');
-        for ($x = 1; $x <= 12; $x++) {
-            $count = Order::whereMonth('created_at', '=', $x)
-            ->whereYear('created_at', '=', $year)
-            ->count();
-            $months[] = $count;
+
+        /* dachboard equipment type chart */
+        $typeChart = $this->getTypeQuantity($currentYear);
+
+        /* dashbaord monthly order chart */
+        $monthlyOrders = $this->getMonthlyOrders($currentYear);
+
+        /* dashboard get user to call login history table's functions */
+        $users = User::all()->reverse();
+
+        /* dashboard login history log 2 */
+        $logs = $this->getLoginHistoryLog();
+
+        return view('home', compact('roles', 'monthlyOrders', 'users', 'logs', 'typeChart'));
+    }
+
+
+
+
+
+    protected function getTypeQuantity($currentYear)
+    {
+        $type = array('ducted system', 'mini VRF', 'package unit', 'spilt system', 'watercool unit');
+        $typeChart = array();
+
+        for ($y = $currentYear; $y >= $currentYear - 2; $y--) {
+            $typeChart[] = $y;
+
+            for ($x = 0; $x < 5; $x++) {
+                $typeCount = Aircon::whereYear('created_at', '=', $y)
+                    ->where('equipment_type', '=', $type[$x])
+                    ->count();
+                $typeChart[] = $typeCount;
+            }
+
+            $otherCount = Aircon::whereYear('created_at', '=', $y)
+                ->whereNotNull('other_type')
+                ->count();
+
+            $typeChart[] = $otherCount;
         }
 
-        /* Registered User Number */
-        $users = User::all();
-        $users = $users->reverse();
+        return $typeChart;
+    }
 
+    protected function getMonthlyOrders($currentYear)
+    {
+        $monthlyOrders = array();
+        for ($m = 1; $m <= 12; $m++) {
+            $count = Order::whereMonth('created_at', '=', $m)
+                ->whereYear('created_at', '=', $currentYear)
+                ->count();
+            $monthlyOrders[] = $count;
+        }
 
-        /* login history */
+        return $monthlyOrders;
+    }
+
+    protected function getLoginHistoryLog()
+    {
         $authLog = AuthenticationLog::all();
         $logs = array();
-        for($x = $authLog->count()-1; $x >= 1; $x--)
-        {
-            if($authLog[$x]->login_at != null)
-            {
+        for ($x = $authLog->count() - 1; $x >= 1; $x--) {
+            if ($authLog[$x]->login_at != null) {
                 $u = User::find($authLog[$x]->authenticatable_id);
-                $logs[] = 'Name: ' .$u->name. '    Log: ' .$authLog[$x]->login_at->toDateTimeString();
+                $logs[] = 'Name: ' . $u->name . '    Log: ' . $authLog[$x]->login_at->toDateTimeString();
             }
         }
 
-        return view('home', compact('roles', 'months', 'users', 'logs'));
+        return $logs;
     }
 }
