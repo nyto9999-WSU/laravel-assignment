@@ -29,17 +29,40 @@ class HomeController extends Controller
 
     public function index(Request $request)
     {
+        $currentYear = Carbon::now()->format('Y');
 
+        /* equipment type */
+        $type = array('ducted system', 'mini VRF', 'package unit', 'spilt system', 'watercool unit');
+        $typeChart = array();
+
+        for($y = $currentYear ; $y >= $currentYear-2 ; $y--)
+        {
+            $typeChart[] = $y;
+
+            for ($x = 0; $x < 5; $x++)
+            {
+                $typeCount = Aircon::whereYear('created_at', '=', $y)
+                                ->where('equipment_type', '=', $type[$x])
+                                ->count();
+                $typeChart[] = $typeCount;
+
+            }
+
+            $otherCount = Aircon::whereYear('created_at', '=', $y)
+                            ->whereNotNull('other_type')
+                            ->count();
+
+            $typeChart[] = $otherCount;
+        }
 
         /* Order quantity yearly */
         $roles = Role::withCount('users')->get();
-        $months = array();
-        $year = Carbon::now()->format('Y');
+        $monthlyOrders = array();
         for ($x = 1; $x <= 12; $x++) {
             $count = Order::whereMonth('created_at', '=', $x)
-            ->whereYear('created_at', '=', $year)
+            ->whereYear('created_at', '=', $currentYear)
             ->count();
-            $months[] = $count;
+            $monthlyOrders[] = $count;
         }
 
         /* Registered User Number */
@@ -59,6 +82,6 @@ class HomeController extends Controller
             }
         }
 
-        return view('home', compact('roles', 'months', 'users', 'logs'));
+        return view('home', compact('roles', 'monthlyOrders', 'users', 'logs', 'typeChart'));
     }
 }

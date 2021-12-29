@@ -17,7 +17,9 @@ class CreateAirconsTable extends Migration
             $table->id();
             $table->string('model_number')->nullable();
             $table->string('equipment_type')->nullable();
+            $table->string('other_type')->nullable();
             $table->string('issue')->nullable();
+            $table->timestamps();
         });
     }
 
