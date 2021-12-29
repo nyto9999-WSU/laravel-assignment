@@ -18,6 +18,8 @@ class OrderController extends Controller
      */
     public function index()
     {
+
+        dd(User::technicians()->get());
         if(auth()->user()->isAdmin())
         {
             $orders = Order::with('aircons', 'user')->get();

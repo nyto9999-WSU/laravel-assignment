@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
 
+        /* role */
         DB::table('roles')->insert([
             'name' => 'user'
         ]);
@@ -26,8 +27,26 @@ class DatabaseSeeder extends Seeder
             'name' => 'technician'
         ]);
 
+        /* user */
+        DB::table('users')->insert([
+            'name' => 'admin',
+            'email' =>'admin@gmail.com',
+            'role_id' => 2,
+            'password' => Hash::make('aaaa1111'),
+            'remember_token' => Str::random(10),
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
 
 
+        DB::table('users')->insert([
+            'name' => 'user',
+            'email' =>'user@gmail.com',
+            'role_id' => 1,
+            'password' => Hash::make('aaaa1111'),
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
 
 
     }

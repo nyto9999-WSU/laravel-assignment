@@ -9,7 +9,6 @@ use App\Models\Role;
 use App\Models\Order;
 use Carbon\Carbon;
 use Rappasoft\LaravelAuthenticationLog\Models\AuthenticationLog;
-
 class HomeController extends Controller
 {
     /**
@@ -28,8 +27,10 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
 
-    public function index()
+    public function index(Request $request)
     {
+
+
         /* Order quantity yearly */
         $roles = Role::withCount('users')->get();
         $months = array();
