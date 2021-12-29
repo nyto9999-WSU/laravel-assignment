@@ -80,5 +80,10 @@ class User extends Authenticatable
         return $this->morphOne(AuthenticationLog::class, 'authenticatable');
     }
 
+    public function scopeTechnicians($query)
+    {
+        $query->where('role_id', '=', '3');
+    }
+
 
 }

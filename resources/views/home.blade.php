@@ -21,7 +21,7 @@
                         </div>
                     </div>
 
-                    {{-- Weekly Completed Job --}}
+                    {{-- FIXME:Weekly Completed Job --}}
                     <div class="col-md-6 p-0">
                         <div class="card">
                             <div class="card-header">
@@ -31,7 +31,7 @@
                         </div>
                     </div>
 
-                    {{-- Today Jobs --}}
+                    {{-- FIXME:Today Jobs --}}
                     <div class="col-md-4 ps-2">
                         <div class="card">
                             <div class="card-header">
@@ -42,6 +42,26 @@
                     </div>
                 </div>
 
+                {{-- FIXME:Equipment type --}}
+                <div class="col-md-12 p-0 mt-2">
+                    <div class="card">
+                        <div class="card-header">
+                            Equipment Type (Unfinished)
+                        </div>
+                        <div id="type_chart" class=""></div>
+                    </div>
+                </div>
+
+                {{-- Yearly Order --}}
+                <div class="card mt-2" style="">
+                    <div class="card-header">
+                        Yearly Order
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <div class="list-group-item" id="yearly_order"></div>
+                    </ul>
+                </div>
+
                 {{-- Login history --}}
                 <div class="card mt-2" style="">
                     <div class="card-header d-flex justify-content-between align-items-center pe-2">
@@ -50,14 +70,11 @@
                         <form type="get" action="admin/role-permission-search">
                             <div class="input-group">
                                 <input type="search" class="form-control" name="query" placeholder="Recipient's username"
-                                    aria-label="Recipient's username" aria-describedby="button-addon2">
+                                aria-label="Recipient's username" aria-describedby="button-addon2">
                                 <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Button</button>
                             </div>
                         </form>
-
                     </div>
-
-                    {{-- login history --}}
                     <div style="width:100%;overflow:auto; max-height:200px;">{{-- scroll bar based on max-height --}}
                         <table class="table">
                             <th>Name</th>
@@ -72,31 +89,26 @@
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->getRole() }}</td>
                                     <td>{{ $user->lastSuccessfulLoginAt() }}</td>
-                                    {{-- <td><button type="button" class="btn btn-lg btn-danger" data-toggle="popover" title="Popover title" data-bs-content="And here's some amazing content. It's very engaging. Right?">Click to toggle popover</button></td> --}}
 
+                                    @if (empty($user->previousLoginAt()))
+                                    <td>N/A</td>
+                                    @else
                                     <td>{{ $user->previousLoginAt() }}</td>
+                                    @endif
+                                    {{-- <td><button type="button" class="btn btn-lg btn-danger" data-toggle="popover" title="Popover title" data-bs-content="And here's some amazing content. It's very engaging. Right?">Click to toggle popover</button></td> --}}
                                     <td>{{ $user->lastSuccessfulLoginIp() }}</td>
 
                                 </tr>
-                            @endif
+                                @endif
 
-                            @empty
+                                @empty
 
-                            @endforelse
-
-                        </table>
+                                @endforelse
+                            </table>
+                        </div>
                     </div>
                 </div>
 
-                {{-- Yearly Order --}}
-                <div class="card mt-2" style="">
-                    <div class="card-header">
-                        Yearly Order
-                    </div>
-                    <ul class="list-group list-group-flush">
-                      <div class="list-group-item" id="yearly_order"></div>
-                    </ul>
-                </div>
 
                 {{-- FIXME: --}}
                 <div class="card mt-2" style="width: 18rem;">
@@ -113,6 +125,7 @@
                         @endforelse
                     </ul>
                 </div>
+
             </div>
         </div>
     </div>
@@ -135,15 +148,16 @@
         google.charts.setOnLoadCallback(todayJobs);
         google.charts.setOnLoadCallback(yearlyOrder);
         google.charts.setOnLoadCallback(weeklyCompletedJob);
+        google.charts.setOnLoadCallback(typeChart);
 
         /* Weekly Completed Job */
         function weeklyCompletedJob() {
             var data = google.visualization.arrayToDataTable([
                 ['string', '', { role: 'style' }],
-                ['Angel',22, '#1772B0'],
-                ['Jay', 6, '#1772B0'],
-                ['Lee', 5, '#1772B0'],
-                ['Chen', 4, '#1772B0'],
+                ['Angel',22, '#5F7C9E'],
+                ['Jay', 6, '#5F7C9E'],
+                ['Lee', 5, '#5F7C9E'],
+                ['Chen', 4, '#5F7C9E'],
             ]);
 
             var options = {
@@ -182,7 +196,7 @@
 
             var options = {
                 title: 'Job left: 30',
-                colors : ['#02992C', 'FF4F4F'],
+                colors : ['#EB9E00', '5F7C9E'],
                 pieHole: 0.4,
                 pieSliceText: 'none',
             };
@@ -230,6 +244,26 @@
             };
 
             var chart = new google.visualization.LineChart(document.getElementById('yearly_order'));
+            chart.draw(data, options);
+        }
+
+        function typeChart() {
+            var opacity = 'opacity: 0.4';
+            var data = google.visualization.arrayToDataTable([
+                ['year', 'Ducted System', 'Package Unit', 'Watercool Unit', 'Mini VRF',
+                'Spilt System', 'Other', { role: 'style' } ],
+                ['2019', 16, 12, 21, 20, 6, 9, ''],
+                ['2020', 16, 22, 3, 2, 2, 9, ''],
+                ['2021', 28, 19, 29, 30, 12, 13, '']
+            ]);
+            var options = {
+                legend: { position: 'top', maxLines: 3 },
+                bar: { groupWidth: '85%' },
+                isStacked: true,
+
+            };
+
+            var chart = new google.visualization.BarChart(document.getElementById('type_chart'));
             chart.draw(data, options);
         }
     </script>
