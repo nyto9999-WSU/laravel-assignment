@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\User;
+use App\Models\Job;
 use Illuminate\Http\Request;
-
+use DB;
 class JobController extends Controller
 {
 
@@ -17,14 +18,6 @@ class JobController extends Controller
     public function index()
     {
 
-    }
-
-    public function assignJobToTechnician($id)
-    {
-        $order = Order::find($id);
-        $technicians = User::technicians()->get();
-
-        return view('pages.admin.job.assignJobToTechnician', compact('order', 'technicians'));
     }
 
     /**
@@ -45,19 +38,11 @@ class JobController extends Controller
      */
     public function store(Request $request, Order $order)
     {
-        //FIXME: two user_id in order table
-        $t = User::technicians()->where('id', '=', 3)->get();
-        $technician = $t[0];
-        $order->technicians()->create([
-            'id' => $technician->id,
-            'name' => $technician->name,
-            'email' => $technician->email,
-            'password' => $technician->password,
-            'created_at' => $technician->created_at,
-            'updated_at' => $technician->updated_at,
-            'role_id' => $technician->role_id,
-        ]);
 
+        $order->update(["status" =>  'assigned']);
+        $attributes = $this->validateAssignment($order);
+        Job::create($attributes);
+        return (new OrderController)->orderAssigned();
 
     }
 
@@ -104,5 +89,23 @@ class JobController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    protected function validateAssignment($order)
+    {
+
+        $attributes = request()->validate([
+            'id' => ['nullable'],
+            'start_date' => ['nullable'],
+        ]);
+
+        return $data = [
+            'order_id' => $order->id,
+            'user_id' => $attributes['id'],
+            'start_date' => $attributes['start_date'],
+            'created_at' => now(),
+            'updated_at' => now(),
+        ];
+
     }
 }

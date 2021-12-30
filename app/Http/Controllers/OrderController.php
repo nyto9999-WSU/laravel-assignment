@@ -22,6 +22,7 @@ class OrderController extends Controller
         if(auth()->user()->isAdmin())
         {
             $orders = Order::with('aircons', 'user')->get();
+
             return view('pages.admin.order.currentOrder', compact('orders'));
         }
 
@@ -31,6 +32,63 @@ class OrderController extends Controller
                         ->where('user_id', auth()->id())
                         ->get();
         return view('pages.user.order.currentOrder', compact('orders'));
+    }
+
+    public function orderRequested()
+    {
+        if(auth()->user()->isAdmin())
+        {
+            $orders = Order::with('aircons', 'user')
+                            ->where('status', '=', 'Booked')
+                            ->get();
+
+            return view('pages.admin.order.currentOrder', compact('orders'));
+        }
+    }
+
+    public function actions(Order $order)
+    {
+        switch ($order->status) {
+
+            case 'Booked':
+                $technicians = User::technicians()->get();
+                return view('pages.admin.job.assignJobToTechnician', compact('order', 'technicians'));
+
+            case 'assigned':
+                $order->update(["status" =>  'completed']);
+                return back();
+
+            case 'completed':
+                $order->delete();
+                return back();
+
+            default:
+                break;
+        }
+    }
+
+    public function orderAssigned()
+    {
+        if(auth()->user()->isAdmin())
+        {
+            $orders = Order::with('aircons', 'user')
+                            ->where('status', '=', 'assigned')
+                            ->get();
+
+            return view('pages.admin.order.assignedOrder', compact('orders'));
+        }
+    }
+
+    public function orderCompleted()
+    {
+        if(auth()->user()->isAdmin())
+        {
+            $orders = Order::with('aircons', 'user')
+                            ->where('status', '=', 'completed')
+                            ->get();
+
+            return view('pages.admin.order.completedOrder', compact('orders'));
+        }
     }
 
 

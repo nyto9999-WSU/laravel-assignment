@@ -59,10 +59,8 @@ class User extends Authenticatable
 
     public function jobs()
     {
-        return $this->belongsToMany(User::class, 'order_id', 'id');
+        return $this->hasbelongsToMany(Order::class);
     }
-
-
 
 
     public function isAdmin()
