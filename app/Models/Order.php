@@ -22,7 +22,7 @@ class Order extends Model
 
     public function technicians()
     {
-        return $this->belongsToMany(User::class, 'user_id', 'id');
+        return $this->belongsToMany(User::class);
     }
 
 

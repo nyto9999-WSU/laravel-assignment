@@ -101,20 +101,40 @@
                     </tr>
 
                 </table>
+                <form action="" method="post">
+                    {{-- techician_id --}}
+
+                </form>
+
 
                 <form action="{{ route('job.store', $order) }}" method="post">
                     @csrf
-                        <label for="date">start date</label>
-                        <input type="text" name="date">
-                        <label for="time">start time</label>
-                        <input type="text" name="time">
+
+                    {{-- start --}}
+                    <label for="start_date">Start Date</label>
+                    <input type="text" class="" id="datepicker" name="start_date">
+
+                    {{-- end --}}
+                    {{-- <label for="end">End Date</label>
+                    <input type="text" class="" id="datepicker" name="end"> --}}
+
+                    @forelse ($technicians as $t)
+                        <h1>{{ $t->id }}</h1>
+                    @empty
+
+                    @endforelse
+
+                    {{-- FIXME:technicain status --}}
+                    <h1>fix technician status</h1>
+                    <select class="" name="id">
+                        <option disabled selected value>Technician</option>
                         @forelse ($technicians as $t)
-                            <h1>{{ $t->name }}</h1>
+                            <option value="{{ $t->id }}">{{ $t->name }}</option>
                         @empty
 
                         @endforelse
-
-                        <button type="submit">submit</button>
+                    </select>
+                    <button type="submit">submit</button>
                 </form>
 
             </div>
@@ -123,3 +143,20 @@
     </div>
     </div>
 @endsection
+
+@push('css')
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+@endpush
+
+@push('js')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+    <script>
+        //在後端改日期匹配mysql格式FIXME:
+        $('#datepicker').datepicker("setDate", new Date());
+        $("#datepicker").datepicker({
+            dateFormat: "yy-mm-dd",
+            minDate: '0'
+        });
+    </script>
+@endpush

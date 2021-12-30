@@ -11,13 +11,13 @@
                 @auth
                     @if (Auth::user()->isAdmin())
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('order.index') }}">Requested Job</a>
+                            <a class="nav-link" href="{{ route('order.requested') }}">Requested Job</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('order.index') }}">Assigned Job(not yet)</a>
+                            <a class="nav-link" href="{{ route('order.assigned') }}">Assigned Job</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('order.index') }}">Completed Job(not yet)</a>
+                            <a class="nav-link" href="{{ route('order.completed') }}">Completed Job</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('rolePermission.index') }}">Role & Permission</a>

@@ -25,6 +25,11 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 /* Order */
+Route::get('order/requested', [OrderController::class, 'orderRequested'])->name('order.requested');
+Route::get('order/assigned', [OrderController::class, 'orderAssigned'])->name('order.assigned');
+Route::get('order/completed', [OrderController::class, 'orderCompleted'])->name('order.completed');
+Route::get('order/{order}/actions', [OrderController::class, 'actions'])->name('order.actions');
+
 Route::resource('order', OrderController::class);
 
 /* Aircon */
@@ -34,7 +39,6 @@ Route::delete('/aircon/delete/{aircon}/order{order}', [AirConController::class, 
 Route::resource('aircon', AirConController::class)->except(['store', 'show', 'destroy']);
 
 /* Job */
-Route::get('job/{id}/order', [JobController::class, 'assignJobToTechnician'])->name('job.assignJobToTechnician');
 Route::post('/job/{order}/order', [JobController::class, 'store'])->name('job.store');
 Route::resource('job', JobController::class)->except(['store']);
 

@@ -13,16 +13,22 @@ class CreateJobsTable extends Migration
      */
     public function up()
     {
-        Schema::create('job', function (Blueprint $table) {
+        Schema::create('jobs', function (Blueprint $table) {
             $table->id();
+
+            $table->date('start_date')->nullable();
+            $table->date('start_time')->nullable();
+            $table->date('end')->nullable();
             $table->foreignId('order_id')
                     ->constrained()
                     ->onDelete('cascade');
 
+            /* techician id */
             $table->foreignId('user_id')
                     ->constrained()
                     ->onDelete('cascade');
             $table->timestamps();
+
         });
     }
 

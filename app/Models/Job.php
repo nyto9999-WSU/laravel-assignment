@@ -10,4 +10,5 @@ class Job extends Model
     use HasFactory;
     protected $guarded = [];
 
+
 }
