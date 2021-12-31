@@ -16,9 +16,8 @@ class CreateJobsTable extends Migration
         Schema::create('jobs', function (Blueprint $table) {
             $table->id();
 
-            $table->date('start_date')->nullable();
-            $table->date('start_time')->nullable();
-            $table->date('end')->nullable();
+
+
             $table->foreignId('order_id')
                     ->constrained()
                     ->onDelete('cascade');

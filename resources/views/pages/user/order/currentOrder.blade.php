@@ -5,68 +5,75 @@
         <h1>Role: {{ Auth::user()->getRole() }}</h1>
         <h1>currentOrder.blade</h1>
         <div class="row justify-content-center">
-                <table class="table">
+            <table class="table">
+                <tr>
+                    <th>Order</th>
+                    <th style="">Model</th>
+                    <th style="">show</th>
+                    <th style="width: 13.2%">Requested Date</th>
+                    <th style="width: 12.2%">Assigned Date</th>
+                    <th style="width: 12.2%">Completed Date</th>
+                    <th>Technician</th>
+                    <th>Status</th>
+                    <th>Cancel</th>
+                </tr>
+                @forelse ($orders as $order)
                     <tr>
-                        <th>Order</th>
-                        <th style="">Model</th>
-                        <th style="">show</th>
-                        <th style="width: 13.2%">Requested Date</th>
-                        <th style="width: 12.2%">Assigned Date</th>
-                        <th style="width: 12.2%">Completed Date</th>
-                        <th>Technician</th>
-                        <th>Status</th>
-                        <th>Cancel</th>
-                    </tr>
-                    @forelse ($orders as $order)
-                        <tr>
-                            <td>
-                                <a href="{{ route('order.show', $order) }}">{{ $order->id }}</a>
-                            </td>
-                            <td>
-                                @forelse ($order->aircons as $aircon)
-                                    <li>
-                                        <a href={{ route('aircon.show', [$aircon, $order]) }}>
-                                            {{ $aircon->model_number }}
-                                        </a>
-                                    </li>
-                                @empty
-                                    N/A
-                                @endforelse
-                                {{-- TODO:show all aircon details --}}
-                                <a href="">all</a>
-                            </td>
-                            <td>
-                                <span class="position-relative">
-                                    all models info
-                                    <span class="ms-3 position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                        {{ $order->aircons->count() }}
-                                    </span>
+                        <td>
+                            <a href="{{ route('order.show', $order) }}">{{ $order->id }}</a>
+                        </td>
+                        <td>
+                            @forelse ($order->aircons as $aircon)
+                                <li>
+                                    <a href={{ route('aircon.show', [$aircon, $order]) }}>
+                                        {{ $aircon->model_number }}
+                                    </a>
+                                </li>
+                            @empty
+                                N/A
+                            @endforelse
+                            {{-- TODO:show all aircon details --}}
+                            <a href="">all</a>
+                        </td>
+                        <td>
+                            <span class="position-relative">
+                                all models info
+                                <span
+                                    class="ms-3 position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    {{ $order->aircons->count() }}
                                 </span>
-                            </td>
+                            </span>
+                        </td>
 
-                            {{-- Requested date --}}
-                            <td>{{ $order->prefer_date }}</td>
-                            {{-- Assigned date --}}
-                            <td>N/A</td>
-                            {{-- Completed date --}}
-                            <td>N/A</td>
-                            {{-- Technician --}}
-                            <td>N/A</td>
-                            <td>{{ $order->status }}</td>
-                            <td>
-                                <form action="{{ route('order.destroy', $order) }}" method="post">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit">order.destory</button>
-                                </form>
-                            </td>
-                        </tr>
-                    @empty
-                        <h1>No Data</h1>
-                    @endforelse
-                </table>
-            </div>
+                        {{-- Requested date --}}
+                        <td>{{ $order->prefer_date }}</td>
+
+                        {{-- Assigned date --}}
+                        {!! !empty($order->assigned_date) ? '<td>$order->assigned_date</td>' : '<td>N/A</td>' !!}
+
+                        {{-- Completed date --}}
+                        {!! !empty($order->completed_date) ? '<td>$order->completed_date</td>' : '<td>N/A</td>' !!}
+
+                        {{-- Technician --}}
+                        {!! !empty($order->job->user_id) ? '<td>$order->job->user_id</td>' : '<td>N/A</td>' !!}
+
+                        {{-- Status --}}
+                        <td>{{ $order->status }}</td>
+
+                        <td>
+                            <form action="{{ route('order.destroy', $order) }}" method="post">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit">order.destory</button>
+                            </form>
+                        </td>
+                    </tr>
+                @empty
+                    <h1>No Data</h1>
+                @endforelse
+            </table>
         </div>
+    </div>
     </div>
     </div>
     </div>
