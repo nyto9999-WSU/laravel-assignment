@@ -28,13 +28,15 @@ class CreateOrdersTable extends Migration
             $table->date('prefer_date')->nullable();
             $table->string('prefer_time')->nullable();
 
-            $table->date('assigned_date')->nullable();
-            $table->string('assigned_time')->nullable();
-            $table->date('completed_date')->nullable();
+            $table->date('job_start_date')->nullable();
+            $table->string('job_start_time')->nullable();
+            $table->date('job_end_date')->nullable();
 
             $table->string('domestic_commercial')->nullable();
             $table->string('extra_note')->nullable();
             $table->string('status')->default('Booked');
+
+            $table->dateTime('assigned_at')->nullable();
             $table->timestamps();
 
             $table->foreignId('user_id')

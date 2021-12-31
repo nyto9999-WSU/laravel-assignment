@@ -30,7 +30,7 @@ class HomeController extends Controller
 
     public function index(Request $request)
     {
-        $currentYear = Carbon::now()->format('Y');
+        $currentYear = now()->format('Y');
 
 
         /* dashboard registered user role */
@@ -48,7 +48,9 @@ class HomeController extends Controller
         /* dashboard login history log 2 */
         $logs = $this->getLoginHistoryLog();
 
-        return view('home', compact('roles', 'monthlyOrders', 'users', 'logs', 'typeChart'));
+        $orderAssignQuantity = $this->getOrderAssigneQuantity();
+
+        return view('home', compact('roles', 'monthlyOrders', 'users', 'logs', 'typeChart', 'orderAssignQuantity'));
     }
 
 
@@ -105,5 +107,19 @@ class HomeController extends Controller
         }
 
         return $logs;
+    }
+
+    protected function getOrderAssigneQuantity()
+    {   $orderAssignedRate = array();
+
+        /* FIXME: au date format */
+
+        $orderAssignedRate[] = Order::whereNotNull('created_at')
+                                    ->whereDate('created_at',  now()->format('y/m/d'))
+                                    ->count();
+
+        $orderAssignedRate[] = Order::whereDate('assigned_at', now()->format('y/m/d'))
+                                    ->count();
+        return $orderAssignedRate;
     }
 }

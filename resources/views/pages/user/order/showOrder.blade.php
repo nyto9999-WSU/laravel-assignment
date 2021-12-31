@@ -21,7 +21,8 @@
                         <td>
                             @forelse ($order->aircons as $aircon)
                                 <li>
-                                    <a href="{{ route('aircon.show', [$aircon, $order]) }}">{{ $aircon->model_number }}</a>
+                                    <a
+                                        href="{{ route('aircon.show', [$aircon, $order]) }}">{{ $aircon->model_number }}</a>
                                 </li>
                             @empty
 
@@ -88,6 +89,28 @@
                         <td>{{ $order->postcode }}</td>
                     </tr>
 
+                    <tr>
+                        <td>Start Date</td>
+                        <td>
+                            @if (!empty($order->job_start_date))
+                                {{ $order->job_start_date }}
+                            @else
+                                N/A
+                            @endif
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>End Date</td>
+                        <td>
+                            @if (!empty($order->job_end_date))
+                                {{ $order->job_end_date }}
+                            @else
+                                N/A
+                            @endif
+                        </td>
+                    </tr>
+
                     {{-- created_at --}}
                     <tr>
                         <td>Requested Date</td>
@@ -95,26 +118,17 @@
                     </tr>
 
                     <tr>
-                        <td>Assigned Date</td>
+                        <td>Assigned at</td>
                         <td>
-                            @if(!empty($order->assigned_date))
-                                {{ $order->assigned_date }}
+                            @if (!empty($order->assigned_at))
+                                {{ $order->assigned_at }}
                             @else
                                 N/A
                             @endif
                         </td>
                     </tr>
 
-                    <tr>
-                        <td>Completed Date</td>
-                        <td>
-                            @if(!empty($order->completed_date))
-                                {{ $order->completed_date }}
-                            @else
-                                N/A
-                            @endif
-                        </td>
-                    </tr>
+
 
                 </table>
 

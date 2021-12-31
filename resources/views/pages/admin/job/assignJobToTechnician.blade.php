@@ -112,8 +112,8 @@
                     @csrf
 
                     {{-- start --}}
-                    <label for="assigned_date">Start Date</label>
-                    <input type="text" class="" id="datepicker" name="assigned_date">
+                    <label for="job_start_date">Start Date</label>
+                    <input type="text" class="" id="datepicker" name="job_start_date">
 
                     <select class="tech_id" name="tech_id">
                         <option disabled selected value>Technician</option>
@@ -123,6 +123,7 @@
 
                         @endforelse
                     </select>
+
                     <button type="submit">submit</button>
                 </form>
 

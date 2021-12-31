@@ -52,7 +52,7 @@ class OrderController extends Controller
 
                 $order->update([
                     "status" =>  'completed',
-                    "completed_date" => now()
+                    "job_end_date" => now()
                 ]);
                 $technician->update(["tech_available" => 1]);
                 return back();

@@ -114,12 +114,13 @@ class JobController extends Controller
     {
 
         $attributes = request()->validate([
-            'assigned_date' => ['nullable'],
+            'job_start_date' => ['nullable'],
         ]);
 
         return $data = [
             "status" =>  'assigned',
-            'assigned_date' => $attributes["assigned_date"]
+            'job_start_date' => $attributes["job_start_date"],
+            'assigned_at' => now(),
         ];
 
     }

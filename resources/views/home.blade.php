@@ -150,7 +150,7 @@
         google.charts.setOnLoadCallback(weeklyCompletedJob);
         google.charts.setOnLoadCallback(typeChart);
 
-        /* Weekly Completed Job */
+        /* FIXME: Weekly Completed Job */
         function weeklyCompletedJob() {
             var data = google.visualization.arrayToDataTable([
                 ['string', '', { role: 'style' }],
@@ -186,16 +186,21 @@
             chart.draw(data, options);
         }
 
-        /* Registered User */
+        /* FIXME:Registered User */
         function todayJobs() {
             var data = google.visualization.arrayToDataTable([
                     ['Job', 'Count'],
-                    ['Assigned',     11],
-                    ['UnAssigned',    30],
+                    /* orderAssignQuantity */
+                    @php
+                        echo "['UnAssigned', ".$orderAssignQuantity[0]."],";
+                        echo "['Assigned', ".$orderAssignQuantity[1]."],";
+                    @endphp
             ]);
 
             var options = {
-                title: 'Job left: 30',
+                title: @php
+                        echo $orderAssignQuantity[0];
+                    @endphp,
                 colors : ['#EB9E00', '5F7C9E'],
                 pieHole: 0.4,
                 pieSliceText: 'none',

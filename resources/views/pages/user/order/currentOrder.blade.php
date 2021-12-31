@@ -11,8 +11,8 @@
                     <th style="">Model</th>
                     <th style="">show</th>
                     <th style="width: 13.2%">Requested Date</th>
-                    <th style="width: 12.2%">Assigned Date</th>
-                    <th style="width: 12.2%">Completed Date</th>
+                    <th style="width: 12.2%">Start Date</th>
+                    <th style="width: 12.2%">End Date</th>
                     <th>Technician</th>
                     <th>Status</th>
                     <th>Cancel</th>
@@ -48,19 +48,19 @@
                         {{-- Requested date --}}
                         <td>{{ $order->prefer_date }}</td>
 
-                        {{-- Assigned date --}}
+                        {{-- job_start_date--}}
                         <td>
-                            @if(!empty($order->assigned_date))
-                            {{ $order->assigned_date }}
+                            @if(!empty($order->job_start_date))
+                            {{ $order->job_start_date }}
                             @else
                             N/A
                             @endif
                         </td>
 
-                        {{-- Completed date --}}
+                        {{-- job_end_date --}}
                         <td>
-                            @if(!empty($order->completed_date))
-                            {{ $order->completed_date }}
+                            @if(!empty($order->job_end_date))
+                            {{ $order->job_end_date }}
                             @else
                             N/A
                             @endif

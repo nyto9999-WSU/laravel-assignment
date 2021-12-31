@@ -9,19 +9,20 @@
                 <table class="table">
                     @forelse ($orders as $order)
                         <tr>
+                            <th>Delete</th>
                             <th>Order</th>
                             <th>Model</th>
                             <th>No. of unit</th>
                             <th>Customer</th>
                             <th>Unit Address</th>
                             <th>Phone</th>
-                            <th>Assigned Date</th>
-                            <th>Completed Date</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
                             <th>Service Type</th>
                             <th>Technician</th>
                         </tr>
                         <tr>
-                            {{-- assign button --}}
+                            {{-- action button --}}
                             <td>
                                 <a href="{{ route('order.actions' , $order) }}" class="btn btn-primary">
                                     <i class="bi bi-trash"></i>
@@ -32,6 +33,7 @@
                             <td>
                                 <a href={{ route('order.show', $order->id) }}>{{ $order->id }}</a>
                             </td>
+
 
                             {{-- model_number --}}
                             <td>
@@ -60,14 +62,18 @@
                             {{-- mobile_number --}}
                             <td>{{ $order->mobile_number }}</td>
 
-                            {{-- created_at --}}
-                            <td>{{ $order->created_at }}</td>
+                            {{-- job_start_date --}}
+                            <td>{{ $order->job_start_date }}</td>
+
+                            {{-- job_end_date --}}
+                            <td>{{ $order->job_end_date }}</td>
+
 
                             {{-- prefer_date --}}
                             <td>{{ $order->domestic_commercial }}</td>
 
-                            {{-- extra_note --}}
-                            <td>{{ $order->extra_note }}</td>
+                            {{-- FIXME: technician --}}
+                            <td>{{ $order->job->user_id }}</td>
                         </tr>
                     @empty
                         <h1>no data</h1>
