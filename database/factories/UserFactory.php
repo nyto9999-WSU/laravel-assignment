@@ -15,10 +15,18 @@ class UserFactory extends Factory
      */
     public function definition()
     {
+        $rand = rand(1,3);
+        $available = 0;
+        if($rand == 3)
+        {
+            $available = 1;
+        }
+
         return [
             'name' => $this->faker->name(),
             'email' => $this->faker->unique()->safeEmail(),
-            'role_id' => rand(1,3),
+            'role_id' => $rand,
+            'tech_available' => $available,
             'email_verified_at' => now(),
             'password' => Hash::make('aaaa1111'),
             'remember_token' => Str::random(10),

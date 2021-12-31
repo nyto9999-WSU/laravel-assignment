@@ -5,6 +5,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\AirConController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\RolePermissionController;
+use App\Http\Controllers\TechnicianController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -47,4 +48,5 @@ Route::get('role-permission', [RolePermissionController::class, 'index'])->name(
 Route::patch('role-permission/{user}/edit', [RolePermissionController::class, 'update'])->name('rolePermission.update');
 Route::delete('role-permission/{user}/destroy', [RolePermissionController::class, 'destroy'])->name('rolePermission.destroy');
 
-
+/* Technician */
+Route::resource('technician', TechnicianController::class);

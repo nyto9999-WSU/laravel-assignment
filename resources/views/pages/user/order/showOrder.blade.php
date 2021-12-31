@@ -35,10 +35,9 @@
                         <td>{{ $order->domestic_commercial }}</td>
                     </tr>
 
-                    {{-- FIXME: --}}
                     <tr>
                         <td>Technician</td>
-                        <td>Unfinished</td>
+                        <td>N/A</td>
                     </tr>
 
                     {{-- extra_note --}}
@@ -95,16 +94,14 @@
                         <td>{{ $order->created_at }}</td>
                     </tr>
 
-                    {{-- FIXME: --}}
                     <tr>
                         <td>Assigned Date</td>
-                        <td>Unfinished</td>
+                        {!! !empty($order->assigned_date) ? '<td>$order->assigned_date</td>' : '<td>N/A</td>' !!}
                     </tr>
 
-                    {{-- FIXME:Completed Date --}}
                     <tr>
                         <td>Completed Date</td>
-                        <td>Unfinished</td>
+                        {!! !empty($order->completed_date) ? '<td>$order->completed_date</td>' : '<td>N/A</td>' !!}
                     </tr>
 
                 </table>

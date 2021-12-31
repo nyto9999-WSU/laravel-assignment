@@ -27,13 +27,20 @@ class CreateOrdersTable extends Migration
             $table->string('postcode')->nullable();
             $table->date('prefer_date')->nullable();
             $table->string('prefer_time')->nullable();
+
+            $table->date('assigned_date')->nullable();
+            $table->string('assigned_time')->nullable();
+            $table->date('completed_date')->nullable();
+
             $table->string('domestic_commercial')->nullable();
             $table->string('extra_note')->nullable();
             $table->string('status')->default('Booked');
             $table->timestamps();
 
             $table->foreignId('user_id')
-                    ->constrained();
+                    ->constrained()
+                    ->onDelete('cascade');
+
         });
 
     }

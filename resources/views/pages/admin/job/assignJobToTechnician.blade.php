@@ -20,8 +20,9 @@
                         <td>
                             @forelse ($order->aircons as $aircon)
                                 <li>
-                                    <a
-                                        href="{{ route('aircon.show', [$aircon, $order]) }}">{{ $aircon->model_number }}</a>
+                                    <a href="{{ route('aircon.show', [$aircon, $order]) }}">
+                                        {{ $aircon->model_number }}
+                                    </a>
                                 </li>
                             @empty
 
@@ -111,12 +112,8 @@
                     @csrf
 
                     {{-- start --}}
-                    <label for="start_date">Start Date</label>
-                    <input type="text" class="" id="datepicker" name="start_date">
-
-                    {{-- end --}}
-                    {{-- <label for="end">End Date</label>
-                    <input type="text" class="" id="datepicker" name="end"> --}}
+                    <label for="assigned_date">Start Date</label>
+                    <input type="text" class="" id="datepicker" name="assigned_date">
 
                     @forelse ($technicians as $t)
                         <h1>{{ $t->id }}</h1>
@@ -124,9 +121,7 @@
 
                     @endforelse
 
-                    {{-- FIXME:technicain status --}}
-                    <h1>fix technician status</h1>
-                    <select class="" name="id">
+                    <select class="tech_id" name="tech_id">
                         <option disabled selected value>Technician</option>
                         @forelse ($technicians as $t)
                             <option value="{{ $t->id }}">{{ $t->name }}</option>

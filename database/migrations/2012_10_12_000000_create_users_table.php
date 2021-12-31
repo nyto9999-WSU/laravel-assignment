@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+            $table->string('tech_available');
 
             $table->foreignId('role_id')
             ->constrained()

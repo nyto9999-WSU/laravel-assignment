@@ -30,20 +30,22 @@ class JobController extends Controller
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request, Order $order)
     {
-
-        $order->update(["status" =>  'assigned']);
         $attributes = $this->validateAssignment($order);
-        Job::create($attributes);
-        return (new OrderController)->orderAssigned();
+        $attributes2 = $this->validateOrder();
 
+        $order->job()->create($attributes);
+
+        $tech_id = $order->job->user_id;
+        $technician = User::find($tech_id);
+
+
+        $order->update($attributes2);
+
+        $technician->update(["tech_available" => 0]);
+
+        return (new OrderController)->orderRequested();
     }
 
     /**
@@ -95,16 +97,28 @@ class JobController extends Controller
     {
 
         $attributes = request()->validate([
-            'id' => ['nullable'],
-            'start_date' => ['nullable'],
+            'tech_id' => ['nullable'],
         ]);
 
         return $data = [
             'order_id' => $order->id,
-            'user_id' => $attributes['id'],
-            'start_date' => $attributes['start_date'],
+            'user_id' => $attributes['tech_id'],
             'created_at' => now(),
             'updated_at' => now(),
+        ];
+
+    }
+
+    protected function validateOrder()
+    {
+
+        $attributes = request()->validate([
+            'assigned_date' => ['nullable'],
+        ]);
+
+        return $data = [
+            "status" =>  'assigned',
+            'assigned_date' => $attributes["assigned_date"]
         ];
 
     }
