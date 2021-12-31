@@ -96,12 +96,24 @@
 
                     <tr>
                         <td>Assigned Date</td>
-                        {!! !empty($order->assigned_date) ? '<td>$order->assigned_date</td>' : '<td>N/A</td>' !!}
+                        <td>
+                            @if(!empty($order->assigned_date))
+                                {{ $order->assigned_date }}
+                            @else
+                                N/A
+                            @endif
+                        </td>
                     </tr>
 
                     <tr>
                         <td>Completed Date</td>
-                        {!! !empty($order->completed_date) ? '<td>$order->completed_date</td>' : '<td>N/A</td>' !!}
+                        <td>
+                            @if(!empty($order->completed_date))
+                                {{ $order->completed_date }}
+                            @else
+                                N/A
+                            @endif
+                        </td>
                     </tr>
 
                 </table>

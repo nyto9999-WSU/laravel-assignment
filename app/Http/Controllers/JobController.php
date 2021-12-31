@@ -32,6 +32,7 @@ class JobController extends Controller
 
     public function store(Request $request, Order $order)
     {
+
         $attributes = $this->validateAssignment($order);
         $attributes2 = $this->validateOrder();
 

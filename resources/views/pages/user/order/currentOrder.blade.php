@@ -49,13 +49,31 @@
                         <td>{{ $order->prefer_date }}</td>
 
                         {{-- Assigned date --}}
-                        {!! !empty($order->assigned_date) ? '<td>$order->assigned_date</td>' : '<td>N/A</td>' !!}
+                        <td>
+                            @if(!empty($order->assigned_date))
+                            {{ $order->assigned_date }}
+                            @else
+                            N/A
+                            @endif
+                        </td>
 
                         {{-- Completed date --}}
-                        {!! !empty($order->completed_date) ? '<td>$order->completed_date</td>' : '<td>N/A</td>' !!}
+                        <td>
+                            @if(!empty($order->completed_date))
+                            {{ $order->completed_date }}
+                            @else
+                            N/A
+                            @endif
+                        </td>
 
-                        {{-- Technician --}}
-                        {!! !empty($order->job->user_id) ? '<td>$order->job->user_id</td>' : '<td>N/A</td>' !!}
+                        {{-- Technician FIXME: #30:--}}
+                        <td>
+                            @if(!empty($order->job->user_id))
+                            {{ $order->job->user_id }}
+                            @else
+                            N/A
+                            @endif
+                        </td>
 
                         {{-- Status --}}
                         <td>{{ $order->status }}</td>
