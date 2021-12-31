@@ -115,12 +115,6 @@
                     <label for="assigned_date">Start Date</label>
                     <input type="text" class="" id="datepicker" name="assigned_date">
 
-                    @forelse ($technicians as $t)
-                        <h1>{{ $t->id }}</h1>
-                    @empty
-
-                    @endforelse
-
                     <select class="tech_id" name="tech_id">
                         <option disabled selected value>Technician</option>
                         @forelse ($technicians as $t)
