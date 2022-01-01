@@ -153,11 +153,16 @@
         /* FIXME: Weekly Completed Job */
         function weeklyCompletedJob() {
             var data = google.visualization.arrayToDataTable([
-                ['string', '', { role: 'style' }],
-                ['Angel',22, '#5F7C9E'],
-                ['Jay', 6, '#EB9E00'],
-                ['Lee', 5, '#5F7C9E'],
-                ['Chen', 4, '#5F7C9E'],
+                ['name', 'number', { role: 'style' }],
+
+                @php
+                    for($i = 0; $i < 4 ; $i++)
+                    {
+                        echo "['$weeklyName[$i]' , ".$weeklyCount[$i].", '5F7C9E'],";
+                    }
+                @endphp
+
+
             ]);
 
             var options = {

@@ -73,7 +73,7 @@
                             <td>{{ $order->domestic_commercial }}</td>
 
                             {{-- FIXME: technician --}}
-                            <td>{{ $order->job->user_id }}</td>
+                            <td>{{ optional($order->job)->user_id }}</td>
                         </tr>
                     @empty
                         <h1>no data</h1>

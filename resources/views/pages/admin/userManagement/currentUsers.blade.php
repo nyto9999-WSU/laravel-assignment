@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <h1>Role: {{ Auth::user()->getRole() }}</h1>
-        <h1>rolePermission.blade(admin)</h1>
+        <h1>currentUser.blade(admin)</h1>
         <div class="row justify-content-center">
             <div class="col-md-8">
 
@@ -16,17 +16,37 @@
                     </div>
                 </form>
 
+                <div class="row mb-2">
+                    <div class="col-md-3">
+                        <a href="{{ route('user.index')}}">All</a>
+                    </div>
+                    <div class="col-md-3">
+                        <a href="{{ route('pages.admins') }}">Admins</a>
+                    </div>
+                    <div class="col-md-3">
+                        <a href="{{ route('pages.technicians') }}">Technicians</a>
+                    </div>
+                    <div class="col-md-3">
+                        <a href="{{ route('pages.users') }}">Users</a>
+                    </div>
+                </div>
+
                 {{-- Users table --}}
                 <table class="table table-striped">
                     <th scope="col">ID</th>
                     <th scope="col">Name</th>
                     <th scope="col">Role</th>
+                    <th scope="col">Edit</th>
+                    <th scope="col">Delete</th>
                     @forelse ($users as $user)
                         <tr>
                             <th scope="row">{{ $user->id }}</th>
-                            <td>{{ $user->name }}</td>
                             <td>
-                                <form action="{{ route('rolePermission.update', $user) }}" method="POST">
+                                <a href="{{ route('user.show', $user) }}">{{ $user->name }}</a>
+                            </td>
+
+                            <td>
+                                <form action="{{ route('user.updateRole', $user) }}" method="POST">
                                     @method('PATCH')
                                     @csrf
 
@@ -37,8 +57,17 @@
                                         <option value="admin">Admin</option>
                                     </select>
 
-                                    <button class="btn btn-danger" type="submit" name=" action"
-                                        value="delete">Delete</button>
+                                </form>
+                            </td>
+
+                            <td><a href="{{ route('user.edit', $user) }}" class="btn btn-primary"><i class="bi bi-pencil-square"></i></i></a>
+                            </td>
+
+                            <td>
+                                <form action="{{ route('user.destroy', $user->id) }}" method="post">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-primary"><i class="bi bi-trash"></i></button>
                                 </form>
                             </td>
                         </tr>
