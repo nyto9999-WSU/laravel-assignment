@@ -33,20 +33,16 @@ class JobController extends Controller
     public function store(Request $request, Order $order)
     {
 
-        $attributes = $this->validateAssignment($order);
-        $attributes2 = $this->validateOrder();
+        $jobAttributes = $this->validateJob($order);
+        $orderAttributes = $this->validateOrder();
 
-        $order->job()->create($attributes);
+        $order->job()->create($jobAttributes);
+        $order->update($orderAttributes);
 
-        $tech_id = $order->job->user_id;
-        $technician = User::find($tech_id);
-
-
-        $order->update($attributes2);
-
+        $technician = $order->getTechnician();
         $technician->update(["tech_available" => 0]);
 
-        return (new OrderController)->orderRequested();
+        return (new PagesController)->orderRequested();
     }
 
     /**
@@ -94,7 +90,7 @@ class JobController extends Controller
         //
     }
 
-    protected function validateAssignment($order)
+    protected function validateJob($order)
     {
 
         $attributes = request()->validate([
@@ -115,11 +111,13 @@ class JobController extends Controller
 
         $attributes = request()->validate([
             'job_start_date' => ['nullable'],
+            'job_start_time' => ['nullable'],
         ]);
 
         return $data = [
             "status" =>  'assigned',
             'job_start_date' => $attributes["job_start_date"],
+            'job_start_time' => $attributes["job_start_time"],
             'assigned_at' => now(),
         ];
 

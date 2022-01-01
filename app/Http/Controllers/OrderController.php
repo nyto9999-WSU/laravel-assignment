@@ -20,8 +20,7 @@ class OrderController extends Controller
     public function index()
     {
 
-        if(auth()->user()->isAdmin())
-        {
+        if (auth()->user()->isAdmin()) {
             $orders = Order::with('aircons', 'user')->get();
 
             return view('pages.admin.order.currentOrder', compact('orders'));
@@ -30,8 +29,8 @@ class OrderController extends Controller
 
         //role user
         $orders = Order::with('aircons', 'user')
-                        ->where('user_id', auth()->id())
-                        ->get();
+            ->where('user_id', auth()->id())
+            ->get();
         return view('pages.user.order.currentOrder', compact('orders'));
     }
 
@@ -42,68 +41,31 @@ class OrderController extends Controller
 
             case 'Booked':
                 $technicians = User::technicians()
-                                    ->where('tech_available', '=', 1)
-                                    ->get();
+                    ->where('tech_available', '=', 1)
+                    ->get();
                 return view('pages.admin.job.assignJobToTechnician', compact('order', 'technicians'));
 
             case 'assigned':
-                $tech_id = $order->job->user_id;
-                $technician = User::find($tech_id);
 
                 $order->update([
                     "status" =>  'completed',
                     "job_end_date" => now()
                 ]);
+
+                $technician = $order->getTechnician();
                 $technician->update(["tech_available" => 1]);
                 return back();
 
             case 'completed':
                 $order->delete();
+                $order->aircons()->delete();
+                $order->job()->delete();
                 return back();
 
             default:
                 break;
         }
     }
-
-    public function orderRequested()
-    {
-        if(auth()->user()->isAdmin())
-        {
-            $orders = Order::with('aircons', 'user')
-                            ->where('status', '=', 'Booked')
-                            ->get();
-
-            return view('pages.admin.order.currentOrder', compact('orders'));
-        }
-    }
-
-
-
-    public function orderAssigned()
-    {
-        if(auth()->user()->isAdmin())
-        {
-            $orders = Order::with('aircons', 'user')
-                            ->where('status', '=', 'assigned')
-                            ->get();
-
-            return view('pages.admin.order.assignedOrder', compact('orders'));
-        }
-    }
-
-    public function orderCompleted()
-    {
-        if(auth()->user()->isAdmin())
-        {
-            $orders = Order::with('aircons', 'user')
-                            ->where('status', '=', 'completed')
-                            ->get();
-
-            return view('pages.admin.order.completedOrder', compact('orders'));
-        }
-    }
-
 
     public function create()
     {
@@ -126,12 +88,9 @@ class OrderController extends Controller
     {
         abort_unless($order->user_id == auth()->id() || auth()->user()->isAdmin(), 403);
 
-
-        $tech_id = optional($order->job)->user_id;
-        $technician = User::find($tech_id);
+        $technician = $order->getTechnician();
 
         return view('pages.user.order.showOrder', compact('order', 'technician'));
-
     }
 
 
@@ -160,6 +119,7 @@ class OrderController extends Controller
     {
         $order->delete();
         $order->aircons()->delete();
+        $order->job->delete();
         return back();
     }
 

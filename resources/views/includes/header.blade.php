@@ -11,19 +11,16 @@
                 @auth
                     @if (Auth::user()->isAdmin())
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('order.requested') }}">Requested Job</a>
+                            <a class="nav-link" href="{{ route('pages.orderRequested') }}">Requested Job</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('order.assigned') }}">Assigned Job</a>
+                            <a class="nav-link" href="{{ route('pages.orderAssigned') }}">Assigned Job</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('order.completed') }}">Completed Job</a>
+                            <a class="nav-link" href="{{ route('pages.orderCompleted') }}">Completed Job</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('rolePermission.index') }}">Role & Permission</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('technician.index') }}">Technicians</a>
+                            <a class="nav-link" href="{{ route('user.index') }}">Role & Permission</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('calendar.index') }}">View Job</a>

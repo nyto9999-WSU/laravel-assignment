@@ -6,8 +6,10 @@ use Illuminate\Http\Request;
 use App\Models\Aircon;
 use App\Models\User;
 use App\Models\Role;
+use App\Models\Job;
 use App\Models\Order;
 use Carbon\Carbon;
+use DB;
 use Rappasoft\LaravelAuthenticationLog\Models\AuthenticationLog;
 
 class HomeController extends Controller
@@ -32,8 +34,30 @@ class HomeController extends Controller
     {
         $currentYear = now()->format('Y');
 
+        $name = array();
 
-        /*  registered user role */
+        $job = DB::table('jobs')
+                ->join('users', 'jobs.user_id', '=', 'users.id')
+                ->select('users.name')
+                ->whereBetween('jobs.created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
+                ->get()
+                ->toArray();
+
+        foreach ($job as $j) {
+            array_push($name,$j->name);
+        }
+
+        $weeklyEffort = array_count_values($name);
+        arsort($weeklyEffort);
+
+        $weeklyName = array();
+        $weeklyCount = array();
+        foreach($weeklyEffort as $key => $value)
+        {
+            $weeklyName[] = $key;
+            $weeklyCount[] = $value;
+        }
+
         $roles = Role::withCount('users')->get();
 
         /* equipment type chart */
@@ -51,7 +75,7 @@ class HomeController extends Controller
         /* Todasys job */
         $orderAssignQuantity = $this->getOrderAssigneQuantity();
 
-        return view('home', compact('roles', 'monthlyOrders', 'users', 'logs', 'typeChart', 'orderAssignQuantity'));
+        return view('home', compact('roles', 'monthlyOrders', 'users', 'logs', 'typeChart', 'orderAssignQuantity', 'weeklyName', 'weeklyCount'));
     }
 
 
@@ -81,6 +105,10 @@ class HomeController extends Controller
         }
 
         return $typeChart;
+    }
+
+    public function getTechnicianWeeklyEffor()
+    {
     }
 
     protected function getMonthlyOrders($currentYear)
@@ -114,15 +142,12 @@ class HomeController extends Controller
     protected function getOrderAssigneQuantity()
     {   $orderAssignedRate = array();
 
-        /* FIXME: au date format */
 
-        $orderAssignedRate[] = Order::whereNotNull('created_at')
-                                    ->whereDate('created_at',  now()->format('y/m/d'))
+        $orderAssignedRate[] = Order::whereDate('created_at',  now()->format('y/m/d'))
                                     ->where('status', '=', 'Booked')
                                     ->count();
 
         $orderAssignedRate[] = Order::whereDate('assigned_at', now()->format('y/m/d'))
-                                    ->whereDate('created_at', now()->format('y/m/d'))
                                     ->where('status', '=', 'assigned')
                                     ->count();
         return $orderAssignedRate;

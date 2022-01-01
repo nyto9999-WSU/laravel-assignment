@@ -102,19 +102,25 @@
                     </tr>
 
                 </table>
-                <form action="" method="post">
-                    {{-- techician_id --}}
-
-                </form>
-
 
                 <form action="{{ route('job.store', $order) }}" method="post">
                     @csrf
 
-                    {{-- start --}}
+                    {{-- job_start_date --}}
                     <label for="job_start_date">Start Date</label>
                     <input type="text" class="" id="datepicker" name="job_start_date">
 
+                    {{-- job start_time --}}
+                    <label for="job_start_time">Morning</label>
+                    <input type="radio" name="job_start_time" value="morning">
+
+                    <label for="job_start_time">Afternoon</label>
+                    <input type="radio" name="job_start_time" value="afternoon">
+
+                    <label for="job_start_time">Evening</label>
+                    <input type="radio" name="job_start_time" value="evening">
+
+                    {{-- technician dropdown --}}
                     <select class="tech_id" name="tech_id">
                         <option disabled selected value>Technician</option>
                         @forelse ($technicians as $t)

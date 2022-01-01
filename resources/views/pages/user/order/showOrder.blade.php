@@ -38,7 +38,13 @@
 
                     <tr>
                         <td>Technician</td>
-                        <td>N/A</td>
+                        <td>
+                            @if (!empty($order->job->user_id))
+                                {{ $order->job->user_id }}
+                            @else
+                                N/A
+                            @endif
+                        </td>
                     </tr>
 
                     {{-- extra_note --}}
@@ -88,6 +94,8 @@
                         <td>Postcode</td>
                         <td>{{ $order->postcode }}</td>
                     </tr>
+
+
 
                     <tr>
                         <td>Start Date</td>

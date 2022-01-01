@@ -29,4 +29,11 @@ class Order extends Model
         return $this->hasOne(Job::class);
     }
 
+    public function getTechnician()
+    {
+       $tech_id = optional($this->job)->user_id;
+       return User::find($tech_id);
+    }
+
+
 }
