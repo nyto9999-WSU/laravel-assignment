@@ -192,8 +192,8 @@
                     ['Job', 'Count'],
                     /* orderAssignQuantity */
                     @php
-                        echo "['UnAssigned', ".$orderAssignQuantity[0]."],";
                         echo "['Assigned', ".$orderAssignQuantity[1]."],";
+                        echo "['UnAssigned', ".$orderAssignQuantity[0]."],";
                     @endphp
             ]);
 

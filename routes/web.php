@@ -6,6 +6,7 @@ use App\Http\Controllers\AirConController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\RolePermissionController;
 use App\Http\Controllers\TechnicianController;
+use App\Http\Controllers\CalendarController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -50,3 +51,7 @@ Route::delete('role-permission/{user}/destroy', [RolePermissionController::class
 
 /* Technician */
 Route::resource('technician', TechnicianController::class);
+
+/* Calendar */
+Route::resource('calendar', CalendarController::class);
+

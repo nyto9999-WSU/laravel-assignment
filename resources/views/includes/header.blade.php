@@ -23,10 +23,10 @@
                             <a class="nav-link" href="{{ route('rolePermission.index') }}">Role & Permission</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('home') }}">View Job(not yet)</a>
+                            <a class="nav-link" href="{{ route('technician.index') }}">Technicians</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('technician.index') }}">Technicians</a>
+                            <a class="nav-link" href="{{ route('calendar.index') }}">View Job</a>
                         </li>
                     @else
                         <li class="nav-item">

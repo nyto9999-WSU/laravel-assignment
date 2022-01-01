@@ -33,21 +33,22 @@ class HomeController extends Controller
         $currentYear = now()->format('Y');
 
 
-        /* dashboard registered user role */
+        /*  registered user role */
         $roles = Role::withCount('users')->get();
 
-        /* dachboard equipment type chart */
+        /* equipment type chart */
         $typeChart = $this->getTypeQuantity($currentYear);
 
-        /* dashbaord monthly order chart */
+        /*  monthly order chart */
         $monthlyOrders = $this->getMonthlyOrders($currentYear);
 
-        /* dashboard get user to call login history table's functions */
+        /*  get user to call login history table's functions */
         $users = User::all()->reverse();
 
-        /* dashboard login history log 2 */
+        /*  login history log 2 */
         $logs = $this->getLoginHistoryLog();
 
+        /* Todasys job */
         $orderAssignQuantity = $this->getOrderAssigneQuantity();
 
         return view('home', compact('roles', 'monthlyOrders', 'users', 'logs', 'typeChart', 'orderAssignQuantity'));
@@ -84,6 +85,7 @@ class HomeController extends Controller
 
     protected function getMonthlyOrders($currentYear)
     {
+
         $monthlyOrders = array();
         for ($m = 1; $m <= 12; $m++) {
             $count = Order::whereMonth('created_at', '=', $m)
@@ -116,9 +118,12 @@ class HomeController extends Controller
 
         $orderAssignedRate[] = Order::whereNotNull('created_at')
                                     ->whereDate('created_at',  now()->format('y/m/d'))
+                                    ->where('status', '=', 'Booked')
                                     ->count();
 
         $orderAssignedRate[] = Order::whereDate('assigned_at', now()->format('y/m/d'))
+                                    ->whereDate('created_at', now()->format('y/m/d'))
+                                    ->where('status', '=', 'assigned')
                                     ->count();
         return $orderAssignedRate;
     }
