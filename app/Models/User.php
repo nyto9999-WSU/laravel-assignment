@@ -52,7 +52,6 @@ class User extends Authenticatable
     }
 
 
-
     public function isAdmin()
     {
        return $this->role->name == 'admin';
@@ -70,7 +69,7 @@ class User extends Authenticatable
 
     public function scopeTechnicians($query)
     {
-        $query->where('role_id', '=', '3');
+        $query->where('role_id', '=', 3);
     }
 
 

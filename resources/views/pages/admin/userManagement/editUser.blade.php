@@ -15,6 +15,7 @@
                     <label for="name">{{ $user->name }}</label>
                     <input type="text" name="name" placeholder="{{ $user->name }}">
 
+
                     <button type="submit">Edit</button>
                 </form>
             </div>

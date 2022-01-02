@@ -61,7 +61,7 @@ class HomeController extends Controller
         $roles = Role::withCount('users')->get();
 
         /* equipment type chart */
-        $typeChart = $this->getTypeQuantity($currentYear);
+        $equipmentChart = $this->getEquipmentQuantity($currentYear);
 
         /*  monthly order chart */
         $monthlyOrders = $this->getMonthlyOrders($currentYear);
@@ -74,37 +74,37 @@ class HomeController extends Controller
 
         /* Todasys job */
         $orderAssignQuantity = $this->getOrderAssigneQuantity();
-
-        return view('home', compact('roles', 'monthlyOrders', 'users', 'logs', 'typeChart', 'orderAssignQuantity', 'weeklyName', 'weeklyCount'));
+        return view('home', compact('roles', 'monthlyOrders', 'users', 'logs', 'equipmentChart', 'orderAssignQuantity', 'weeklyName', 'weeklyCount'));
     }
 
 
 
 
 
-    protected function getTypeQuantity($currentYear)
+    protected function getEquipmentQuantity($currentYear)
     {
         $type = array('ducted system', 'mini VRF', 'package unit', 'spilt system', 'watercool unit');
-        $typeChart = array();
+        $equipmentChart = array();
 
         for ($y = $currentYear; $y >= $currentYear - 2; $y--) {
-            $typeChart[] = $y;
+            $equipmentChart[] = $y;
 
             for ($x = 0; $x < 5; $x++) {
                 $typeCount = Aircon::whereYear('created_at', '=', $y)
                     ->where('equipment_type', '=', $type[$x])
                     ->count();
-                $typeChart[] = $typeCount;
+                $equipmentChart[] = $typeCount;
             }
 
             $otherCount = Aircon::whereYear('created_at', '=', $y)
                 ->whereNotNull('other_type')
                 ->count();
 
-            $typeChart[] = $otherCount;
+            $equipmentChart[] = $otherCount;
         }
 
-        return $typeChart;
+
+        return $equipmentChart;
     }
 
     public function getTechnicianWeeklyEffor()
@@ -150,6 +150,11 @@ class HomeController extends Controller
         $orderAssignedRate[] = Order::whereDate('assigned_at', now()->format('y/m/d'))
                                     ->where('status', '=', 'assigned')
                                     ->count();
+
+        if($orderAssignedRate[0] == 0 && $orderAssignedRate[1] == 0)
+        {
+            $orderAssignedRate = null;
+        }
         return $orderAssignedRate;
     }
 }

@@ -13,16 +13,19 @@
                         <td>ID</td>
                         <td>{{ $user->id }}</td>
                     </tr>
+
                     {{-- name --}}
                     <tr>
                         <td>Name</td>
                         <td>{{ $user->name }}</td>
                     </tr>
+
                     {{-- email --}}
                     <tr>
                         <td>email</td>
                         <td>{{ $user->email }}</td>
                     </tr>
+
                     {{-- created_at --}}
                     <tr>
                         <td>created_at</td>

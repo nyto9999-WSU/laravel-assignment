@@ -78,6 +78,7 @@
                         {{-- Status --}}
                         <td>{{ $order->status }}</td>
 
+                        {{-- delete button --}}
                         <td>
                             <form action="{{ route('order.destroy', $order) }}" method="post">
                                 @csrf

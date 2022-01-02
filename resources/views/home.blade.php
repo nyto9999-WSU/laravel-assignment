@@ -27,7 +27,11 @@
                             <div class="card-header">
                                 Weekly Completed Job (Unfinished)
                             </div>
-                            <div id="weekly_completed_job" class=""></div>
+                            @if ($weeklyName != null)
+                                <div id="weekly_completed_job" class=""></div>
+                            @else
+                                No data
+                            @endif
                         </div>
                     </div>
 
@@ -37,7 +41,11 @@
                             <div class="card-header">
                                 Today Jobs (Unfinished)
                             </div>
-                            <div  id="today_jobs" class=""></div>
+                            @if ($orderAssignQuantity != null)
+                                <div  id="today_jobs"></div>
+                            @else
+                                No data
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -148,21 +156,19 @@
         google.charts.setOnLoadCallback(todayJobs);
         google.charts.setOnLoadCallback(monthlyOrder);
         google.charts.setOnLoadCallback(weeklyCompletedJob);
-        google.charts.setOnLoadCallback(typeChart);
+        google.charts.setOnLoadCallback(equipmentChart);
 
         /* FIXME: Weekly Completed Job */
         function weeklyCompletedJob() {
             var data = google.visualization.arrayToDataTable([
-                ['name', 'number', { role: 'style' }],
+                        ['name', 'number', { role: 'style' }],
 
                 @php
-                    for($i = 0; $i < 4 ; $i++)
+                    for($i = 0; $i < count($weeklyCount) ; $i++)
                     {
                         echo "['$weeklyName[$i]' , ".$weeklyCount[$i].", '5F7C9E'],";
                     }
                 @endphp
-
-
             ]);
 
             var options = {
@@ -192,20 +198,31 @@
         }
 
         /* FIXME:Registered User */
+
         function todayJobs() {
             var data = google.visualization.arrayToDataTable([
+                /* orderAssignQuantity */
                     ['Job', 'Count'],
-                    /* orderAssignQuantity */
                     @php
-                        echo "['Assigned', ".$orderAssignQuantity[1]."],";
-                        echo "['UnAssigned', ".$orderAssignQuantity[0]."],";
+                        if($orderAssignQuantity != null)
+                        {
+                            echo "['Assigned', ".$orderAssignQuantity[1]."],";
+                            echo "['UnAssigned', ".$orderAssignQuantity[0]."],";
+                        }
                     @endphp
             ]);
 
             var options = {
                 title: @php
+                    if($orderAssignQuantity != null)
+                    {
                         echo $orderAssignQuantity[0];
-                    @endphp,
+                    }
+                    else
+                    {
+                        echo 'nodata';
+                    }
+                @endphp,
                 colors : ['#EB9E00', '5F7C9E'],
                 pieHole: 0.4,
                 pieSliceText: 'none',
@@ -215,6 +232,7 @@
 
             chart.draw(data, options);
         }
+
 
         /* monthly Order */
         function monthlyOrder() {
@@ -250,7 +268,7 @@
             chart.draw(data, options);
         }
 
-        function typeChart() {
+        function equipmentChart() {
             var opacity = 'opacity: 0.4';
             var data = google.visualization.arrayToDataTable([
                 ['year', 'Ducted System', 'Mini VRF', 'Package', 'Spilt System',
@@ -258,7 +276,7 @@
                 @php
                     for($y = 0; $y<3; $y++)
                     {
-                        echo "[".$typeChart[$y*7].", ".$typeChart[$y*7+1].", ".$typeChart[$y*7+2].", ".$typeChart[$y*7+3].", ".$typeChart[$y*7+4].", ".$typeChart[$y*7+5].", ".$typeChart[$y*7+6].", ''],";
+                        echo "[".$equipmentChart[$y*7].", ".$equipmentChart[$y*7+1].", ".$equipmentChart[$y*7+2].", ".$equipmentChart[$y*7+3].", ".$equipmentChart[$y*7+4].", ".$equipmentChart[$y*7+5].", ".$equipmentChart[$y*7+6].", ''],";
                     }
                 @endphp
             ]);
