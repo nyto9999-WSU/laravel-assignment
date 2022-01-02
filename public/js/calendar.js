@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
       droppable: true, // this allows things to be dropped onto the calendar
       events: [
         {
-
+          /* FIXME: title and event questions */
           title: 'Job 1\n Model:cds12dw\n PD: 2021-12-09\n PT: Afternoon\n Address: Newtown\n Quantity: 5\n Type:Split System\n D&C : Domestic\n Contact: 063321689',
           start: '2021-12-09T09:00:00',
           end: '2021-12-09T11:59:00',

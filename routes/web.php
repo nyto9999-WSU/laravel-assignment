@@ -44,7 +44,7 @@ Route::resource('job', JobController::class)->except(['store']);
 /* User */
 Route::patch('user/{user}/profile/edit', [UserController::class, 'updateProfile'])->name('user.updateProfile');
 Route::patch('user/{user}/role/edit', [UserController::class, 'updateRole'])->name('user.updateRole');
-Route::resource('user', UserController::class)->except(['destory']);
+Route::resource('user', UserController::class);
 
 /* Calendar */
 Route::resource('calendar', CalendarController::class);
@@ -53,7 +53,6 @@ Route::resource('calendar', CalendarController::class);
 Route::get('/pages/user/admins', [PagesController::class, 'admins'])->name('pages.admins');
 Route::get('/pages/user/technicians', [PagesController::class, 'technicians'])->name('pages.technicians');
 Route::get('/pages/user/users', [PagesController::class, 'users'])->name('pages.users');
-
 Route::get('/pages/order/requested', [PagesController::class, 'orderRequested'])->name('pages.orderRequested');
 Route::get('/pages/order/assigned', [PagesController::class, 'orderAssigned'])->name('pages.orderAssigned');
 Route::get('/pages/order/completed', [PagesController::class, 'orderCompleted'])->name('pages.orderCompleted');

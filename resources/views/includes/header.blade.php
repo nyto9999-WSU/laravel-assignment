@@ -25,6 +25,12 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('calendar.index') }}">View Job</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('order.create') }}">Create Order</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('order.index') }}">Current Order</a>
+                        </li>
                     @else
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('order.create') }}">Create Order</a>

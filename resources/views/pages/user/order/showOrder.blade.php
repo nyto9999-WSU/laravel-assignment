@@ -95,8 +95,19 @@
                         <td>{{ $order->postcode }}</td>
                     </tr>
 
+                    {{-- prefer_date --}}
+                    <tr>
+                        <td>Prefer Date</td>
+                        <td>{{ $order->prefer_date }}</td>
+                    </tr>
 
+                    {{-- prefer_time --}}
+                    <tr>
+                        <td>prefer_time</td>
+                        <td>{{ $order->prefer_time }}</td>
+                    </tr>
 
+                    {{-- job_start_date --}}
                     <tr>
                         <td>Start Date</td>
                         <td>
@@ -108,6 +119,7 @@
                         </td>
                     </tr>
 
+                    {{-- job_end_date --}}
                     <tr>
                         <td>End Date</td>
                         <td>
@@ -125,6 +137,7 @@
                         <td>{{ $order->created_at }}</td>
                     </tr>
 
+                    {{-- assigned_at --}}
                     <tr>
                         <td>Assigned at</td>
                         <td>
@@ -135,11 +148,9 @@
                             @endif
                         </td>
                     </tr>
-
-
-
                 </table>
 
+                {{-- edit button --}}
                 <a href="{{ route('order.edit', $order) }}" class="btn btn-primary">order.edit</a>
             </div>
         </div>

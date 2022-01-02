@@ -106,7 +106,7 @@ class OrderController extends Controller
 
         $order->update($attributes);
 
-        return $this->edit($order);
+        return back();
     }
 
     /**

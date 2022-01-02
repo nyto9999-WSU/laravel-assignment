@@ -16,9 +16,10 @@
                     </div>
                 </form>
 
+                {{-- filter --}}
                 <div class="row mb-2">
                     <div class="col-md-3">
-                        <a href="{{ route('user.index')}}">All</a>
+                        <a href="{{ route('user.index') }}">All</a>
                     </div>
                     <div class="col-md-3">
                         <a href="{{ route('pages.admins') }}">Admins</a>
@@ -31,6 +32,9 @@
                     </div>
                 </div>
 
+                {{-- create user --}}
+                <a href="{{ route('user.create') }}" class="btn btn-primary">Add</a>
+
                 {{-- Users table --}}
                 <table class="table table-striped">
                     <th scope="col">ID</th>
@@ -40,11 +44,15 @@
                     <th scope="col">Delete</th>
                     @forelse ($users as $user)
                         <tr>
+                            {{-- user id --}}
                             <th scope="row">{{ $user->id }}</th>
+
+                            {{-- user name --}}
                             <td>
                                 <a href="{{ route('user.show', $user) }}">{{ $user->name }}</a>
                             </td>
 
+                            {{-- role dropdown --}}
                             <td>
                                 <form action="{{ route('user.updateRole', $user) }}" method="POST">
                                     @method('PATCH')
@@ -60,9 +68,12 @@
                                 </form>
                             </td>
 
-                            <td><a href="{{ route('user.edit', $user) }}" class="btn btn-primary"><i class="bi bi-pencil-square"></i></i></a>
+                            {{-- edit button --}}
+                            <td><a href="{{ route('user.edit', $user) }}" class="btn btn-primary"><i
+                                        class="bi bi-pencil-square"></i></a>
                             </td>
 
+                            {{-- delete button --}}
                             <td>
                                 <form action="{{ route('user.destroy', $user->id) }}" method="post">
                                     @csrf
@@ -71,20 +82,20 @@
                                 </form>
                             </td>
                         </tr>
-                    @empty
+                        @empty
                         <h1>no data</h1>
-                    @endforelse
-                </table>
+                        @endforelse
+                    </table>
+
+                    <div class="d-flex flex-row-reverse">
+                        {!! $users->links() !!}
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="d-flex flex-row-reverse">
-            {!! $users->links() !!}
-        </div>
-    </div>
 
     </div>
 
 
     </div>
 @endsection
-
