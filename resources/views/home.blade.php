@@ -1,139 +1,141 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container-fluid">
-                <div class="row mt-3">
+    <div class="container">
+        <div class="container-fluid">
+                    <div class="row mt-3">
 
-                    {{-- Registered User --}}
-                    <div class="col-md-2 pe-2">
-                        <div class="card">
-                            <div class="card-header">
-                                Registered User
+                        {{-- Registered User --}}
+                        <div class="col-md-2 pe-2">
+                            <div class="card">
+                                <div class="card-header">
+                                    Registered User
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    @forelse ($roles as $role)
+                                        <li class="list-group-item">{{ $role->name }} : {{ $role->users_count }}</li>
+                                    @empty
+
+                                    @endforelse
+                                    <li class="list-group-item">Total: {{ $roles->sum('users_count') }}</li>
+                                </ul>
                             </div>
-                            <ul class="list-group list-group-flush">
-                                @forelse ($roles as $role)
-                                    <li class="list-group-item">{{ $role->name }} : {{ $role->users_count }}</li>
-                                @empty
-
-                                @endforelse
-                                <li class="list-group-item">Total: {{ $roles->sum('users_count') }}</li>
-                            </ul>
                         </div>
-                    </div>
 
-                    {{-- FIXME:Weekly Completed Job --}}
-                    <div class="col-md-6 p-0">
-                        <div class="card">
-                            <div class="card-header">
-                                Weekly Completed Job (Unfinished)
-                            </div>
-                            @if ($weeklyName != null)
-                                <div id="weekly_completed_job" class=""></div>
-                            @else
-                                No data
-                            @endif
-                        </div>
-                    </div>
-
-                    {{-- FIXME:Today Jobs --}}
-                    <div class="col-md-4 ps-2">
-                        <div class="card">
-                            <div class="card-header">
-                                Today Jobs (Unfinished)
-                            </div>
-                            @if ($orderAssignQuantity != null)
-                                <div  id="today_jobs"></div>
-                            @else
-                                No data
-                            @endif
-                        </div>
-                    </div>
-                </div>
-
-                {{-- FIXME:Equipment type --}}
-                <div class="col-md-12 p-0 mt-2">
-                    <div class="card">
-                        <div class="card-header">
-                            Equipment Type
-                        </div>
-                        <div id="type_chart" class=""></div>
-                    </div>
-                </div>
-
-                {{-- monthly Order --}}
-                <div class="card mt-2" style="">
-                    <div class="card-header">
-                        monthly Order
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        <div class="list-group-item" id="monthly_order"></div>
-                    </ul>
-                </div>
-
-                {{-- Login history --}}
-                <div class="card mt-2" style="">
-                    <div class="card-header d-flex justify-content-between align-items-center pe-2">
-                        Login History
-                        {{-- search bar --}}
-                        <form type="get" action="admin/role-permission-search">
-                            <div class="input-group">
-                                <input type="search" class="form-control" name="query" placeholder="Recipient's username"
-                                aria-label="Recipient's username" aria-describedby="button-addon2">
-                                <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Button</button>
-                            </div>
-                        </form>
-                    </div>
-                    <div style="width:100%;overflow:auto; max-height:200px;">{{-- scroll bar based on max-height --}}
-                        <table class="table">
-                            <th>Name</th>
-                            <th>role</th>
-                            <th>Last Login</th>
-                            <th>Previous Login</th>
-                            <th>Last IP</th>
-
-                            @forelse ($users as $user)
-                            @if ($user->lastSuccessfulLoginAt())
-                                <tr>
-                                    <td>{{ $user->name }}</td>
-                                    <td>{{ $user->getRole() }}</td>
-                                    <td>{{ $user->lastSuccessfulLoginAt() }}</td>
-
-                                    @if (empty($user->previousLoginAt()))
-                                    <td>N/A</td>
-                                    @else
-                                    <td>{{ $user->previousLoginAt() }}</td>
-                                    @endif
-                                    {{-- <td><button type="button" class="btn btn-lg btn-danger" data-toggle="popover" title="Popover title" data-bs-content="And here's some amazing content. It's very engaging. Right?">Click to toggle popover</button></td> --}}
-                                    <td>{{ $user->lastSuccessfulLoginIp() }}</td>
-
-                                </tr>
+                        {{-- Weekly Completed Job --}}
+                        <div class="col-md-6 p-0">
+                            <div class="card">
+                                <div class="card-header">
+                                    Weekly Completed Job (Unfinished)
+                                </div>
+                                @if ($weeklyName != null)
+                                    <div id="weekly_completed_job" class=""></div>
+                                @else
+                                    No data
                                 @endif
+                            </div>
+                        </div>
 
-                                @empty
-
-                                @endforelse
-                            </table>
+                        {{-- Today Jobs --}}
+                        <div class="col-md-4 ps-2">
+                            <div class="card">
+                                <div class="card-header">
+                                    Today Jobs (Unfinished)
+                                </div>
+                                @if ($orderAssignQuantity != null)
+                                    <div  id="today_jobs"></div>
+                                @else
+                                    No data
+                                @endif
+                            </div>
                         </div>
                     </div>
-                </div>
 
-
-                {{-- FIXME: --}}
-                <div class="card mt-2" style="width: 18rem;">
-                    <div class="card-header">
-                        User Data
+                    {{-- Equipment type --}}
+                    <div class="col-md-12 p-0 mt-2">
+                        <div class="card">
+                            <div class="card-header">
+                                Equipment Type
+                            </div>
+                            <div id="type_chart" class=""></div>
+                        </div>
                     </div>
-                    <ul class="list-group list-group-flush d-flex">
-                        @forelse ($logs as $log)
 
-                        <li class="list-group-item">{{ $log }}</li>
+                    {{-- monthly Order --}}
+                    <div class="card mt-2" style="">
+                        <div class="card-header">
+                            monthly Order
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <div class="list-group-item" id="monthly_order"></div>
+                        </ul>
+                    </div>
 
-                        @empty
+                    {{-- Login history --}}
+                    <div class="card mt-2" style="">
+                        <div class="card-header d-flex justify-content-between align-items-center pe-2">
+                            Login History
+                            {{-- search bar --}}
+                            <form type="get" action="admin/role-permission-search">
+                                <div class="input-group">
+                                    <input type="search" class="form-control" name="query" placeholder="Recipient's username"
+                                    aria-label="Recipient's username" aria-describedby="button-addon2">
+                                    <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Button</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div style="width:100%;overflow:auto; max-height:200px;">{{-- scroll bar based on max-height --}}
+                            <table class="table">
+                                <th>Name</th>
+                                <th>role</th>
+                                <th>Last Login</th>
+                                <th>Previous Login</th>
+                                <th>Last IP</th>
 
-                        @endforelse
-                    </ul>
+                                @forelse ($users as $user)
+                                @if ($user->lastSuccessfulLoginAt())
+                                    <tr>
+                                        <td>{{ $user->name }}</td>
+                                        <td>{{ $user->getRole() }}</td>
+                                        <td>{{ $user->lastSuccessfulLoginAt() }}</td>
+
+                                        @if (empty($user->previousLoginAt()))
+                                        <td>N/A</td>
+                                        @else
+                                        <td>{{ $user->previousLoginAt() }}</td>
+                                        @endif
+                                        {{-- <td><button type="button" class="btn btn-lg btn-danger" data-toggle="popover" title="Popover title" data-bs-content="And here's some amazing content. It's very engaging. Right?">Click to toggle popover</button></td> --}}
+                                        <td>{{ $user->lastSuccessfulLoginIp() }}</td>
+
+                                    </tr>
+                                    @endif
+
+                                    @empty
+
+                                    @endforelse
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    {{-- FIXME: --}}
+                    <div class="card mt-2" style="width: 18rem;">
+                        <div class="card-header">
+                            User Data
+                        </div>
+                        <ul class="list-group list-group-flush d-flex">
+                            @forelse ($logs as $log)
+
+                            <li class="list-group-item">{{ $log }}</li>
+
+                            @empty
+
+                            @endforelse
+                        </ul>
+                    </div>
+
                 </div>
-
             </div>
         </div>
     </div>
@@ -197,8 +199,7 @@
             chart.draw(data, options);
         }
 
-        /* FIXME:Registered User */
-
+        /* Registered User */
         function todayJobs() {
             var data = google.visualization.arrayToDataTable([
                 /* orderAssignQuantity */
