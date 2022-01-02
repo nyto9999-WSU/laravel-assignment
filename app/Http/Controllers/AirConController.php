@@ -55,7 +55,6 @@ class AirConController extends Controller
      */
     public function show(Aircon $aircon, Order $order)
     {
-
         abort_unless($order->user_id == auth()->id() || auth()->user()->isAdmin(), 403);
 
         return view('pages.user.order-aircons.showAirconDetails', compact('aircon'));

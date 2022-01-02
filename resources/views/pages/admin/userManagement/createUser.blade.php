@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <h1>Role: {{ Auth::user()->getRole() }}</h1>
-        <h1>editUser.blade</h1>
+        <h1>createUser.blade</h1>
         <div class="row justify-content-center">
             <div class="col-md-8">
 
