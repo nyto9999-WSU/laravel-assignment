@@ -10,6 +10,10 @@ try
     MAIL_USERNAME=
     MAIL_PASSWORD=
     MAIL_ENCRYPTION=tls
+    
+    //put these keys under env.
+    RECAPTCHA_SITE_KEY=6LdeiuYdAAAAAHXbC3ozBZQmQOJmWQUd9yiFeQ3b
+    RECAPTCHA_SECRET_KEY=6LdeiuYdAAAAAIyYTvjKqZMd9jgHuayeX8W3IZsO
 ```
 
 
