@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Aircon;
 use App\Models\Order;
 use App\Models\User;
+use App\Models\Job;
 use DB;
 use Illuminate\Support\Carbon;
 
@@ -19,21 +20,56 @@ class OrderController extends Controller
     public function index()
     {
 
+
         
         if(auth()->user()->isAdmin())
         {
+
             $orders = Order::with('aircons', 'user')->get();
+
             return view('pages.admin.order.currentOrder', compact('orders'));
         }
 
 
         //role user
         $orders = Order::with('aircons', 'user')
-                        ->where('user_id', auth()->id())
-                        ->get();
+            ->where('user_id', auth()->id())
+            ->get();
         return view('pages.user.order.currentOrder', compact('orders'));
     }
 
+
+    public function actions(Order $order)
+    {
+        switch ($order->status) {
+
+            case 'Booked':
+                $technicians = User::technicians()
+                    ->where('tech_available', '=', 1)
+                    ->get();
+                return view('pages.admin.job.assignJobToTechnician', compact('order', 'technicians'));
+
+            case 'assigned':
+
+                $order->update([
+                    "status" =>  'completed',
+                    "job_end_date" => now()
+                ]);
+
+                $technician = $order->getTechnician();
+                $technician->update(["tech_available" => 1]);
+                return back();
+
+            case 'completed':
+                $order->delete();
+                $order->aircons()->delete();
+                $order->job()->delete();
+                return back();
+
+            default:
+                break;
+        }
+    }
 
     public function create()
     {
@@ -54,20 +90,11 @@ class OrderController extends Controller
 
     public function show(Order $order)
     {
-        if(auth()->user()->isAdmin())
-        {
-            $order->with('aircons', 'user')
-                  ->get();
+        abort_unless($order->user_id == auth()->id() || auth()->user()->isAdmin(), 403);
 
-            return view('pages.user.order.showOrder', compact('order'));
-        }
+        $technician = $order->getTechnician();
 
-        abort_if($order->user_id != auth()->id(), 403);
-        $order->with('aircons', 'user')
-              ->get();
-
-        return view('pages.user.order.showOrder', compact('order'));
-
+        return view('pages.user.order.showOrder', compact('order', 'technician'));
     }
 
 
@@ -83,7 +110,7 @@ class OrderController extends Controller
 
         $order->update($attributes);
 
-        return $this->edit($order);
+        return back();
     }
 
     /**
@@ -95,6 +122,8 @@ class OrderController extends Controller
     public function destroy(Order $order)
     {
         $order->delete();
+        $order->aircons()->delete();
+        $order->job->delete();
         return back();
     }
 

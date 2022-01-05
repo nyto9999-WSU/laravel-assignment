@@ -37,6 +37,7 @@ class AirConController extends Controller
      */
     public function store(Request $request, Order $order)
     {
+
         $order = Order::find($order->id);
 
         $attributes = $this->validateAirCon();
@@ -54,7 +55,6 @@ class AirConController extends Controller
      */
     public function show(Aircon $aircon, Order $order)
     {
-
         abort_unless($order->user_id == auth()->id() || auth()->user()->isAdmin(), 403);
 
         return view('pages.user.order-aircons.showAirconDetails', compact('aircon'));
@@ -114,9 +114,11 @@ class AirConController extends Controller
             request()->merge(['equipment_type' => request()->other_type]);
         }
 
+
         return request()->validate([
             'model_number' => ['nullable'],
             'equipment_type' => ['nullable'],
+            'other_type' => ['nullable'],
             'issue' => ['nullable'],
         ]);
     }

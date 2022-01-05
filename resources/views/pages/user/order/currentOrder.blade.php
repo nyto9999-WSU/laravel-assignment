@@ -5,8 +5,21 @@
         <h1>Role: {{ Auth::user()->getRole() }}</h1>
         <h1>currentOrder.blade</h1>
         <div class="row justify-content-center">
-                <table class="table">
+            <table class="table">
+                <tr>
+                    <th>Order</th>
+                    <th style="">Model</th>
+                    <th style="">show</th>
+                    <th style="width: 13.2%">Requested Date</th>
+                    <th style="width: 12.2%">Start Date</th>
+                    <th style="width: 12.2%">End Date</th>
+                    <th>Technician</th>
+                    <th>Status</th>
+                    <th>Cancel</th>
+                </tr>
+                @forelse ($orders as $order)
                     <tr>
+
                         <th>Order</th>
                         <th style="">Model</th>
                         <th style="">show</th>
@@ -45,8 +58,32 @@
                                     <span class="ms-3 position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                                         {{ $order->aircons->count() }}
                                     </span>
+
                                 </span>
-                            </td>
+                            </span>
+                        </td>
+
+                        {{-- Requested date --}}
+                        <td>{{ $order->prefer_date }}</td>
+
+                        {{-- job_start_date--}}
+                        <td>
+                            @if(!empty($order->job_start_date))
+                            {{ $order->job_start_date }}
+                            @else
+                            N/A
+                            @endif
+                        </td>
+
+                        {{-- job_end_date --}}
+                        <td>
+                            @if(!empty($order->job_end_date))
+                            {{ $order->job_end_date }}
+                            @else
+                            N/A
+                            @endif
+                        </td>
+
 
                             {{-- Requested date --}}
                             <td>{{ $order->prefer_date }}</td>
@@ -70,7 +107,9 @@
                     @endforelse
                 </table>
             </div>
+
         </div>
+    </div>
     </div>
     </div>
     </div>

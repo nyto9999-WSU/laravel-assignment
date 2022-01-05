@@ -3,7 +3,11 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\AirConController;
+use App\Http\Controllers\JobController;
 use App\Http\Controllers\RolePermissionController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\CalendarController;
+use App\Http\Controllers\PagesController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -24,6 +28,7 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 /* Order */
+Route::get('order/{order}/actions', [OrderController::class, 'actions'])->name('order.actions');
 Route::resource('order', OrderController::class);
 
 /* Aircon */
@@ -33,8 +38,22 @@ Route::post('/aircon/order/{order}', [AirConController::class, 'store'])->name('
 Route::delete('/aircon/delete/{aircon}/order{order}', [AirConController::class, 'destroy'])->name('aircon.destroy');
 Route::resource('aircon', AirConController::class)->except(['store', 'show', 'destroy']);
 
-/* Role & Permission */
-Route::get('role-permission', [RolePermissionController::class, 'index'])->name('rolePermission.index');
-Route::patch('role-permission/{user}/edit', [RolePermissionController::class, 'update'])->name('rolePermission.update');
-Route::delete('role-permission/{user}/destroy', [RolePermissionController::class, 'destroy'])->name('rolePermission.destroy');
+/* Job */
+Route::post('/job/{order}/order', [JobController::class, 'store'])->name('job.store');
+Route::resource('job', JobController::class)->except(['store']);
 
+/* User */
+Route::patch('user/{user}/profile/edit', [UserController::class, 'updateProfile'])->name('user.updateProfile');
+Route::patch('user/{user}/role/edit', [UserController::class, 'updateRole'])->name('user.updateRole');
+Route::resource('user', UserController::class);
+
+/* Calendar */
+Route::resource('calendar', CalendarController::class);
+
+/* Pages */
+Route::get('/pages/user/admins', [PagesController::class, 'admins'])->name('pages.admins');
+Route::get('/pages/user/technicians', [PagesController::class, 'technicians'])->name('pages.technicians');
+Route::get('/pages/user/users', [PagesController::class, 'users'])->name('pages.users');
+Route::get('/pages/order/requested', [PagesController::class, 'orderRequested'])->name('pages.orderRequested');
+Route::get('/pages/order/assigned', [PagesController::class, 'orderAssigned'])->name('pages.orderAssigned');
+Route::get('/pages/order/completed', [PagesController::class, 'orderCompleted'])->name('pages.orderCompleted');

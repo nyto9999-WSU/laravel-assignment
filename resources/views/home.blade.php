@@ -1,131 +1,141 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container-fluid">
-                <div class="row mt-3">
+    <div class="container">
+        <div class="container-fluid">
+                    <div class="row mt-3">
 
-                    {{-- Registered User --}}
-                    <div class="col-md-2 pe-2">
-                        <div class="card">
-                            <div class="card-header">
-                                Registered User
+                        {{-- Registered User --}}
+                        <div class="col-md-2 pe-2">
+                            <div class="card">
+                                <div class="card-header">
+                                    Registered User
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    @forelse ($roles as $role)
+                                        <li class="list-group-item">{{ $role->name }} : {{ $role->users_count }}</li>
+                                    @empty
+
+                                    @endforelse
+                                    <li class="list-group-item">Total: {{ $roles->sum('users_count') }}</li>
+                                </ul>
                             </div>
-                            <ul class="list-group list-group-flush">
-                                @forelse ($roles as $role)
-                                    <li class="list-group-item">{{ $role->name }} : {{ $role->users_count }}</li>
-                                @empty
-
-                                @endforelse
-                                <li class="list-group-item">Total: {{ $roles->sum('users_count') }}</li>
-                            </ul>
                         </div>
-                    </div>
 
-                    {{-- FIXME:Weekly Completed Job --}}
-                    <div class="col-md-6 p-0">
-                        <div class="card">
-                            <div class="card-header">
-                                Weekly Completed Job (Unfinished)
-                            </div>
-                            <div id="weekly_completed_job" class=""></div>
-                        </div>
-                    </div>
-
-                    {{-- FIXME:Today Jobs --}}
-                    <div class="col-md-4 ps-2">
-                        <div class="card">
-                            <div class="card-header">
-                                Today Jobs (Unfinished)
-                            </div>
-                            <div  id="today_jobs" class=""></div>
-                        </div>
-                    </div>
-                </div>
-
-                {{-- FIXME:Equipment type --}}
-                <div class="col-md-12 p-0 mt-2">
-                    <div class="card">
-                        <div class="card-header">
-                            Equipment Type (Unfinished)
-                        </div>
-                        <div id="type_chart" class=""></div>
-                    </div>
-                </div>
-
-                {{-- Yearly Order --}}
-                <div class="card mt-2" style="">
-                    <div class="card-header">
-                        Yearly Order
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        <div class="list-group-item" id="yearly_order"></div>
-                    </ul>
-                </div>
-
-                {{-- Login history --}}
-                <div class="card mt-2" style="">
-                    <div class="card-header d-flex justify-content-between align-items-center pe-2">
-                        Login History
-                        {{-- search bar --}}
-                        <form type="get" action="admin/role-permission-search">
-                            <div class="input-group">
-                                <input type="search" class="form-control" name="query" placeholder="Recipient's username"
-                                aria-label="Recipient's username" aria-describedby="button-addon2">
-                                <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Button</button>
-                            </div>
-                        </form>
-                    </div>
-                    <div style="width:100%;overflow:auto; max-height:200px;">{{-- scroll bar based on max-height --}}
-                        <table class="table">
-                            <th>Name</th>
-                            <th>role</th>
-                            <th>Last Login</th>
-                            <th>Previous Login</th>
-                            <th>Last IP</th>
-
-                            @forelse ($users as $user)
-                            @if ($user->lastSuccessfulLoginAt())
-                                <tr>
-                                    <td>{{ $user->name }}</td>
-                                    <td>{{ $user->getRole() }}</td>
-                                    <td>{{ $user->lastSuccessfulLoginAt() }}</td>
-
-                                    @if (empty($user->previousLoginAt()))
-                                    <td>N/A</td>
-                                    @else
-                                    <td>{{ $user->previousLoginAt() }}</td>
-                                    @endif
-                                    {{-- <td><button type="button" class="btn btn-lg btn-danger" data-toggle="popover" title="Popover title" data-bs-content="And here's some amazing content. It's very engaging. Right?">Click to toggle popover</button></td> --}}
-                                    <td>{{ $user->lastSuccessfulLoginIp() }}</td>
-
-                                </tr>
+                        {{-- Weekly Completed Job --}}
+                        <div class="col-md-6 p-0">
+                            <div class="card">
+                                <div class="card-header">
+                                    Weekly Completed Job (Unfinished)
+                                </div>
+                                @if ($weeklyName != null)
+                                    <div id="weekly_completed_job" class=""></div>
+                                @else
+                                    No data
                                 @endif
+                            </div>
+                        </div>
 
-                                @empty
-
-                                @endforelse
-                            </table>
+                        {{-- Today Jobs --}}
+                        <div class="col-md-4 ps-2">
+                            <div class="card">
+                                <div class="card-header">
+                                    Today Jobs (Unfinished)
+                                </div>
+                                @if ($orderAssignQuantity != null)
+                                    <div  id="today_jobs"></div>
+                                @else
+                                    No data
+                                @endif
+                            </div>
                         </div>
                     </div>
-                </div>
 
-
-                {{-- FIXME: --}}
-                <div class="card mt-2" style="width: 18rem;">
-                    <div class="card-header">
-                        User Data
+                    {{-- Equipment type --}}
+                    <div class="col-md-12 p-0 mt-2">
+                        <div class="card">
+                            <div class="card-header">
+                                Equipment Type
+                            </div>
+                            <div id="type_chart" class=""></div>
+                        </div>
                     </div>
-                    <ul class="list-group list-group-flush d-flex">
-                        @forelse ($logs as $log)
 
-                        <li class="list-group-item">{{ $log }}</li>
+                    {{-- monthly Order --}}
+                    <div class="card mt-2" style="">
+                        <div class="card-header">
+                            monthly Order
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <div class="list-group-item" id="monthly_order"></div>
+                        </ul>
+                    </div>
 
-                        @empty
+                    {{-- Login history --}}
+                    <div class="card mt-2" style="">
+                        <div class="card-header d-flex justify-content-between align-items-center pe-2">
+                            Login History
+                            {{-- search bar --}}
+                            <form type="get" action="admin/role-permission-search">
+                                <div class="input-group">
+                                    <input type="search" class="form-control" name="query" placeholder="Recipient's username"
+                                    aria-label="Recipient's username" aria-describedby="button-addon2">
+                                    <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Button</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div style="width:100%;overflow:auto; max-height:200px;">{{-- scroll bar based on max-height --}}
+                            <table class="table">
+                                <th>Name</th>
+                                <th>role</th>
+                                <th>Last Login</th>
+                                <th>Previous Login</th>
+                                <th>Last IP</th>
 
-                        @endforelse
-                    </ul>
+                                @forelse ($users as $user)
+                                @if ($user->lastSuccessfulLoginAt())
+                                    <tr>
+                                        <td>{{ $user->name }}</td>
+                                        <td>{{ $user->getRole() }}</td>
+                                        <td>{{ $user->lastSuccessfulLoginAt() }}</td>
+
+                                        @if (empty($user->previousLoginAt()))
+                                        <td>N/A</td>
+                                        @else
+                                        <td>{{ $user->previousLoginAt() }}</td>
+                                        @endif
+                                        {{-- <td><button type="button" class="btn btn-lg btn-danger" data-toggle="popover" title="Popover title" data-bs-content="And here's some amazing content. It's very engaging. Right?">Click to toggle popover</button></td> --}}
+                                        <td>{{ $user->lastSuccessfulLoginIp() }}</td>
+
+                                    </tr>
+                                    @endif
+
+                                    @empty
+
+                                    @endforelse
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    {{-- FIXME: --}}
+                    <div class="card mt-2" style="width: 18rem;">
+                        <div class="card-header">
+                            User Data
+                        </div>
+                        <ul class="list-group list-group-flush d-flex">
+                            @forelse ($logs as $log)
+
+                            <li class="list-group-item">{{ $log }}</li>
+
+                            @empty
+
+                            @endforelse
+                        </ul>
+                    </div>
+
                 </div>
-
             </div>
         </div>
     </div>
@@ -146,18 +156,21 @@
     <script type="text/javascript">
         google.charts.load('current', {'packages':['corechart']});
         google.charts.setOnLoadCallback(todayJobs);
-        google.charts.setOnLoadCallback(yearlyOrder);
+        google.charts.setOnLoadCallback(monthlyOrder);
         google.charts.setOnLoadCallback(weeklyCompletedJob);
-        google.charts.setOnLoadCallback(typeChart);
+        google.charts.setOnLoadCallback(equipmentChart);
 
-        /* Weekly Completed Job */
+        /* FIXME: Weekly Completed Job */
         function weeklyCompletedJob() {
             var data = google.visualization.arrayToDataTable([
-                ['string', '', { role: 'style' }],
-                ['Angel',22, '#5F7C9E'],
-                ['Jay', 6, '#5F7C9E'],
-                ['Lee', 5, '#5F7C9E'],
-                ['Chen', 4, '#5F7C9E'],
+                        ['name', 'number', { role: 'style' }],
+
+                @php
+                    for($i = 0; $i < count($weeklyCount) ; $i++)
+                    {
+                        echo "['$weeklyName[$i]' , ".$weeklyCount[$i].", '5F7C9E'],";
+                    }
+                @endphp
             ]);
 
             var options = {
@@ -189,13 +202,28 @@
         /* Registered User */
         function todayJobs() {
             var data = google.visualization.arrayToDataTable([
+                /* orderAssignQuantity */
                     ['Job', 'Count'],
-                    ['Assigned',     11],
-                    ['UnAssigned',    30],
+                    @php
+                        if($orderAssignQuantity != null)
+                        {
+                            echo "['Assigned', ".$orderAssignQuantity[1]."],";
+                            echo "['UnAssigned', ".$orderAssignQuantity[0]."],";
+                        }
+                    @endphp
             ]);
 
             var options = {
-                title: 'Job left: 30',
+                title: @php
+                    if($orderAssignQuantity != null)
+                    {
+                        echo $orderAssignQuantity[0];
+                    }
+                    else
+                    {
+                        echo 'nodata';
+                    }
+                @endphp,
                 colors : ['#EB9E00', '5F7C9E'],
                 pieHole: 0.4,
                 pieSliceText: 'none',
@@ -206,8 +234,9 @@
             chart.draw(data, options);
         }
 
-        /* Yearly Order */
-        function yearlyOrder() {
+
+        /* monthly Order */
+        function monthlyOrder() {
             var data = new google.visualization.DataTable();
             data.addColumn('string', 'Months');
             data.addColumn('number', 'Jobs');
@@ -215,18 +244,11 @@
             data.addRows([
 
                 @php
-                    echo "['Jan', ".$months[0]."],";
-                    echo "['Feb', ".$months[1]."],";
-                    echo "['Mar', ".$months[2]."],";
-                    echo "['Apr', ".$months[3]."],";
-                    echo "['May', ".$months[4]."],";
-                    echo "['Jun', ".$months[5]."],";
-                    echo "['Jul', ".$months[6]."],";
-                    echo "['Aug', ".$months[7]."],";
-                    echo "['Sep', ".$months[8]."],";
-                    echo "['Oct', ".$months[9]."],";
-                    echo "['Nov', ".$months[10]."],";
-                    echo "['Dec', ".$months[11]."],";
+                    $months = array('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec');
+                    for($i = 0; $i < 12 ; $i++)
+                    {
+                        echo "['.$months[$i].', ".$monthlyOrders[$i]."],";
+                    }
                 @endphp
 
             ]);
@@ -243,18 +265,21 @@
                 backgroundColor: 'transparent',
             };
 
-            var chart = new google.visualization.LineChart(document.getElementById('yearly_order'));
+            var chart = new google.visualization.LineChart(document.getElementById('monthly_order'));
             chart.draw(data, options);
         }
 
-        function typeChart() {
+        function equipmentChart() {
             var opacity = 'opacity: 0.4';
             var data = google.visualization.arrayToDataTable([
-                ['year', 'Ducted System', 'Package Unit', 'Watercool Unit', 'Mini VRF',
-                'Spilt System', 'Other', { role: 'style' } ],
-                ['2019', 16, 12, 21, 20, 6, 9, ''],
-                ['2020', 16, 22, 3, 2, 2, 9, ''],
-                ['2021', 28, 19, 29, 30, 12, 13, '']
+                ['year', 'Ducted System', 'Mini VRF', 'Package', 'Spilt System',
+                'Watercool Unit', 'Other', { role: 'style' } ],
+                @php
+                    for($y = 0; $y<3; $y++)
+                    {
+                        echo "[".$equipmentChart[$y*7].", ".$equipmentChart[$y*7+1].", ".$equipmentChart[$y*7+2].", ".$equipmentChart[$y*7+3].", ".$equipmentChart[$y*7+4].", ".$equipmentChart[$y*7+5].", ".$equipmentChart[$y*7+6].", ''],";
+                    }
+                @endphp
             ]);
             var options = {
                 legend: { position: 'top', maxLines: 3 },

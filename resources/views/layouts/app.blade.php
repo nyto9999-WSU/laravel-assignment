@@ -11,7 +11,6 @@
         @include('includes.header')
     </header>
 
-    <div class="container">
 
         <div class="row">
             @yield('content')
@@ -21,7 +20,6 @@
             @include('includes.footer')
         </footer>
 
-    </div>
 </body>
 
 @stack('js')

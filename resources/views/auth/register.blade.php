@@ -59,7 +59,14 @@
                             <div class="col-md-6">
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
                             </div>
+
+                            <div class="form-group row">
+                                <label class="col-md-4 col-form-label text-md-right">Laravel Google Recaptcha</label>
+                                <div class="col-md-6"> {!! htmlFormSnippet() !!} </div>
+                            </div>
                         </div>
+
+
 
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">

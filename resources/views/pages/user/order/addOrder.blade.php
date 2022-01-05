@@ -164,15 +164,17 @@
 
 @push('css')
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
-    @push('js')
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-        <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
-        <script>
-            //在後端改日期匹配mysql格式FIXME:
-            $('#datepicker').datepicker("setDate", new Date());
-            $("#datepicker").datepicker({
-                dateFormat: "yy-mm-dd",
-                minDate: '0'
-            });
-        </script>
-    @endpush
+@endpush
+
+@push('js')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+    <script>
+        //在後端改日期匹配mysql格式FIXME:
+        $('#datepicker').datepicker("setDate", new Date());
+        $("#datepicker").datepicker({
+            dateFormat: "yy-mm-dd",
+            minDate: '0'
+        });
+    </script>
+@endpush

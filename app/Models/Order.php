@@ -20,9 +20,19 @@ class Order extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function technicians()
+    // public function technicians()
+    // {
+    //     return $this->belongsToMany(User::class);
+    // }
+    public function job()
     {
-        return $this->belongsToMany(User::class, 'user_id', 'id');
+        return $this->hasOne(Job::class);
+    }
+
+    public function getTechnician()
+    {
+       $tech_id = optional($this->job)->user_id;
+       return User::find($tech_id);
     }
 
 

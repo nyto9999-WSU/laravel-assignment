@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+
 <div class="container">
 
 <!--Request intro-->
@@ -25,6 +26,7 @@
     <div class="col-md-12">
         <label for="model_number" class="form-label">Model Number</label>
         <input type="text" class="form-control" name="model_number" id="model_number" placeholder="eg: XGD78IJD7">
+
     </div>
     {{-- equipment_type --}}
     <div class="col-md-6">

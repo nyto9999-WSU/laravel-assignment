@@ -2,10 +2,10 @@
 
 @section('content')
     <div class="container">
+        <h1>assignJobToTechnician.blade</h1>
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <h1>Role: {{ Auth::user()->getRole() }}</h1>
-                <h1>showOrder.blade</h1>
+
                 <table class="table">
 
                     {{-- order_id --}}
@@ -14,15 +14,15 @@
                         <td>{{ $order->id }}</td>
                     </tr>
 
-
                     {{-- model_number --}}
                     <tr>
                         <td>Model Number</td>
                         <td>
                             @forelse ($order->aircons as $aircon)
                                 <li>
-                                    <a
-                                        href="{{ route('aircon.show', [$aircon, $order]) }}">{{ $aircon->model_number }}</a>
+                                    <a href="{{ route('aircon.show', [$aircon, $order]) }}">
+                                        {{ $aircon->model_number }}
+                                    </a>
                                 </li>
                             @empty
 
@@ -34,17 +34,6 @@
                     <tr>
                         <td>Domestic Commercial</td>
                         <td>{{ $order->domestic_commercial }}</td>
-                    </tr>
-
-                    <tr>
-                        <td>Technician</td>
-                        <td>
-                            @if (!empty($order->job->user_id))
-                                {{ $order->job->user_id }}
-                            @else
-                                N/A
-                            @endif
-                        </td>
                     </tr>
 
                     {{-- extra_note --}}
@@ -94,6 +83,17 @@
                         <td>Postcode</td>
                         <td>{{ $order->postcode }}</td>
                     </tr>
+                    {{-- mobile_number --}}
+                    <tr>
+                        <td>Mobile</td>
+                        <td>{{ $order->mobile_number }}</td>
+                    </tr>
+
+                    {{-- prefer_time --}}
+                    <tr>
+                        <td>Prefer Time</td>
+                        <td>{{ $order->prefer_time }}</td>
+                    </tr>
 
                     {{-- prefer_date --}}
                     <tr>
@@ -101,60 +101,57 @@
                         <td>{{ $order->prefer_date }}</td>
                     </tr>
 
-                    {{-- prefer_time --}}
-                    <tr>
-                        <td>prefer_time</td>
-                        <td>{{ $order->prefer_time }}</td>
-                    </tr>
-
-                    {{-- job_start_date --}}
-                    <tr>
-                        <td>Start Date</td>
-                        <td>
-                            @if (!empty($order->job_start_date))
-                                {{ $order->job_start_date }}
-                            @else
-                                N/A
-                            @endif
-                        </td>
-                    </tr>
-
-                    {{-- job_end_date --}}
-                    <tr>
-                        <td>End Date</td>
-                        <td>
-                            @if (!empty($order->job_end_date))
-                                {{ $order->job_end_date }}
-                            @else
-                                N/A
-                            @endif
-                        </td>
-                    </tr>
-
-                    {{-- created_at --}}
-                    <tr>
-                        <td>Requested Date</td>
-                        <td>{{ $order->created_at }}</td>
-                    </tr>
-
-                    {{-- assigned_at --}}
-                    <tr>
-                        <td>Assigned at</td>
-                        <td>
-                            @if (!empty($order->assigned_at))
-                                {{ $order->assigned_at }}
-                            @else
-                                N/A
-                            @endif
-                        </td>
-                    </tr>
                 </table>
 
-                {{-- edit button --}}
-                <a href="{{ route('order.edit', $order) }}" class="btn btn-primary">order.edit</a>
+                <form action="{{ route('job.store', $order) }}" method="post">
+                    @csrf
+
+                    {{-- job_start_date --}}
+                    <label for="job_start_date">Start Date</label>
+                    <input type="text" class="" id="datepicker" name="job_start_date">
+
+                    {{-- job start_time --}}
+                    <label for="job_start_time">Morning</label>
+                    <input type="radio" name="job_start_time" value="morning">
+
+                    <label for="job_start_time">Afternoon</label>
+                    <input type="radio" name="job_start_time" value="afternoon">
+
+                    <label for="job_start_time">Evening</label>
+                    <input type="radio" name="job_start_time" value="evening">
+
+                    {{-- technician dropdown --}}
+                    <select class="tech_id" name="tech_id">
+                        <option disabled selected value>Technician</option>
+                        @forelse ($technicians as $t)
+                            <option value="{{ $t->id }}">{{ $t->name }}</option>
+                        @empty
+
+                        @endforelse
+                    </select>
+
+                    <button type="submit">submit</button>
+                </form>
             </div>
         </div>
     </div>
     </div>
     </div>
 @endsection
+
+@push('css')
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+@endpush
+
+@push('js')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+    <script>
+        //在後端改日期匹配mysql格式FIXME:
+        $('#datepicker').datepicker("setDate", new Date());
+        $("#datepicker").datepicker({
+            dateFormat: "yy-mm-dd",
+            minDate: '0'
+        });
+    </script>
+@endpush

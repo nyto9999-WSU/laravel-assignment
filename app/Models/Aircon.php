@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Aircon extends Model
 {
-    public $timestamps = false;
     use HasFactory;
     protected $guarded = [];
 
@@ -17,9 +16,5 @@ class Aircon extends Model
         return $this->belongsToMany(Order::class);
     }
 
-    // public function user()
-    // {
-    //     return $this->belongsTo(User::class);
-    // }
 
 }

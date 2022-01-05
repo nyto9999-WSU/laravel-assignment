@@ -51,19 +51,6 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class);
     }
 
-    // public function aircons()
-    // {
-    //     return $this->hasMany(Aircon::class);
-    // }
-
-
-    public function jobs()
-    {
-        return $this->belongsToMany(User::class, 'order_id', 'id');
-    }
-
-
-
 
     public function isAdmin()
     {
@@ -82,7 +69,7 @@ class User extends Authenticatable
 
     public function scopeTechnicians($query)
     {
-        $query->where('role_id', '=', '3');
+        $query->where('role_id', '=', 3);
     }
 
 

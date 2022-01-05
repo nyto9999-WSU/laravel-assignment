@@ -1,4 +1,6 @@
 
+IF YOU CANNOT RUN PROJECT PLEASE UPDATE COMPOSER  ```composer update --no-scripts```
+
 FIrst time setup:
     step1
         - Run ```composer update --no-scripts```
