@@ -20,7 +20,11 @@ class OrderController extends Controller
     public function index()
     {
 
-        if (auth()->user()->isAdmin()) {
+
+        
+        if(auth()->user()->isAdmin())
+        {
+
             $orders = Order::with('aircons', 'user')->get();
 
             return view('pages.admin.order.currentOrder', compact('orders'));

@@ -19,28 +19,46 @@
                 </tr>
                 @forelse ($orders as $order)
                     <tr>
-                        <td>
-                            <a href="{{ route('order.show', $order) }}">{{ $order->id }}</a>
-                        </td>
-                        <td>
-                            @forelse ($order->aircons as $aircon)
+
+                        <th>Order</th>
+                        <th style="">Model</th>
+                        <th style="">show</th>
+                        <th style="width: 13.2%">Requested Date</th>
+                        <th style="width: 12.2%">Assigned Date</th>
+                        <th style="width: 12.2%">Completed Date</th>
+                        <th>Technician</th>
+                        <th>Status</th>
+                        <th>Cancel</th>
+                    </tr>
+                    @forelse ($orders as $order)
+                        <tr>
+                            <td>
+                                <a href="{{ route('order.show', $order) }}">{{ $order->id }}</a>
+                            </td>
+                            <td>
+                                @forelse ($order->aircons as $aircon)
+                                    <li>
+                                        <a href={{ route('aircon.show', [$aircon, $order]) }}>
+                                            {{ $aircon->model_number }}
+                                        </a>
+                                    </li>
+                                @empty
+                                    N/A
+                                @endforelse
+                                {{-- TODO:show all aircon details --}}
                                 <li>
-                                    <a href={{ route('aircon.show', [$aircon, $order]) }}>
-                                        {{ $aircon->model_number }}
-                                    </a>
-                                </li>
-                            @empty
-                                N/A
-                            @endforelse
-                            {{-- TODO:show all aircon details --}}
-                            <a href="">all</a>
-                        </td>
-                        <td>
-                            <span class="position-relative">
-                                all models info
-                                <span
-                                    class="ms-3 position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                    {{ $order->aircons->count() }}
+                                        <a href={{ route('aircon.showAll', [$order]) }}>
+                                            all
+                                        </a>
+                                    </li>
+                            </td>
+                            <td>
+                                <span class="position-relative">
+                                    all models info
+                                    <span class="ms-3 position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                        {{ $order->aircons->count() }}
+                                    </span>
+
                                 </span>
                             </span>
                         </td>
@@ -66,31 +84,30 @@
                             @endif
                         </td>
 
-                        {{-- Technician FIXME: #30:--}}
-                        <td>
-                            @if(!empty($order->job->user_id))
-                            {{ $order->job->user_id }}
-                            @else
-                            N/A
-                            @endif
-                        </td>
 
-                        {{-- Status --}}
-                        <td>{{ $order->status }}</td>
+                            {{-- Requested date --}}
+                            <td>{{ $order->prefer_date }}</td>
+                            {{-- Assigned date --}}
+                            <td>N/A</td>
+                            {{-- Completed date --}}
+                            <td>N/A</td>
+                            {{-- Technician --}}
+                            <td>N/A</td>
+                            <td>{{ $order->status }}</td>
+                            <td>
+                                <form action="{{ route('order.destroy', $order) }}" method="post">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    @empty
+                        <h1>No Data</h1>
+                    @endforelse
+                </table>
+            </div>
 
-                        {{-- delete button --}}
-                        <td>
-                            <form action="{{ route('order.destroy', $order) }}" method="post">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit">order.destory</button>
-                            </form>
-                        </td>
-                    </tr>
-                @empty
-                    <h1>No Data</h1>
-                @endforelse
-            </table>
         </div>
     </div>
     </div>

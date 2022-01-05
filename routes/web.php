@@ -33,6 +33,7 @@ Route::resource('order', OrderController::class);
 
 /* Aircon */
 Route::get('/aircon/{aircon}/order{order}/', [AirConController::class, 'show'])->name('aircon.show');
+Route::get('/airconall/order{order}/', [AirConController::class, 'showAll'])->name('aircon.showAll');
 Route::post('/aircon/order/{order}', [AirConController::class, 'store'])->name('aircon.store');
 Route::delete('/aircon/delete/{aircon}/order{order}', [AirConController::class, 'destroy'])->name('aircon.destroy');
 Route::resource('aircon', AirConController::class)->except(['store', 'show', 'destroy']);
