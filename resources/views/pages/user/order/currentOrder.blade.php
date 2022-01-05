@@ -33,7 +33,11 @@
                                     N/A
                                 @endforelse
                                 {{-- TODO:show all aircon details --}}
-                                <a href="">all</a>
+                                <li>
+                                        <a href={{ route('aircon.showAll', [$order]) }}>
+                                            all
+                                        </a>
+                                    </li>
                             </td>
                             <td>
                                 <span class="position-relative">
@@ -57,7 +61,7 @@
                                 <form action="{{ route('order.destroy', $order) }}" method="post">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit">order.destory</button>
+                                    <button type="submit" class="btn btn-danger">Delete</button>
                                 </form>
                             </td>
                         </tr>

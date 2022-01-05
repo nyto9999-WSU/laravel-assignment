@@ -61,6 +61,15 @@ class AirConController extends Controller
     }
 
     /* TODO:Show all aircons details */
+    public function showAll(Order $order)
+    {
+        
+        $aircons = $order->aircons;
+        
+        abort_unless($order->user_id == auth()->id() || auth()->user()->isAdmin(), 403);
+
+        return view('pages.user.order-aircons.showAllAirconDetails', compact('aircons'));
+    }
 
     /**
      * Show the form for editing the specified resource.
