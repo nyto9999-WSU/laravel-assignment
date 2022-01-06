@@ -19,6 +19,7 @@ use App\Http\Controllers\PagesController;
 |dd
 */
 //complete this part
+//complete this part
 
 Route::get('/', function () {
     return view('welcome');
