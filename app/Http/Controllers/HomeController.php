@@ -70,11 +70,11 @@ class HomeController extends Controller
         $users = User::all()->reverse();
 
         /*  login history log 2 */
-        $logs = $this->getLoginHistoryLog();
+        // $logs = $this->getLoginHistoryLog();
 
         /* Todasys job */
         $orderAssignQuantity = $this->getOrderAssigneQuantity();
-        return view('home', compact('roles', 'monthlyOrders', 'users', 'logs', 'equipmentChart', 'orderAssignQuantity', 'weeklyName', 'weeklyCount'));
+        return view('home', compact('roles', 'monthlyOrders', 'users', 'equipmentChart', 'orderAssignQuantity', 'weeklyName', 'weeklyCount'));
     }
 
 
@@ -125,19 +125,19 @@ class HomeController extends Controller
         return $monthlyOrders;
     }
 
-    protected function getLoginHistoryLog()
-    {
-        $authLog = AuthenticationLog::all();
-        $logs = array();
-        for ($x = $authLog->count() - 1; $x >= 1; $x--) {
-            if ($authLog[$x]->login_at != null) {
-                $u = User::find($authLog[$x]->authenticatable_id);
-                $logs[] = 'Name: ' . $u->name . '    Log: ' . $authLog[$x]->login_at->toDateTimeString();
-            }
-        }
+    // protected function getLoginHistoryLog()
+    // {
+    //     $authLog = AuthenticationLog::all();
+    //     $logs = array();
+    //     for ($x = $authLog->count() - 1; $x >= 1; $x--) {
+    //         if ($authLog[$x]->login_at != null) {
+    //             $u = User::find($authLog[$x]->authenticatable_id);
+    //             $logs[] = 'Name: ' . $u->name . '    Log: ' . $authLog[$x]->login_at->toDateTimeString();
+    //         }
+    //     }
 
-        return $logs;
-    }
+    //     return $logs;
+    // }
 
     protected function getOrderAssigneQuantity()
     {   $orderAssignedRate = array();

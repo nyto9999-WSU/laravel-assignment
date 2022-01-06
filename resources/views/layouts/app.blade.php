@@ -12,7 +12,7 @@
     </header>
 
 
-        <div class="row">
+        <div class="">
             @yield('content')
         </div>
 

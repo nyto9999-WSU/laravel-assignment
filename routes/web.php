@@ -4,10 +4,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\AirConController;
 use App\Http\Controllers\JobController;
-use App\Http\Controllers\RolePermissionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\PagesController;
+use App\Http\Controllers\NoteController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -57,3 +57,7 @@ Route::get('/pages/user/users', [PagesController::class, 'users'])->name('pages.
 Route::get('/pages/order/requested', [PagesController::class, 'orderRequested'])->name('pages.orderRequested');
 Route::get('/pages/order/assigned', [PagesController::class, 'orderAssigned'])->name('pages.orderAssigned');
 Route::get('/pages/order/completed', [PagesController::class, 'orderCompleted'])->name('pages.orderCompleted');
+
+/* Admin Extra note */
+Route::post('/note/order/{order}', [NoteController::class, 'store'])->name('note.store');
+Route::resource('note', NoteController::class)->except(['store']);

@@ -20,10 +20,11 @@ class Order extends Model
         return $this->belongsTo(User::class);
     }
 
-    // public function technicians()
-    // {
-    //     return $this->belongsToMany(User::class);
-    // }
+    public function notes()
+    {
+        return $this->hasMany(Note::class);
+    }
+
     public function job()
     {
         return $this->hasOne(Job::class);
