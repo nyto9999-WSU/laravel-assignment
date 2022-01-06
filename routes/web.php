@@ -59,3 +59,4 @@ Route::get('/pages/user/users', [PagesController::class, 'users'])->name('pages.
 Route::get('/pages/order/requested', [PagesController::class, 'orderRequested'])->name('pages.orderRequested');
 Route::get('/pages/order/assigned', [PagesController::class, 'orderAssigned'])->name('pages.orderAssigned');
 Route::get('/pages/order/completed', [PagesController::class, 'orderCompleted'])->name('pages.orderCompleted');
+/* Search function done  */
