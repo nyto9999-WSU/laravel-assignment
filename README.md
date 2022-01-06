@@ -1,4 +1,23 @@
 
+If you have issue with recaptcha
+try 
+```composer require biscolab/laravel-recaptcha
+   php artisan vendor:publish --provider="Biscolab\ReCaptcha\ReCaptchaServiceProvider"  
+   
+    MAIL_DRIVER=smtp
+    MAIL_HOST=smtp.gmail.com
+    MAIL_PORT=587
+    MAIL_USERNAME=
+    MAIL_PASSWORD=
+    MAIL_ENCRYPTION=tls
+    
+    //put these keys under env.
+    RECAPTCHA_SITE_KEY=6LdeiuYdAAAAAHXbC3ozBZQmQOJmWQUd9yiFeQ3b
+    RECAPTCHA_SECRET_KEY=6LdeiuYdAAAAAIyYTvjKqZMd9jgHuayeX8W3IZsO
+```
+
+
+
 IF YOU CANNOT RUN PROJECT PLEASE UPDATE COMPOSER  ```composer update --no-scripts```
 
 FIrst time setup:

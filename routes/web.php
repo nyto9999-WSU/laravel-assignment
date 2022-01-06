@@ -18,6 +18,8 @@ use App\Http\Controllers\NoteController;
 | contains the "web" middleware group. Now create something great!
 |dd
 */
+//complete this part
+//complete this part
 
 Route::get('/', function () {
     return view('welcome');
@@ -61,3 +63,4 @@ Route::get('/pages/order/completed', [PagesController::class, 'orderCompleted'])
 /* Admin Extra note */
 Route::post('/note/order/{order}', [NoteController::class, 'store'])->name('note.store');
 Route::resource('note', NoteController::class)->except(['store']);
+
