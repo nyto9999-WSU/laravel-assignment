@@ -9,7 +9,6 @@
                 <table class="table">
                     @forelse ($orders as $order)
                         <tr>
-                            <th>Delete</th>
                             <th>Order</th>
                             <th>Model</th>
                             <th>No. of unit</th>
@@ -23,11 +22,11 @@
                         </tr>
                         <tr>
                             {{-- action button --}}
-                            <td>
+                            {{-- <td>
                                 <a href="{{ route('order.actions' , $order) }}" class="btn btn-primary">
                                     <i class="bi bi-trash"></i>
                                 </a>
-                            </td>
+                            </td> --}}
 
                             {{-- order_id --}}
                             <td>

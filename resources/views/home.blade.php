@@ -120,7 +120,7 @@
 
 
                     {{-- FIXME: --}}
-                    <div class="card mt-2" style="width: 18rem;">
+                    {{-- <div class="card mt-2" style="width: 18rem;">
                         <div class="card-header">
                             User Data
                         </div>
@@ -133,7 +133,7 @@
 
                             @endforelse
                         </ul>
-                    </div>
+                    </div> --}}
 
                 </div>
             </div>
@@ -251,6 +251,7 @@
                     }
                 @endphp
 
+
             ]);
 
             var options = {
@@ -274,6 +275,7 @@
             var data = google.visualization.arrayToDataTable([
                 ['year', 'Ducted System', 'Mini VRF', 'Package', 'Spilt System',
                 'Watercool Unit', 'Other', { role: 'style' } ],
+
                 @php
                     for($y = 0; $y<3; $y++)
                     {

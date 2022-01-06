@@ -21,7 +21,7 @@ class OrderController extends Controller
     {
 
 
-        
+
         if(auth()->user()->isAdmin())
         {
 
@@ -58,12 +58,6 @@ class OrderController extends Controller
 
                 $technician = $order->getTechnician();
                 $technician->update(["tech_available" => 1]);
-                return back();
-
-            case 'completed':
-                $order->delete();
-                $order->aircons()->delete();
-                $order->job()->delete();
                 return back();
 
             default:
@@ -121,9 +115,14 @@ class OrderController extends Controller
      */
     public function destroy(Order $order)
     {
+        if($order->relation)
+        {
+            $order->job->delete();
+        }
+        $order->aircons->each->delete();
+
         $order->delete();
-        $order->aircons()->delete();
-        $order->job->delete();
+
         return back();
     }
 
