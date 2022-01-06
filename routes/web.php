@@ -18,6 +18,7 @@ use App\Http\Controllers\PagesController;
 | contains the "web" middleware group. Now create something great!
 |dd
 */
+//complete this part
 
 Route::get('/', function () {
     return view('welcome');
