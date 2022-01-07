@@ -117,11 +117,14 @@ class OrderController extends Controller
     {
         if($order->relation)
         {
-            $order->job->delete();
-        }
-        $order->aircons->each->delete();
 
+            $order->job()->delete();
+        }
+        
+        $order->aircons->each->delete();
+        
         $order->delete();
+        
 
         return back();
     }
