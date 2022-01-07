@@ -157,6 +157,7 @@ class OrderController extends Controller
     {
         return request()->validate([
             'extra_note' => ['nullable'],
+
         ]);
     }
 }

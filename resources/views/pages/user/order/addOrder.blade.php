@@ -113,22 +113,14 @@
                     {{-- prefer_time --}}
                     <div class="col-md-4">
 
-                        <h4 class="">Perfer time</h1>
-                            <div class="form-check">
-                                <input id="credit" name="prefer_time" type="radio" class="form-check-input" checked>
-                                <label class="form-check-label" for="credit">Morning</label>
-                            </div>
+                        <label for="prefer_time" class="form-label">Prefer Time</label>
+                        <select class="form-select" name="prefer_time" id="prefer_time">
+                            <option value="">Choose...</option>
+                            <option>Morning</option>
+                            <option>Afternoon</option>
+                            <option>Evening</option>
+                        </select>
 
-
-                            <div class="form-check">
-                                <input id="debit" name="prefer_time" type="radio" class="form-check-input">
-                                <label class="form-check-label" for="debit">Afternoon</label>
-                            </div>
-
-                            <div class="form-check">
-                                <input id="paypal" name="prefer_time" type="radio" class="form-check-input">
-                                <label class="form-check-label" for="paypal">Evening</label>
-                            </div>
                     </div>
 
 
@@ -183,7 +175,7 @@
         //在後端改日期匹配mysql格式FIXME:
         $('#datepicker').datepicker("setDate", new Date());
         $("#datepicker").datepicker({
-            dateFormat: "dd-mm-yy",
+            dateFormat: "yy-mm-dd",
             minDate: '0'
         });
     </script>
