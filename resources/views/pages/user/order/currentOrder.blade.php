@@ -12,11 +12,13 @@
             <table class="table table-hover">
                 <thead class="text-black text-wrap">
                 <tr>
+
                     <th>Job ID</th>
                     <th style="">Model</th>
                     <th style="">Requested Date</th>
                     <th style="">Assigned Date</th>
                     <th style="">Completed Date</th>
+
                     <th>Technician</th>
                     <th>Status</th>
                     
@@ -24,6 +26,7 @@
                 </thead>
                 @forelse ($orders as $order)
                     <tr>
+
                             <td>
                                 <a href="{{ route('order.show', $order) }}">{{ $order->id }}</a>
                             </td>
@@ -37,35 +40,51 @@
                                 @empty
                                     N/A
                                 @endforelse
-                                
+                                {{-- TODO:show all aircon details --}}
+                            <li>
+                                <a href={{ route('aircon.showAll', [$order]) }}>
+                                    all
+                                </a>
+                            </li>
+                        </td>
+                        <td>
+                            <span class="position-relative">
+                                all models info
+                                <span
+                                    class="ms-3 position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    {{ $order->aircons->count() }}
+                                </span>
+                            </span>
+                        </td>
+
 
                         {{-- Requested date --}}
                         <td>{{ $order->prefer_date }}</td>
 
-                        {{-- job_start_date--}}
+                        {{-- job_start_date --}}
                         <td>
-                            @if(!empty($order->job_start_date))
-                            {{ $order->job_start_date }}
+                            @if (!empty($order->job_start_date))
+                                {{ $order->job_start_date }}
                             @else
-                            N/A
+                                N/A
                             @endif
                         </td>
 
                         {{-- job_end_date --}}
                         <td>
-                            @if(!empty($order->job_end_date))
-                            {{ $order->job_end_date }}
+                            @if (!empty($order->job_end_date))
+                                {{ $order->job_end_date }}
                             @else
-                            N/A
+                                N/A
                             @endif
                         </td>
 
-                        {{-- Technician FIXME: #30:--}}
+                        {{-- Technician FIXME: #30: --}}
                         <td>
-                            @if(!empty($order->job->user_id))
-                            {{ $order->job->user_id }}
+                            @if (!empty($order->job->user_id))
+                                {{ $order->job->user_id }}
                             @else
-                            N/A
+                                N/A
                             @endif
                         </td>
 
@@ -73,12 +92,20 @@
                         <td>{{ $order->status }}</td>
 
                         {{-- delete button --}}
-                        
-                        </tr>
-                    @empty
-                        <h1>No Data</h1>
-                    @endforelse
-                </table>
+
+                        <td>
+                            <form action="{{ route('order.destroy', $order) }}" method="post">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                @empty
+                    <h1>No Data</h1>
+                @endforelse
+            </table>
+
         </div>
     </div>
     </div>

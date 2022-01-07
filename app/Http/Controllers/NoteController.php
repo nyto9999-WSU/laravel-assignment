@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Aircon;
 use App\Models\Order;
-use View;
-use function Symfony\Component\String\b;
+use App\Models\Note;
+use Illuminate\Http\Request;
 
-class AirConController extends Controller
+class NoteController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,7 +15,7 @@ class AirConController extends Controller
      */
     public function index()
     {
-        return view('pages.user.order-aircons.addAircon');
+        //
     }
 
     /**
@@ -29,6 +27,7 @@ class AirConController extends Controller
     {
         //
     }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -38,13 +37,11 @@ class AirConController extends Controller
     public function store(Request $request, Order $order)
     {
 
-        $order = Order::find($order->id);
-
         $attributes = $this->validateAirCon();
 
-        $order->aircons()->create($attributes);
+        $order->notes()->create($attributes);
 
-        return view('pages.user.order-aircons.addAircon', compact('order'));
+        return (new OrderController)->actions($order);
     }
 
     /**
@@ -53,22 +50,9 @@ class AirConController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Aircon $aircon, Order $order)
+    public function show($id)
     {
-        abort_unless($order->user_id == auth()->id() || auth()->user()->isAdmin(), 403);
-
-        return view('pages.user.order-aircons.showAirconDetails', compact('aircon'));
-    }
-
-    /* TODO:Show all aircons details */
-    public function showAll(Order $order)
-    {
-
-        $aircons = $order->aircons;
-
-        abort_unless($order->user_id == auth()->id() || auth()->user()->isAdmin(), 403);
-
-        return view('pages.user.order-aircons.showAllAirconDetails', compact('aircons'));
+        //
     }
 
     /**
@@ -89,10 +73,9 @@ class AirConController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Order $order)
+    public function update(Request $request, $id)
     {
         //
-
     }
 
     /**
@@ -101,25 +84,19 @@ class AirConController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-
-    public function destroy(Aircon $aircon, Order $order)
+    public function destroy($id)
     {
-        $aircon->delete();
-        return view('pages.user.order-aircons.addAircon', compact('order'));
+        //
+        $note = Note::find($id);
+        $note->delete();
+        return back();
     }
 
     protected function validateAirCon()
     {
-        if (!empty(request()->other_type)) {
-            request()->merge(['equipment_type' => request()->other_type]);
-        }
-
 
         return request()->validate([
-            'model_number' => ['nullable'],
-            'equipment_type' => ['nullable'],
-            'other_type' => ['nullable'],
-            'issue' => ['nullable'],
+            'description' => ['nullable'],
         ]);
     }
 }

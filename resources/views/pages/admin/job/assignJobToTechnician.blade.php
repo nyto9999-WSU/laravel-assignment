@@ -120,6 +120,7 @@
                     <label for="job_start_time">Evening</label>
                     <input type="radio" name="job_start_time" value="evening">
 
+
                     {{-- technician dropdown --}}
                     <select class="tech_id" name="tech_id">
                         <option disabled selected value>Technician</option>
@@ -130,8 +131,34 @@
                         @endforelse
                     </select>
 
+
                     <button type="submit">submit</button>
                 </form>
+
+                {{-- extra note --}}
+                <form action="{{ route('note.store', $order) }}" method="post">
+                    @csrf
+
+                    <label for="description"></label>
+                    <input type="text" name="description">
+
+                    <button type="submit">Add note</button>
+                </form>
+
+                <h1>EXTRA NOTE</h1>
+                @forelse ($order->notes as $note)
+                    <li>{{ $note->description }}</li>
+                    <form action="{{ route('note.destroy', $note) }}" method="post">
+                        @method('DELETE')
+                        @csrf
+                        <button type="submit">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </form>
+                @empty
+                    <li>N/A</li>
+                @endforelse
+
             </div>
         </div>
     </div>

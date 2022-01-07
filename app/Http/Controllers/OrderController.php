@@ -21,7 +21,7 @@ class OrderController extends Controller
     {
 
 
-        
+
         if(auth()->user()->isAdmin())
         {
 
@@ -58,12 +58,6 @@ class OrderController extends Controller
 
                 $technician = $order->getTechnician();
                 $technician->update(["tech_available" => 1]);
-                return back();
-
-            case 'completed':
-                $order->delete();
-                $order->aircons()->delete();
-                $order->job()->delete();
                 return back();
 
             default:
@@ -123,6 +117,7 @@ class OrderController extends Controller
     {
         if($order->relation)
         {
+
             $order->job()->delete();
         }
         
@@ -130,6 +125,7 @@ class OrderController extends Controller
         
         $order->delete();
         
+
         return back();
     }
 
@@ -164,6 +160,7 @@ class OrderController extends Controller
     {
         return request()->validate([
             'extra_note' => ['nullable'],
+
         ]);
     }
 }

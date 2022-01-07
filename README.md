@@ -1,7 +1,8 @@
 
 If you have issue with recaptcha
 try 
-```composer require biscolab/laravel-recaptcha
+```
+    composer require biscolab/laravel-recaptcha
    php artisan vendor:publish --provider="Biscolab\ReCaptcha\ReCaptchaServiceProvider"  
    
     MAIL_DRIVER=smtp
