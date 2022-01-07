@@ -119,6 +119,8 @@ class UserController extends Controller
         return back();
     }
 
+
+
     protected function validateUserProfile($user)
     {
 

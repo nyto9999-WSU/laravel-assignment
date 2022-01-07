@@ -121,9 +121,15 @@ class OrderController extends Controller
      */
     public function destroy(Order $order)
     {
+        if($order->relation)
+        {
+            $order->job()->delete();
+        }
+        
+        $order->aircons->each->delete();
+        
         $order->delete();
-        $order->aircons()->delete();
-        $order->job->delete();
+        
         return back();
     }
 

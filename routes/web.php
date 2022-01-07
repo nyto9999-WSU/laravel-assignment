@@ -47,6 +47,7 @@ Route::patch('user/{user}/profile/edit', [UserController::class, 'updateProfile'
 Route::patch('user/{user}/role/edit', [UserController::class, 'updateRole'])->name('user.updateRole');
 Route::resource('user', UserController::class);
 
+
 /* Calendar */
 Route::resource('calendar', CalendarController::class);
 
