@@ -6,6 +6,7 @@
         <h1>Role: {{ Auth::user()->getRole() }}</h1>
         <h1>showAllAirconDetails.blade</h1>
         @forelse ($aircons as $aircon)
+        
         <div class="col-md-12">
             <table>
                 
@@ -34,7 +35,7 @@
                 </tr>
                 
             </table>
-            <hr class="my-4">
+            <hr>
         </div>
     </div>
 </div>
