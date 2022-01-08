@@ -4,7 +4,7 @@
     <div class="container">
         <div class="container-fluid">
                     <div class="row mt-3">
-                        <img src="{{ asset('image/logo.jpeg') }}">
+                        
 
                         {{-- Registered User --}}
                         <div class="col-md-2 pe-2">
