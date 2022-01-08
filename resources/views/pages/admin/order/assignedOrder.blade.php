@@ -6,6 +6,11 @@
         <h1>assignOrder.blade(admin)</h1>
         <div class="row justify-content-center">
             <div class="col-md-8">
+                <div class="col-4">Search</div>
+                <div class="col-6">
+                    <input type="text" id="search" class="form-control">
+                </div>
+                <div id="current_orders">
                 <table class="table">
                     @forelse ($orders as $order)
                         <tr>
@@ -82,8 +87,27 @@
                     @endforelse
                 </table>
             </div>
+            </div>
         </div>
     </div>
     </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script>
+    $('#search').on('keyup',function(){
+    $value=$(this).val();
+    $.ajax({
+    type : 'get',
+    url : '/pages/order/search-requested-jobs',
+    data:{'s':$value, status:'assigned'},
+    success:function(data){
+        // console.log(data);
+    $('#current_orders').html(data.html);
+    }
+    });
+    })
+    </script>
+    <script type="text/javascript">
+        $.ajaxSetup({ headers: { 'csrftoken' : '{{ csrf_token() }}' } });
+    </script>
 @endsection
