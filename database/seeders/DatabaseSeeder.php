@@ -42,7 +42,8 @@ class DatabaseSeeder extends Seeder
             'updated_at' => now()
         ]);
 
-
+       /* user */
+        /* user */
         DB::table('users')->insert([
             'name' => 'user',
             'email' =>'user@gmail.com',
