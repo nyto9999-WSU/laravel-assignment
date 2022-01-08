@@ -63,7 +63,11 @@ Route::get('/pages/order/requested', [PagesController::class, 'orderRequested'])
 Route::get('/pages/order/assigned', [PagesController::class, 'orderAssigned'])->name('pages.orderAssigned');
 Route::get('/pages/order/completed', [PagesController::class, 'orderCompleted'])->name('pages.orderCompleted');
 
+
+Route::get('/pages/order/search-requested-jobs', [PagesController::class, 'searchRequestedJobs']);
+Route::get('/pages/order/search-request-history', [PagesController::class, 'searchRequesteHistory']);
+
 /* Admin Extra note */
 Route::post('/note/order/{order}', [NoteController::class, 'store'])->name('note.store');
 Route::resource('note', NoteController::class)->except(['store']);
-
+Route::get('/admin/role-permission-search', [UserController::class, 'SearchUser']);

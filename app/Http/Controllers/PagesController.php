@@ -11,6 +11,33 @@ use App\Models\Job;
 class PagesController extends Controller
 {
     //
+
+    public function searchRequestedJobs(Request $attr)
+    {
+        if (auth()->user()->isAdmin()) {
+            $orders = Order::with('aircons', 'user')
+                ->where('status', '=', "$attr->status")->where('name', 'like', "%$attr->s%")
+                ->orWhere('id', $attr->s)
+                ->get();
+            return response()->json([
+                'statusCode' => 200,
+                'html' => view('pages.admin.search.current-orders', get_defined_vars())->render(),
+            ]);
+        }
+    }
+    public function searchRequesteHistory(Request $attr)
+    {
+        $orders = Order::with('aircons', 'user')
+            ->where('user_id', auth()->id())
+            ->where('prefer_date', 'like', "%$attr->s%")
+            ->get();
+            return response()->json([
+                'statusCode' => 200,
+                'html' => view('pages.user.search.current-orders', get_defined_vars())->render(),
+            ]);
+    }
+
+
     public function orderRequested()
     {
         if (auth()->user()->isAdmin()) {

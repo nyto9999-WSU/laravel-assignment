@@ -8,11 +8,11 @@
             <div class="col-md-8">
 
                 {{-- Search bar --}}
-                <form type="get" action="admin/role-permission-search">
+                <form type="get" action="/admin/role-permission-search">
                     <div class="input-group mb-3">
                         <input type="search" class="form-control mr-2" name="query" placeholder="Recipient's username"
-                            aria-label="Recipient's username" aria-describedby="button-addon2">
-                        <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Button</button>
+                            aria-label="Recipient's username" aria-describedby="button-addon2" value="{{!empty($name) ? $name : ''}}">
+                        <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Search</button>
                     </div>
                 </form>
 

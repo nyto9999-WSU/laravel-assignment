@@ -24,7 +24,6 @@ class OrderController extends Controller
 
         if(auth()->user()->isAdmin())
         {
-
             $orders = Order::with('aircons', 'user')->get();
 
             return view('pages.admin.order.currentOrder', compact('orders'));
@@ -120,11 +119,11 @@ class OrderController extends Controller
 
             $order->job()->delete();
         }
-        
+
         $order->aircons->each->delete();
-        
+
         $order->delete();
-        
+
 
         return back();
     }

@@ -17,8 +17,16 @@ class UserController extends Controller
     public function index()
     {
         $users = User::paginate(3);
-
         return view('pages.admin.userManagement.currentUsers', compact('users'));
+    }
+
+    public function SearchUser(Request $req)
+    {
+        $data = $req->all();
+        $name = $data['query'];
+        $users = User::where('name', 'like', "%$name%")->paginate(3);
+        $users->appends(['query' => $name]);
+        return view('pages.admin.userManagement.currentUsers', compact(['users', 'name']));
     }
 
     public function create()

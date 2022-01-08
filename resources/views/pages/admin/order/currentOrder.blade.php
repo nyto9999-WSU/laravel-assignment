@@ -6,80 +6,104 @@
         <h1>currentOrder.blade(admin)</h1>
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <table class="table">
-                    @forelse ($orders as $order)
-                        <tr>
-                            <th>Assign</th>
-                            <th>Order</th>
-                            <th>Model</th>
-                            <th>No. of unit</th>
-                            <th>Customer</th>
-                            <th>Unit Address</th>
-                            <th>Phone</th>
-                            <th>Requested Date</th>
-                            <th>Preferred Date</th>
-                            <th>Type</th>
-                            <th>Extra Note</th>
-                        </tr>
-                        <tr>
-                            {{-- assign button --}}
-                            <td>
-                                <a href="{{ route('order.actions' , $order) }}" class="btn btn-primary">
-                                    <i class="bi bi-pen"></i>
-                                </a>
-                            </td>
+                <div class="col-4">Search</div>
+                <div class="col-6">
+                    <input type="text" id="search" class="form-control">
+                </div>
+                <div id="current_orders">
+                    <table class="table">
+                        @forelse ($orders as $order)
+                            <tr>
+                                <th>Assign</th>
+                                <th>Order</th>
+                                <th>Model</th>
+                                <th>No. of unit</th>
+                                <th>Customer</th>
+                                <th>Unit Address</th>
+                                <th>Phone</th>
+                                <th>Requested Date</th>
+                                <th>Preferred Date</th>
+                                <th>Type</th>
+                                <th>Extra Note</th>
+                            </tr>
+                            <tr>
+                                {{-- assign button --}}
+                                <td>
+                                    <a href="{{ route('order.actions' , $order) }}" class="btn btn-primary">
+                                        <i class="bi bi-pen"></i>
+                                    </a>
+                                </td>
 
-                            {{-- order_id --}}
-                            <td>
-                                <a href={{ route('order.show', $order->id) }}>{{ $order->id }}</a>
-                            </td>
+                                {{-- order_id --}}
+                                <td>
+                                    <a href={{ route('order.show', $order->id) }}>{{ $order->id }}</a>
+                                </td>
 
-                            {{-- model_number --}}
-                            <td>
-                                @forelse ($order->aircons as $aircon)
-                                    <li>
-                                        <a href={{ route('aircon.show', [$aircon, $order]) }}>
-                                            {{ $aircon->id }}
-                                        </a>
-                                    </li>
-                                @empty
-                                    N/A
-                                @endforelse
-                                {{-- TODO: all aircons --}}
-                                <li>All</li>
-                            </td>
+                                {{-- model_number --}}
+                                <td>
+                                    @forelse ($order->aircons as $aircon)
+                                        <li>
+                                            <a href={{ route('aircon.show', [$aircon, $order]) }}>
+                                                {{ $aircon->id }}
+                                            </a>
+                                        </li>
+                                    @empty
+                                        N/A
+                                    @endforelse
+                                    {{-- TODO: all aircons --}}
+                                    <li>All</li>
+                                </td>
 
-                            {{-- no_of_unit --}}
-                            <td>{{ $order->no_of_unit }}</td>
+                                {{-- no_of_unit --}}
+                                <td>{{ $order->no_of_unit }}</td>
 
-                            {{-- name --}}
-                            <td>{{ $order->name }}</td>
+                                {{-- name --}}
+                                <td>{{ $order->name }}</td>
 
-                            {{-- install_address --}}
-                            <td>{{ $order->install_address }}</td>
+                                {{-- install_address --}}
+                                <td>{{ $order->install_address }}</td>
 
-                            {{-- mobile_number --}}
-                            <td>{{ $order->mobile_number }}</td>
+                                {{-- mobile_number --}}
+                                <td>{{ $order->mobile_number }}</td>
 
-                            {{-- created_at --}}
-                            <td>{{ $order->created_at }}</td>
+                                {{-- created_at --}}
+                                <td>{{ $order->created_at }}</td>
 
-                            {{-- prefer_date --}}
-                            <td>{{ $order->prefer_date }}</td>
+                                {{-- prefer_date --}}
+                                <td>{{ $order->prefer_date }}</td>
 
-                            {{-- domestic_commercial --}}
-                            <td>{{ $order->domestic_commercial }}</td>
+                                {{-- domestic_commercial --}}
+                                <td>{{ $order->domestic_commercial }}</td>
 
-                            {{-- extra_note --}}
-                            <td>{{ $order->extra_note }}</td>
-                        </tr>
-                    @empty
-                        <h1>no data</h1>
-                    @endforelse
-                </table>
+                                {{-- extra_note --}}
+                                <td>{{ $order->extra_note }}</td>
+                            </tr>
+                        @empty
+                            <h1>no data</h1>
+                        @endforelse
+                    </table>
+                </div>
             </div>
         </div>
     </div>
     </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script>
+$('#search').on('keyup',function(){
+$value=$(this).val();
+$.ajax({
+type : 'get',
+url : '/pages/order/search-requested-jobs',
+data:{'s':$value, status:'Booked'},
+success:function(data){
+    // console.log(data);
+$('#current_orders').html(data.html);
+}
+});
+})
+</script>
+<script type="text/javascript">
+    $.ajaxSetup({ headers: { 'csrftoken' : '{{ csrf_token() }}' } });
+</script>
 @endsection
