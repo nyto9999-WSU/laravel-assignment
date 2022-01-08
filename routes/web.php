@@ -21,9 +21,11 @@ use App\Http\Controllers\NoteController;
 //complete this part
 //complete this part
 
+/* First page */
 Route::get('/', function () {
     return view('welcome');
 });
+
 Auth::routes();
 
 /* Dashboards */
