@@ -77,7 +77,7 @@
 
                             {{-- TODO: Print --}}
                             <td>
-                                <a href="" class="btn btn-primary">
+                                <a href="{{route('order.printOrder', $order->id)}}" class="btn btn-primary">
                                     <i class="bi bi-printer"></i>
                                 </a>
                             </td>

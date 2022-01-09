@@ -90,6 +90,16 @@ class OrderController extends Controller
         return view('pages.user.order.showOrder', compact('order', 'technician'));
     }
 
+    public function printOrder($order)
+    {
+        // abort_unless($order->user_id == auth()->id() || auth()->user()->isAdmin(), 403);
+        $order = Order::find($order);
+        $technician = $order->getTechnician();
+
+        return view('pages.user.order.print-order', compact('order', 'technician'));
+    }
+
+
 
     public function edit(Order $order)
     {
