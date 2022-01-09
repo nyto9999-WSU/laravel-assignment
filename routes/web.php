@@ -37,6 +37,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('order/{order}/actions', [OrderController::class, 'actions'])->name('order.actions');
 Route::resource('order', OrderController::class);
 
+Route::get('/print-order/{id?}', [OrderController::class, 'printOrder'])->name('order.printOrder');
+
 /* Aircon */
 Route::get('/aircon/{aircon}/order{order}/', [AirConController::class, 'show'])->name('aircon.show');
 Route::get('/airconall/order{order}/', [AirConController::class, 'showAll'])->name('aircon.showAll');
