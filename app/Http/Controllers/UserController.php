@@ -45,6 +45,13 @@ class UserController extends Controller
 
     }
 
+    public function profile()
+    {
+        $user = auth()->user();
+
+        return view('pages.admin.userManagement.userProfile', compact('user'));
+    }
+
 
     public function show(User $user)
     {

@@ -67,7 +67,7 @@
                             <td>{{ $order->mobile_number }}</td>
 
                             {{-- created_at --}}
-                            <td>{{ $order->created_at }}</td>
+                            <td>{{ date('d-m-Y', strtotime($order->created_at)) }}</td>
 
                             {{-- prefer_date --}}
                             <td>{{ $order->domestic_commercial }}</td>

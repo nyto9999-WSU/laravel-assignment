@@ -46,7 +46,7 @@
                         </td>
                         <td>
                             <span class="position-relative">
-                                all models info
+                                all models
                                 <span
                                     class="ms-3 position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                                     {{ $order->aircons->count() }}
@@ -56,8 +56,7 @@
 
 
                         {{-- Requested date --}}
-                        <td>{{ $order->prefer_date }}</td>
-
+                        <td>{{ date('d-m-Y', strtotime($order->prefer_date)) }}</td>
                         {{-- job_start_date --}}
                         <td>
                             @if (!empty($order->job_start_date))

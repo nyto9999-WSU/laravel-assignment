@@ -71,11 +71,11 @@ class OrderController extends Controller
 
     public function store(Request $request)
     {
-
         $attributes = $this->validateOrder();
         auth()->user()->orders()->create($attributes);
-
-        $order = Order::orderBy('created_at', 'desc')->first(); //FIXME: Need more accurate query
+        $order = Order::where('user_id', '=', auth()->user()->id)
+                        ->orderBy('created_at', 'desc')
+                        ->first();
 
         return view('pages.user.order-aircons.addAircon', compact('order'));
     }
@@ -139,7 +139,7 @@ class OrderController extends Controller
 
     protected function validateOrder()
     {
-        return request()->validate([
+        $validation = request()->validate([
             'name' => ['nullable'],
             'email' => ['nullable'],
             'mobile_number' => ['nullable'],
@@ -153,6 +153,12 @@ class OrderController extends Controller
             'domestic_commercial' => ['nullable'],
             'extra_note' => ['nullable'],
         ]);
+
+        $mySQL_date = Carbon::createFromFormat('d-m-Y', $validation['prefer_date'])->format('Y-m-d');
+
+        return $data = [
+            'prefer_date' => $mySQL_date,
+        ];
     }
 
     protected function validateEditOrder()

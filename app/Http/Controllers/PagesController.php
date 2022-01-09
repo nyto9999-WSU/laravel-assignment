@@ -90,4 +90,6 @@ class PagesController extends Controller
                      ->paginate(9);
         return view('pages.admin.userManagement.currentUsers', compact('users'));
     }
+
+
 }

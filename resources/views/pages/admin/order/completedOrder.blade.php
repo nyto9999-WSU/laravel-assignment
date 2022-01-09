@@ -67,10 +67,10 @@
                             <td>{{ $order->mobile_number }}</td>
 
                             {{-- job_start_date --}}
-                            <td>{{ $order->job_start_date }}</td>
+                            <td>{{ date('d-m-Y', strtotime($order->job_start_date)) }}</td>
 
                             {{-- job_end_date --}}
-                            <td>{{ $order->job_end_date }}</td>
+                            <td>{{ date('d-m-Y', strtotime($order->job_end_date)) }}</td>
 
 
                             {{-- prefer_date --}}

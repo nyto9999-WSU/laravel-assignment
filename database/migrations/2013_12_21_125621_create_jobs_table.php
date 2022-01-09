@@ -15,7 +15,7 @@ class CreateJobsTable extends Migration
     {
         Schema::create('jobs', function (Blueprint $table) {
             $table->id();
-
+            $table->string('tech_name');
 
 
             $table->foreignId('order_id')
@@ -24,6 +24,7 @@ class CreateJobsTable extends Migration
 
             /* techician id */
             $table->foreignId('user_id')
+                    ->nullable()
                     ->constrained()
                     ->onDelete('cascade');
             $table->timestamps();

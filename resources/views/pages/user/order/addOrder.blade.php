@@ -21,7 +21,6 @@
                     </div>
                 </div>
 
-
                 {{-- email --}}
                 <div class="col-12">
                     <label for="email" class="form-label">Email Address</label>
@@ -70,8 +69,13 @@
                         <select class="form-select" name="state" id="state">
                             <option value="">Choose...</option>
                             <option>NSW</option>
-                            <option>Sydney</option>
-                            <option>California</option>
+                            <option>Victoria</option>
+                            <option>Queensland</option>
+                            <option>South Australia</option>
+                            <option>Western Australia</option>
+                            <option>Tasmania</option>
+                            <option>Northern Territory</option>
+                            <option>Australian Capital Territory</option>
                         </select>
                         <div class="invalid-feedback">
                             Please provide a valid state.
@@ -145,8 +149,6 @@
                         <textarea class="form-control" name="extra_note" id="extra_note" cols="30" rows="2"
                             placeholder="example: 2 dogs in house"></textarea>
 
-
-
                         <hr class="my-4">
                     </div>
                 </div>
@@ -175,7 +177,7 @@
         //在後端改日期匹配mysql格式FIXME:
         $('#datepicker').datepicker("setDate", new Date());
         $("#datepicker").datepicker({
-            dateFormat: "yy-mm-dd",
+            dateFormat: "dd-mm-yy",
             minDate: '0'
         });
     </script>
