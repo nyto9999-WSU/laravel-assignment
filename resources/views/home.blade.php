@@ -4,7 +4,7 @@
     <div class="container">
         <div class="container-fluid">
                     <div class="row mt-3">
-                        
+
 
                         {{-- Registered User --}}
                         <div class="col-md-2 pe-2">

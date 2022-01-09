@@ -39,8 +39,8 @@
                     <tr>
                         <td>Technician</td>
                         <td>
-                            @if (!empty($order->job->user_id))
-                                {{ $order->job->user_id }}
+                            @if (!empty($order->job->tech_name))
+                                {{ $order->job->tech_name }}
                             @else
                                 N/A
                             @endif
@@ -98,13 +98,25 @@
                     {{-- prefer_date --}}
                     <tr>
                         <td>Prefer Date</td>
-                        <td>{{ $order->prefer_date }}</td>
+                        <td>
+                            @if (!empty($order->prefer_date))
+                                {{ date('d-m-Y', strtotime($order->prefer_date)) }}
+                            @else
+                                N/A
+                            @endif
+                        </td>
                     </tr>
 
                     {{-- prefer_time --}}
                     <tr>
                         <td>prefer_time</td>
-                        <td>{{ $order->prefer_time }}</td>
+                        <td>
+                            @if (!empty($order->prefer_time))
+                                {{ $order->prefer_time }}
+                            @else
+                                N/A
+                            @endif
+                        </td>
                     </tr>
 
                     {{-- job_start_date --}}
@@ -112,7 +124,7 @@
                         <td>Start Date</td>
                         <td>
                             @if (!empty($order->job_start_date))
-                                {{ $order->job_start_date }}
+                                {{ date('d-m-Y', strtotime($order->job_start_date)) }}
                             @else
                                 N/A
                             @endif
@@ -124,7 +136,7 @@
                         <td>End Date</td>
                         <td>
                             @if (!empty($order->job_end_date))
-                                {{ $order->job_end_date }}
+                                {{ date('d-m-Y', strtotime($order->job_end_date)) }}
                             @else
                                 N/A
                             @endif
@@ -134,7 +146,7 @@
                     {{-- created_at --}}
                     <tr>
                         <td>Requested Date</td>
-                        <td>{{ $order->created_at }}</td>
+                        <td>{{ date('d-m-Y h:m:s', strtotime($order->created_at)) }}</td>
                     </tr>
 
                     {{-- assigned_at --}}
@@ -142,7 +154,7 @@
                         <td>Assigned at</td>
                         <td>
                             @if (!empty($order->assigned_at))
-                                {{ $order->assigned_at }}
+                                {{ date('d-m-Y h:m:s', strtotime($order->assigned_at)) }}
                             @else
                                 N/A
                             @endif

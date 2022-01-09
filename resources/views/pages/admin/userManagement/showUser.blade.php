@@ -1,45 +1,28 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <h1>Role: {{ Auth::user()->getRole() }}</h1>
-                <h1>showOrder.blade</h1>
-                <table class="table">
-
-                    {{-- user_id --}}
-                    <tr>
-                        <td>ID</td>
-                        <td>{{ $user->id }}</td>
-                    </tr>
-
-                    {{-- name --}}
-                    <tr>
-                        <td>Name</td>
-                        <td>{{ $user->name }}</td>
-                    </tr>
-
-                    {{-- email --}}
-                    <tr>
-                        <td>email</td>
-                        <td>{{ $user->email }}</td>
-                    </tr>
-
-                    {{-- created_at --}}
-                    <tr>
-                        <td>created_at</td>
-                        <td>{{ $user->created_at }}</td>
-                    </tr>
-
-
-
-
-                </table>
-
-            </div>
-        </div>
-    </div>
-    </div>
-    </div>
+    <h1>Show user blade</h1>
+    <table class="table">
+        <tr>
+            <td>User ID</td>
+            <td>{{ $user->id }}</td>
+        </tr>
+        <tr>
+            <td>Role</td>
+            <td>{{ $user->getRole() }}</td>
+        </tr>
+        <tr>
+            <td>Name</td>
+            <td>{{ $user->name }}</td>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td>{{ $user->email }}</td>
+        </tr>
+        <tr>
+            <td>Registered</td>
+            <td>{{ date('d-m-Y h:m:s', strtotime($user->created_at)) }}</td>
+        </tr>
+    </table>
+    <a href="{{ route('user.edit', $user) }}" class="btn btn-primary">Edit btn</a>
 @endsection

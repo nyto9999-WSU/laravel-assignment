@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Job;
 use Illuminate\Http\Request;
 use DB;
+use Illuminate\Support\Carbon;
 class JobController extends Controller
 {
 
@@ -94,12 +95,12 @@ class JobController extends Controller
     {
 
         $attributes = request()->validate([
-            'tech_id' => ['nullable'],
+            'tech_name' => ['nullable'],
         ]);
 
         return $data = [
             'order_id' => $order->id,
-            'user_id' => $attributes['tech_id'],
+            'tech_name' => $attributes['tech_name'],
             'created_at' => now(),
             'updated_at' => now(),
         ];
@@ -109,15 +110,16 @@ class JobController extends Controller
     protected function validateOrder()
     {
 
-        $attributes = request()->validate([
+        $validation = request()->validate([
             'job_start_date' => ['nullable'],
             'job_start_time' => ['nullable'],
         ]);
 
+        $mySQL_date = Carbon::createFromFormat('d-m-Y', $validation['job_start_date'])->format('Y-m-d');
         return $data = [
             "status" =>  'assigned',
-            'job_start_date' => $attributes["job_start_date"],
-            'job_start_time' => $attributes["job_start_time"],
+            'job_start_date' => $mySQL_date,
+            'job_start_time' => $validation["job_start_time"],
             'assigned_at' => now(),
         ];
 

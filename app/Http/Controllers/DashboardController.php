@@ -12,7 +12,7 @@ use Carbon\Carbon;
 use DB;
 use Rappasoft\LaravelAuthenticationLog\Models\AuthenticationLog;
 
-class HomeController extends Controller
+class DashboardController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -22,6 +22,7 @@ class HomeController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('isAdmin');
     }
 
     /**
@@ -32,24 +33,19 @@ class HomeController extends Controller
 
     public function index(Request $request)
     {
-        if(!auth()->user()->isAdmin())
-        {
-            return view('pages.user.order.addOrder');
-        }
-
         $currentYear = now()->format('Y');
 
         $name = array();
 
         $job = DB::table('jobs')
-                ->join('users', 'jobs.user_id', '=', 'users.id')
-                ->select('users.name')
-                ->whereBetween('jobs.created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
-                ->get()
-                ->toArray();
+            ->join('users', 'jobs.user_id', '=', 'users.id')
+            ->select('users.name')
+            ->whereBetween('jobs.created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
+            ->get()
+            ->toArray();
 
         foreach ($job as $j) {
-            array_push($name,$j->name);
+            array_push($name, $j->name);
         }
 
         $weeklyEffort = array_count_values($name);
@@ -57,8 +53,7 @@ class HomeController extends Controller
 
         $weeklyName = array();
         $weeklyCount = array();
-        foreach($weeklyEffort as $key => $value)
-        {
+        foreach ($weeklyEffort as $key => $value) {
             $weeklyName[] = $key;
             $weeklyCount[] = $value;
         }
@@ -79,7 +74,7 @@ class HomeController extends Controller
 
         /* Todasys job */
         $orderAssignQuantity = $this->getOrderAssigneQuantity();
-        return view('home', compact('roles', 'monthlyOrders', 'users', 'equipmentChart', 'orderAssignQuantity', 'weeklyName', 'weeklyCount'));
+        return view('pages.admin.dashboard', compact('roles', 'monthlyOrders', 'users', 'equipmentChart', 'orderAssignQuantity', 'weeklyName', 'weeklyCount'));
     }
 
 
@@ -113,8 +108,7 @@ class HomeController extends Controller
     }
 
     public function getTechnicianWeeklyEffor()
-    {
-    }
+    { }
 
     protected function getMonthlyOrders($currentYear)
     {
@@ -145,19 +139,19 @@ class HomeController extends Controller
     // }
 
     protected function getOrderAssigneQuantity()
-    {   $orderAssignedRate = array();
+    {
+        $orderAssignedRate = array();
 
 
         $orderAssignedRate[] = Order::whereDate('created_at',  now()->format('y/m/d'))
-                                    ->where('status', '=', 'Booked')
-                                    ->count();
+            ->where('status', '=', 'Booked')
+            ->count();
 
         $orderAssignedRate[] = Order::whereDate('assigned_at', now()->format('y/m/d'))
-                                    ->where('status', '=', 'assigned')
-                                    ->count();
+            ->where('status', '=', 'assigned')
+            ->count();
 
-        if($orderAssignedRate[0] == 0 && $orderAssignedRate[1] == 0)
-        {
+        if ($orderAssignedRate[0] == 0 && $orderAssignedRate[1] == 0) {
             $orderAssignedRate = null;
         }
         return $orderAssignedRate;

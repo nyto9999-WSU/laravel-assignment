@@ -98,7 +98,7 @@
                     {{-- prefer_date --}}
                     <tr>
                         <td>Prefer Date</td>
-                        <td>{{ $order->prefer_date }}</td>
+                        <td>{{ date('d-m-Y', strtotime($order->prefer_date)) }}</td>
                     </tr>
 
                 </table>
@@ -122,10 +122,10 @@
 
 
                     {{-- technician dropdown --}}
-                    <select class="tech_id" name="tech_id">
+                    <select class="tech_name" name="tech_name">
                         <option disabled selected value>Technician</option>
                         @forelse ($technicians as $t)
-                            <option value="{{ $t->id }}">{{ $t->name }}</option>
+                            <option value="{{ $t->name }}">{{ $t->name }}</option>
                         @empty
 
                         @endforelse
@@ -177,7 +177,7 @@
         //在後端改日期匹配mysql格式FIXME:
         $('#datepicker').datepicker("setDate", new Date());
         $("#datepicker").datepicker({
-            dateFormat: "yy-mm-dd",
+            dateFormat: "dd-mm-yy",
             minDate: '0'
         });
     </script>
