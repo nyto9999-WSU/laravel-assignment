@@ -35,7 +35,13 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('order/{order}/actions', [OrderController::class, 'actions'])->name('order.actions');
 Route::resource('order', OrderController::class);
 
+
+
+// print order route
 Route::get('/print-order/{id?}', [OrderController::class, 'printOrder'])->name('order.printOrder');
+
+
+
 
 /* Aircon */
 Route::get('/aircon/{aircon}/order{order}/', [AirConController::class, 'show'])->name('aircon.show');
@@ -65,11 +71,16 @@ Route::get('/pages/order/requested', [PagesController::class, 'orderRequested'])
 Route::get('/pages/order/assigned', [PagesController::class, 'orderAssigned'])->name('pages.orderAssigned');
 Route::get('/pages/order/completed', [PagesController::class, 'orderCompleted'])->name('pages.orderCompleted');
 
-
+// search  route for all 3 jobs for admin
 Route::get('/pages/order/search-requested-jobs', [PagesController::class, 'searchRequestedJobs']);
+
+// search route for requested history for user
 Route::get('/pages/order/search-request-history', [PagesController::class, 'searchRequesteHistory']);
+
 
 /* Admin Extra note */
 Route::post('/note/order/{order}', [NoteController::class, 'store'])->name('note.store');
 Route::resource('note', NoteController::class)->except(['store']);
+
+// search route for roles and permission on the admin side
 Route::get('/admin/role-permission-search', [UserController::class, 'SearchUser']);
