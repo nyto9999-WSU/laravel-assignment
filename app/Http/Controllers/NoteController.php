@@ -99,4 +99,20 @@ class NoteController extends Controller
             'description' => ['nullable'],
         ]);
     }
+
+    public function noteAjax(Request $request)
+    {
+        if($request->ajax())
+        {
+            $attributes = $this->validateAirCon();
+
+            $order = Order::find($request->id);
+            $order->notes()->create($attributes);
+            $notes = $order->notes;
+            // return response()->json(['success'=>'Data successfull loaded','data'=>$request->data, 'id'=>$request->id]);
+            // return response()->json($notes);
+            return $notes;
+        }
+
+    }
 }
