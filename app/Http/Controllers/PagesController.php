@@ -11,12 +11,12 @@ use App\Models\Job;
 class PagesController extends Controller
 {
     //
-
+    // function for search admin jobs
     public function searchRequestedJobs(Request $attr)
     {
         if (auth()->user()->isAdmin()) {
             $orders = Order::with('aircons', 'user')
-                ->where('status', '=', "$attr->status")->where('name', 'like', "%$attr->s%")
+                ->where('status', '=', "$attr->status")->where('name', 'like', "%$attr->s%")->orWhere('mobile_number', 'like', "%$attr->s%")
                 ->orWhere('id', $attr->s)
                 ->get();
             return response()->json([
@@ -25,6 +25,8 @@ class PagesController extends Controller
             ]);
         }
     }
+
+    // function for search user requested history
     public function searchRequesteHistory(Request $attr)
     {
         $orders = Order::with('aircons', 'user')

@@ -20,6 +20,8 @@ class UserController extends Controller
         return view('pages.admin.userManagement.currentUsers', compact('users'));
     }
 
+
+// search function for roles and permissions admin
     public function SearchUser(Request $req)
     {
         $data = $req->all();
@@ -28,6 +30,7 @@ class UserController extends Controller
         $users->appends(['query' => $name]);
         return view('pages.admin.userManagement.currentUsers', compact(['users', 'name']));
     }
+
 
     public function create()
     {
