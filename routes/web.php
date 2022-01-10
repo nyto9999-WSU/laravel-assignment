@@ -71,5 +71,6 @@ Route::get('/pages/order/search-request-history', [PagesController::class, 'sear
 
 /* Admin Extra note */
 Route::post('/note/order/{order}', [NoteController::class, 'store'])->name('note.store');
+Route::post('/note/ajax', [NoteController::class, 'noteAjax'])->name('note.ajax');
 Route::resource('note', NoteController::class)->except(['store']);
 Route::get('/admin/role-permission-search', [UserController::class, 'SearchUser']);

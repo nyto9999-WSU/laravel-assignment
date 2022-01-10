@@ -135,29 +135,29 @@
                     <button type="submit">submit</button>
                 </form>
 
-                {{-- extra note --}}
+                {{-- add note --}}
                 <form action="{{ route('note.store', $order) }}" method="post">
                     @csrf
 
                     <label for="description"></label>
-                    <input type="text" name="description">
-
-                    <button type="submit">Add note</button>
+                    <textarea id="desc" name="description" rows="4" cols="50"></textarea>
+                    <button type="submit" id="note-submit">Add note</button>
                 </form>
 
+                <div class="alert alert-success" style="display:none">It works</div>
+
                 <h1>EXTRA NOTE</h1>
-                @forelse ($order->notes as $note)
-                    <li>{{ $note->description }}</li>
-                    <form action="{{ route('note.destroy', $note) }}" method="post">
-                        @method('DELETE')
-                        @csrf
-                        <button type="submit">
-                            <i class="bi bi-trash"></i>
-                        </button>
-                    </form>
-                @empty
-                    <li>N/A</li>
-                @endforelse
+
+                {{-- notes history --}}
+                <div id="notes">
+                    <ul>
+                        @forelse ($order->notes as $note)
+                            <li>{{ $note->description }}</li>
+                        @empty
+                            N/A
+                        @endforelse
+                    </ul>
+                </div>
 
             </div>
         </div>
@@ -179,6 +179,34 @@
         $("#datepicker").datepicker({
             dateFormat: "dd-mm-yy",
             minDate: '0'
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#note-submit').click(function (e) {
+                e.preventDefault();
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $("meta[name='csrf-token']").attr('content')
+                    }
+                });
+
+                $.ajax({
+                    type: "POST",
+                    url: '/note/ajax',
+                    data: {'id': {{ $order->id }}, 'description': $("#desc").val()},
+                    success: function (response) {
+                        var row = '';
+                        $(".alert").show().delay(900).fadeOut();
+                        $("#notes").empty();
+                        console.log(response);
+                        $.each(response, function(idx, obj){
+                            row += ("<li>" + obj.description + "</li>");
+                        });
+                        $("#notes").html(row);
+                    }
+                });
+            });
         });
     </script>
 @endpush
