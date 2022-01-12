@@ -1,0 +1,51 @@
+.container {
+  max-width: 980px;
+}
+
+.assign-job-container {
+  max-width: 1000px;
+}
+
+#status-button {
+  max-width: 170px;
+}
+.bd-placeholder-img {
+  font-size: 1.125rem;
+  text-anchor: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+
+@media (min-width: 768px) {
+  .bd-placeholder-img-lg {
+    font-size: 3.5rem;
+  }
+}
+thead {
+  background-color: #6377b8;
+  font-size: small;
+}
+
+tr td {
+ font-size: small;
+}
+
+
+#icon-button{
+  background-color: #6377b8;
+}
+
+#color-blue {
+  background-color: #6377b8;
+}
+
+.classWithPad { margin:5px; padding:10px; }
+
+table {
+  table-layout: fixed;
+}
+
+#extra-note-to-tech, .shadow-textarea textarea.form-control::placeholder {
+  font-weight: 300;
+}
