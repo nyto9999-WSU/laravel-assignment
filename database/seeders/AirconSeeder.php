@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Aircon;
 use Illuminate\Database\Seeder;
-use App\Models\Order;
 
-class OrderSeeder extends Seeder
+class AirconSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,7 +14,6 @@ class OrderSeeder extends Seeder
      */
     public function run()
     {
-        //
-        Order::factory(100)->create();
+        Aircon::factory(100)->create();
     }
 }

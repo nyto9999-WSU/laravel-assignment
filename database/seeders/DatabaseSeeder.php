@@ -53,6 +53,11 @@ class DatabaseSeeder extends Seeder
             'updated_at' => now()
         ]);
 
+        // $this->call([
+        //     OrderSeeder::class,
+        //     TechSeeder::class,
+        //     AirconSeeder::class,
+        // ]);
 
     }
 }
