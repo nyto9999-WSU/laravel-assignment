@@ -1,12 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
-        <h1>assignJobToTechnician.blade</h1>
-        <div class="row justify-content-center">
-            <div class="col-md-8">
+    <div class="container mb-2">
+        <div class="row">
+            <h2 class="text-center">Assign a job to a Technician</h2>
+            <small></small>
 
-                <table class="table">
+            {{-- assign table left --}}
+            <div class="col-md-9 shadow-sm px-1 rounded border border-2 pb-0">
+                <table class="table table-hover  text-start mb-2 mt-1">
 
                     {{-- order_id --}}
                     <tr>
@@ -101,69 +103,91 @@
                         <td>{{ date('d-m-Y', strtotime($order->prefer_date)) }}</td>
                     </tr>
 
+                    {{-- success alert --}}
+                    <tr id="js-alert" style="display:none">
+                        <td colspan="2" class="bg-warning text-center">Add note successfully</td>
+                    </tr>
                 </table>
+            </div>
 
-                <form action="{{ route('job.store', $order) }}" method="post">
-                    @csrf
+            {{-- assign table right --}}
+            <div class="col-3">
+                <div class="col-12 shadow-sm px-1 py-1 rounded border border-2">
+                    <form action="{{ route('job.store', $order) }}" method="post">
+                        @csrf
 
-                    {{-- job_start_date --}}
-                    <label for="job_start_date">Start Date</label>
-                    <input type="text" class="" id="datepicker" name="job_start_date">
+                        {{-- choose time title --}}
+                        <div id="blue" class="text-center px-2 mb-1 text-white">
+                            <div class="pt-2" style="height: 49px">
+                                Choose Time and Date
+                            </div>
+                        </div>
 
-                    {{-- job start_time --}}
-                    <label for="job_start_time">Morning</label>
-                    <input type="radio" name="job_start_time" value="morning">
+                        {{-- job_start_date --}}
+                        <label for="job_start_date">Start Date</label>
+                        <input type="text" class="form-select" id="datepicker" name="job_start_date">
 
-                    <label for="job_start_time">Afternoon</label>
-                    <input type="radio" name="job_start_time" value="afternoon">
+                        {{-- job_start_time --}}
+                        <label for="assign-time">Start Time</label>
+                        <select class="form-select w-100" name="job_start_time">
+                            <option value="">Choose...</option>
+                            <option>Morning</option>
+                            <option>Afternoon</option>
+                            <option>Evening</option>
+                        </select>
 
-                    <label for="job_start_time">Evening</label>
-                    <input type="radio" name="job_start_time" value="evening">
+                        {{-- add technician --}}
+                        <div class="mt-2 mb-2">
+                            <label for="tech_name">Techinicain</label>
+                            <select class="form-select" name="tech_name">
+                                <option disabled selected value>Technician</option>
+                                @forelse ($technicians as $t)
+                                    <option value="{{ $t->name }}">{{ $t->name }}</option>
+                                @empty
 
+                                @endforelse
+                            </select>
+                        </div>
 
-                    {{-- technician dropdown --}}
-                    <select class="tech_name" name="tech_name">
-                        <option disabled selected value>Technician</option>
-                        @forelse ($technicians as $t)
-                            <option value="{{ $t->name }}">{{ $t->name }}</option>
-                        @empty
+                        {{-- add ntoe title --}}
+                        <div id="blue" class="text-center px-2 mb-1 text-white">
+                            <div class="pt-2" style="height: 49px">
+                                Notes
+                            </div>
+                        </div>
 
-                        @endforelse
-                    </select>
+                        {{-- notes record --}}
+                        <div class="mt-2 mb-2">
+                            <ul class="list-group border border-dark" id="js-notes" style="height: 180px; overflow: auto">
 
+                                @forelse ($order->notes as $note)
+                                    <li class="wraptext-li">
+                                        {{ $note->description }}
+                                    </li>
+                                @empty
+                                    N/A
+                                @endforelse
+                            </ul>
+                        </div>
 
-                    <button type="submit">submit</button>
-                </form>
+                        {{-- textarea --}}
+                        <div class="mt-1" style="display: block;">
+                            <textarea id="textarea" name="description" rows="3" class="form-control mb-1"></textarea>
 
-                {{-- add note --}}
-                <form action="{{ route('note.store', $order) }}" method="post">
-                    @csrf
+                            {{-- js note submit --}}
+                            <button id="js-note-submit" class="w-100 btn btn-warning border border-dark text-white mb-1">Add
+                                Note</button>
+                        </div>
 
-                    <label for="description"></label>
-                    <textarea id="desc" name="description" rows="4" cols="50"></textarea>
-                    <button type="submit" id="note-submit">Add note</button>
-                </form>
-
-                <div class="alert alert-success" style="display:none">It works</div>
-
-                <h1>EXTRA NOTE</h1>
-
-                {{-- notes history --}}
-                <div id="notes">
-                    <ul>
-                        @forelse ($order->notes as $note)
-                            <li>{{ $note->description }}</li>
-                        @empty
-                            N/A
-                        @endforelse
-                    </ul>
+                        {{-- Assign btn --}}
+                        <button type="submit" id="blue"
+                            class="w-100 btn border border-dark text-white font-weight-bold">Assign</button>
+                    </form>
                 </div>
-
             </div>
         </div>
     </div>
-    </div>
-    </div>
+
 @endsection
 
 @push('css')
@@ -182,8 +206,8 @@
         });
     </script>
     <script>
-        $(document).ready(function () {
-            $('#note-submit').click(function (e) {
+        $(document).ready(function() {
+            $('#js-note-submit').click(function(e) {
                 e.preventDefault();
                 $.ajaxSetup({
                     headers: {
@@ -194,18 +218,24 @@
                 $.ajax({
                     type: "POST",
                     url: '/note/ajax',
-                    data: {'id': {{ $order->id }}, 'description': $("#desc").val()},
-                    success: function (response) {
-                        var row = '';
-                        $(".alert").show().delay(900).fadeOut();
-                        $("#notes").empty();
+                    data: {
+                        'id': {{ $order->id }},
+                        'description': $("#textarea").val()
+                    },
+                    success: function(response) {
+                        var row = "";
+                        $("#js-alert").show().delay(900).fadeOut();
+                        $("#js-notes").empty();
                         console.log(response);
-                        $.each(response, function(idx, obj){
-                            row += ("<li>" + obj.description + "</li>");
+                        $.each(response, function(idx, obj) {
+                            row += ("<li class='wraptext-li'>" + obj.description +
+                                "</li>");
                         });
-                        $("#notes").html(row);
+
+                        $("#js-notes").html(row);
                     }
                 });
+
             });
         });
     </script>

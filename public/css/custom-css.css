@@ -1,0 +1,23 @@
+#blue {
+    background-color: #005aa4;
+}
+
+#desc, .shadow-textarea textarea.form-control::placeholder {
+    font-weight: 300;
+}
+
+.wraptext-li {
+    white-space: normal;
+    float: left;
+    width: 100%;
+    height: auto;
+    word-wrap: break-word;
+    position: relative;
+    display: block;
+    padding: 0.5rem 1rem;
+    color: #212529;
+    text-decoration: none;
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+}
+

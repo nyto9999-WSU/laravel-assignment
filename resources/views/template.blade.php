@@ -33,3 +33,24 @@ public function index()
 
     return view('pages.admin.calendar', compact('id','install_address','start','end'));
 }
+
+
+
+
+                            {{-- job start_time --}}
+                            {{-- <label for="job_start_time">Morning</label>
+                            <input type="radio" name="job_start_time" value="morning">
+
+                            <label for="job_start_time">Afternoon</label>
+                            <input type="radio" name="job_start_time" value="afternoon">
+
+                            <label for="job_start_time">Evening</label>
+                            <input type="radio" name="job_start_time" value="evening"> --}}
+
+
+                            {{-- technician dropdown --}}
+
+
+                            {{-- add note --}}
+
+                            {{-- notes history --}}
