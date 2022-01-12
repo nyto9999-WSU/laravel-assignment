@@ -148,12 +148,18 @@ class HomeController extends Controller
     {   $orderAssignedRate = array();
 
 
-        $orderAssignedRate[] = Order::whereDate('created_at',  now()->format('y/m/d'))
-                                    ->where('status', '=', 'Booked')
+        // $orderAssignedRate[] = Order::whereDate('created_at',  now()->format('y/m/d'))
+        //                             ->where('status', '=', 'Booked')
+        //                             ->count();
+
+        // $orderAssignedRate[] = Order::whereDate('assigned_at', now()->format('y/m/d'))
+        //                             ->where('status', '=', 'assigned')
+        //                             ->count();
+
+        $orderAssignedRate[] = Order::where('status', '=', 'Booked')
                                     ->count();
 
-        $orderAssignedRate[] = Order::whereDate('assigned_at', now()->format('y/m/d'))
-                                    ->where('status', '=', 'assigned')
+        $orderAssignedRate[] = Order::where('status', '=', 'assigned')
                                     ->count();
 
         if($orderAssignedRate[0] == 0 && $orderAssignedRate[1] == 0)
