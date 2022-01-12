@@ -16,9 +16,16 @@ class PagesController extends Controller
     {
         if (auth()->user()->isAdmin()) {
             $orders = Order::with('aircons', 'user')
-                ->where('status', '=', "$attr->status")->where('name', 'like', "%$attr->s%")->orWhere('mobile_number', 'like', "%$attr->s%")
-                ->orWhere('id', $attr->s)
-                ->get();
+                ->where('status', '=', "$attr->status");
+                $value = $attr->s;
+              $orders =  $orders->where(function($query2) use ($value)
+                 {
+                    $query2->where('name', 'like', "%$value%")
+                         ->orWhere('mobile_number', 'like', "%$value%")
+                         ->orWhere('id', $value);
+                 })->get();
+                 // dd($orders);
+                $status = $attr->status;
             return response()->json([
                 'statusCode' => 200,
                 'html' => view('pages.admin.search.current-orders', get_defined_vars())->render(),

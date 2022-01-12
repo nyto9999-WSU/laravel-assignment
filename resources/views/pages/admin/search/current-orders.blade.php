@@ -51,6 +51,14 @@
 
     {{-- extra_note --}}
     <td>{{ $order->extra_note }}</td>
+    @if($status == 'assigned')
+    {{-- TODO: Print --}}
+    <td>
+        <a href="{{route('order.printOrder', $order->id)}}" class="btn btn-primary">
+            <i class="bi bi-printer"></i>
+        </a>
+    </td>
+    @endif
 </tr>
 @empty
 <h1>no data</h1>

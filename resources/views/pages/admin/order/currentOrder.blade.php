@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-
+ 
 
 <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 <!-- Bootstrap core CSS -->
