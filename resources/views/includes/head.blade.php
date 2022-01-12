@@ -9,4 +9,7 @@
 <!-- Styles -->
 <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
+{{-- custom css --}}
+<link href="{{ asset('css/custom-css.css') }}" rel="stylesheet">
+
 {!! ReCaptcha::htmlScriptTagJsApi() !!}
