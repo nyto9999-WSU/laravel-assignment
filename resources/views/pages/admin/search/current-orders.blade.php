@@ -1,18 +1,5 @@
-<table class="table">
+
 @forelse ($orders as $order)
-<tr>
-    <th>Assign</th>
-    <th>Order</th>
-    <th>Model</th>
-    <th>No. of unit</th>
-    <th>Customer</th>
-    <th>Unit Address</th>
-    <th>Phone</th>
-    <th>Requested Date</th>
-    <th>Preferred Date</th>
-    <th>Type</th>
-    <th>Extra Note</th>
-</tr>
 <tr>
     {{-- assign button --}}
     <td>
@@ -68,4 +55,3 @@
 @empty
 <h1>no data</h1>
 @endforelse
-</table>
