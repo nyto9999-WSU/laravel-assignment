@@ -21,3 +21,9 @@
     border: 1px solid rgba(0, 0, 0, 0.125);
 }
 
+#badge-all-units{
+    background: #005aa4;
+    position:relative;
+    top: -10px;
+    left: 5px;
+}

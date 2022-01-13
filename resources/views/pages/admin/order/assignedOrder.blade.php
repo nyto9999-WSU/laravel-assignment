@@ -61,18 +61,29 @@
 
                                 {{-- model_number --}}
                                 <td>
-                                    @forelse ($order->aircons as $aircon)
-                                        <li>
-                                            <a href={{ route('aircon.show', [$aircon, $order]) }}>
-                                                {{ $aircon->id }}
-                                            </a>
-                                        </li>
-                                    @empty
-                                        N/A
-                                    @endforelse
-                                    {{-- TODO: all aircons --}}
-                                    <li>All</li>
-                                </td>
+                                  @if (count($order->aircons) <= 1)
+                                      @forelse ($order->aircons as $aircon)
+                                          <a href={{ route('aircon.show', [$aircon, $order]) }}>
+                                              {{ $aircon->model_number }}
+                                          </a>
+                                      @empty
+                                          N/A
+                                      @endforelse
+                                  @else
+                                      @forelse ($order->aircons as $aircon)
+                                          <li>
+                                              <a href={{ route('aircon.show', [$aircon, $order]) }}>
+                                                  {{ $aircon->model_number }}
+                                              </a>
+                                          </li>
+                                      @empty
+                                          N/A
+                                      @endforelse
+                                      <a href={{ route('aircon.showAll', [$order]) }}>
+                                          All
+                                      </a>
+                                  @endif
+                              </td>
 
                                 {{-- no_of_unit --}}
                                 <td>{{ $order->no_of_unit }}</td>

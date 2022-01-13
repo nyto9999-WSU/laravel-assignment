@@ -2,12 +2,14 @@
 
 @section('content')
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <h1>Role: {{ Auth::user()->getRole() }}</h1>
-                <h1>showOrder.blade</h1>
-                <table class="table">
+        <h2 class="text-center">Request Details</h2>
+            <div class="col-12 shadow-sm px-1 rounded border border-2">
+                <table class="table table-hover text-start mb-2 mt-1">
 
+                    {{-- header 1 --}}
+                    <th id="blue" colspan="2" class="text-white">
+                        Job Details
+                    </th>
                     {{-- order_id --}}
                     <tr>
                         <td>Order</td>
@@ -59,9 +61,14 @@
                         <td>{{ $order->status }}</td>
                     </tr>
 
+                    <!--Owner info-->
+                    <th id="blue" colspan="2" class="text-white">
+                        Owner Info
+                    </th>
+
                     {{-- name --}}
                     <tr>
-                        <td>Owner</td>
+                        <td>Name</td>
                         <td>{{ $order->name }}</td>
                     </tr>
 
@@ -73,7 +80,7 @@
 
                     {{-- install_address --}}
                     <tr>
-                        <td>Installation Address</td>
+                        <td>Address</td>
                         <td>{{ $order->install_address }}</td>
                     </tr>
 
@@ -161,12 +168,8 @@
                         </td>
                     </tr>
                 </table>
-
                 {{-- edit button --}}
-                <a href="{{ route('order.edit', $order) }}" class="btn btn-primary">order.edit</a>
+                <a href="{{ route('order.edit', $order) }}" id="blue" class="w-100 btn btn-primary mb-1">Edit</a>
             </div>
-        </div>
-    </div>
-    </div>
     </div>
 @endsection

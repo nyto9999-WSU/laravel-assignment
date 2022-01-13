@@ -20,8 +20,6 @@ class OrderController extends Controller
     public function index()
     {
 
-
-
         if(auth()->user()->isAdmin())
         {
             $orders = Order::with('aircons', 'user')->get();
