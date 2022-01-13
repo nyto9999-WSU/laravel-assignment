@@ -1,30 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-<!-- Bootstrap core CSS -->
-<link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/headers/">
-<link href="{{asset('assets/CSS/bootstrap.min.css')}}" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
-<!-- Custom styles for this template -->
-<link href="{{asset('assets/CSS/form-validation.css')}}" rel="stylesheet">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-
-<style media="screen">
-  .navbar-nav{
-    font-size:14px !important;
-  }
-  .container {
-    max-width:1070px !important;
-  }
-  table {
-    overflow:hidden;
-  }
-</style>
-
-
-
 
     <div class="container-fluid mt-3">
         <!-- <h1>Role: {{ Auth::user()->getRole() }}</h1> -->
@@ -53,8 +29,8 @@
               <table class="table table-hover text-start mt-1">
 
                   <thead class="text-white">
-                    <tr>
-                       
+                    <tr id="blue">
+
                         <th>Order</th>
                         <th>Model</th>
                         <th>No. of unit</th>
@@ -71,7 +47,7 @@
                     @forelse ($orders as $order)
                   <tr>
                       {{-- assign button --}}
-                    
+
 
                       {{-- order_id --}}
                       <td>
@@ -125,19 +101,9 @@
                 </table>
 
           </div>
-          <nav aria-label="Page navigation example ">
-            <ul class="pagination justify-content-end ">
-              <li class="page-item disabled ">
-                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-              </li>
-              <li class="page-item"><a class="page-link " href="#">1</a></li>
-              <li class="page-item"><a class="page-link " href="#">2</a></li>
-              <li class="page-item"><a class="page-link " href="#">3</a></li>
-              <li class="page-item">
-                <a class="page-link  text-dark" href="#">Next</a>
-              </li>
-            </ul>
-          </nav>
+          <div class="d-flex flex-row-reverse">
+            {!! $orders->links() !!}
+          </div>
 
         </div>
 

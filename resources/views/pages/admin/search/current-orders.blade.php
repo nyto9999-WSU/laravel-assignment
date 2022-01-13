@@ -3,7 +3,7 @@
 <tr>
     {{-- assign button --}}
     <td>
-        <a href="{{ route('order.actions' , $order) }}" class="btn btn-primary">
+        <a href="{{ route('order.actions' , $order) }}" id="blue" class="btn btn-primary">
             <i class="bi bi-pen"></i>
         </a>
     </td>
