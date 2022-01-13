@@ -23,7 +23,7 @@ class PagesController extends Controller
                     $query2->where('name', 'like', "%$value%")
                          ->orWhere('mobile_number', 'like', "%$value%")
                          ->orWhere('id', $value);
-                 })->get();
+                 })->limit(7)->get(); //pagination
                  // dd($orders);
                 $status = $attr->status;
             return response()->json([
@@ -39,6 +39,7 @@ class PagesController extends Controller
         $orders = Order::with('aircons', 'user')
             ->where('user_id', auth()->id())
             ->where('prefer_date', 'like', "%$attr->s%")
+            ->limit(7) //pagination
             ->get();
             return response()->json([
                 'statusCode' => 200,
