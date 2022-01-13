@@ -55,7 +55,7 @@
 
                   <thead class="text-white">
                     <tr>
-                        <th>Assign</th>
+                        
                         <th>Order</th>
                         <th>Model</th>
                         <th>No. of unit</th>
@@ -72,14 +72,7 @@
                   <tbody id="current_orders">
                     @forelse ($orders as $order)
                   <tr>
-                      {{-- assign button --}}
-                      <td>
-                          <a href="{{ route('order.actions' , $order) }}" id="color-blue" class="btn text-white">
-                              <i class="bi bi-pen"></i>
-                          </a>
-                      </td>
-
-                      {{-- order_id --}}
+                     
                       <td>
                           <a href={{ route('order.show', $order->id) }}>{{ $order->id }}</a>
                       </td>
