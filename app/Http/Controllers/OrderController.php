@@ -27,7 +27,6 @@ class OrderController extends Controller
             return view('pages.admin.order.currentOrder', compact('orders'));
         }
 
-
         //role user
         $orders = Order::with('aircons', 'user')
             ->where('user_id', auth()->id())
@@ -36,25 +35,23 @@ class OrderController extends Controller
     }
 
 
-    public function actions(Order $order)
+    public function actions(Order $order, Job $job)
     {
-        switch ($order->status) {
+        switch ($job->status) {
 
-            case 'Booked':
+            case 'booked':
                 $technicians = User::technicians()
-                    ->where('tech_available', '=', 1)
                     ->get();
-                return view('pages.admin.job.assignJobToTechnician', compact('order', 'technicians'));
+                $aircon = Aircon::find($job->aircon_id);
+                return view('pages.admin.job.assignJobToTechnician', compact('order','job', 'technicians', 'aircon'));
 
             case 'assigned':
 
-                $order->update([
+                $job->update([
                     "status" =>  'completed',
-                    "job_end_date" => now()
+                    "end_date" => now()
                 ]);
 
-                $technician = $order->getTechnician();
-                $technician->update(["tech_available" => 1]);
                 return back();
 
             default:
@@ -79,11 +76,11 @@ class OrderController extends Controller
     }
 
 
-    public function show(Order $order)
+    public function show($id, Job $job)
     {
-        abort_unless($order->user_id == auth()->id() || auth()->user()->isAdmin(), 403);
+            // abort_unless($order->user_id == auth()->id() || auth()->user()->isAdmin(), 403);
 
-        $technician = $order->getTechnician();
+            // $technician = $order->getTechnician();
 
         return view('pages.user.order.showOrder', compact('order', 'technician'));
     }
@@ -148,26 +145,23 @@ class OrderController extends Controller
 
     protected function validateOrder()
     {
-        $validation = request()->validate([
+         return request()->validate([
             'name' => ['nullable'],
             'email' => ['nullable'],
             'mobile_number' => ['nullable'],
-            'no_of_unit' => ['nullable'],
-            'install_address' => ['nullable'],
+            'address' => ['nullable'],
             'state' => ['nullable'],
             'suburb' => ['nullable'],
             'postcode' => ['nullable'],
-            'prefer_date' => ['nullable'],
-            'prefer_time' => ['nullable'],
-            'domestic_commercial' => ['nullable'],
             'extra_note' => ['nullable'],
         ]);
 
-        $mySQL_date = Carbon::createFromFormat('d-m-Y', $validation['prefer_date'])->format('Y-m-d');
+        // $mySQL_date = Carbon::createFromFormat('d-m-Y', $validation['prefer_date'])->format('Y-m-d');
 
-        return $data = [
-            'prefer_date' => $mySQL_date,
-        ];
+        // return $data = [
+        //     'prefer_date' => $mySQL_date,
+        // ];
+
     }
 
     protected function validateEditOrder()

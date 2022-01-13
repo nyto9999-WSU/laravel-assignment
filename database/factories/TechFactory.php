@@ -17,7 +17,6 @@ class TechFactory extends Factory
             'name' => $this->faker->name(),
             'email' => $this->faker->unique()->safeEmail(),
             'role_id' => 3,
-            'tech_available' => 0,
             'email_verified_at' => now(),
             'password' => Hash::make('aaaa1111'),
             'remember_token' => Str::random(10),

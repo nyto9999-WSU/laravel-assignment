@@ -23,12 +23,10 @@ class CreateUsersTable extends Migration
             $table->string('password')->nullable();
             $table->rememberToken()->nullable();
             $table->timestamps();
-            $table->string('tech_available');
 
             $table->foreignId('role_id')
-            ->constrained()
-            ->onDelete('cascade');
-
+                ->constrained()
+                ->onDelete('cascade');
         });
     }
 

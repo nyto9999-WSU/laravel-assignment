@@ -31,9 +31,8 @@
                     <thead class="text-white">
                         <tr id="blue">
                             <th>Assign</th>
-                            <th>Order</th>
+                            <th>Job</th>
                             <th>Model</th>
-                            <th>No. of unit</th>
                             <th>Customer</th>
                             <th>Unit Address</th>
                             <th>Phone</th>
@@ -45,53 +44,33 @@
                     </thead>
                     <tbody id="current_orders">
                         @forelse ($orders as $order)
+                            @forelse ($order->jobs as $job)
+                            @if ($job->status == 'booked')
                             <tr>
                                 {{-- assign button --}}
                                 <td>
-                                    <a href="{{ route('order.actions', $order) }}" id="blue" class="btn text-white">
+                                    <a href="{{ route('order.actions', [$order, 'job' => $job]) }}" id="blue" class="btn text-white">
                                         <i id="id=" blue"" class="bi bi-pen"></i>
                                     </a>
                                 </td>
 
-                                {{-- order_id --}}
+                                {{-- job_id --}}
                                 <td>
-                                    <a href={{ route('order.show', $order->id) }}>{{ $order->id }}</a>
+                                    <a href="{{ route('job.show', $job) }}">{{ $job->id }}</a>
                                 </td>
+
 
                                 {{-- model_number --}}
                                 <td>
-                                    @if (count($order->aircons) <= 1)
-                                        @forelse ($order->aircons as $aircon)
-                                            <a href={{ route('aircon.show', [$aircon, $order]) }}>
-                                                {{ $aircon->model_number }}
-                                            </a>
-                                        @empty
-                                            N/A
-                                        @endforelse
-                                    @else
-                                        @forelse ($order->aircons as $aircon)
-                                            <li>
-                                                <a href={{ route('aircon.show', [$aircon, $order]) }}>
-                                                    {{ $aircon->model_number }}
-                                                </a>
-                                            </li>
-                                        @empty
-                                            N/A
-                                        @endforelse
-                                        <a href={{ route('aircon.showAll', [$order]) }}>
-                                            All
-                                        </a>
-                                    @endif
+                                    <a href={{ route('aircon.show', ['id' => $job->aircon_id, $order]) }}>
+                                        {{ $job->model_number }}
+                                    </a>
                                 </td>
-
-                                {{-- no_of_unit --}}
-                                <td>{{ $order->no_of_unit }}</td>
-
                                 {{-- name --}}
                                 <td>{{ $order->name }}</td>
 
                                 {{-- install_address --}}
-                                <td>{{ $order->install_address }}</td>
+                                <td>{{ $job->install_address }}</td>
 
                                 {{-- mobile_number --}}
                                 <td>{{ $order->mobile_number }}</td>
@@ -103,11 +82,16 @@
                                 <td>{{ date('d-m-Y', strtotime($order->prefer_date)) }}</td>
 
                                 {{-- domestic_commercial --}}
-                                <td>{{ $order->domestic_commercial }}</td>
+                                <td>{{ $job->domestic_commercial }}</td>
 
                                 {{-- extra_note --}}
                                 <td>{{ $order->extra_note }}</td>
                             </tr>
+                            @endif
+
+                            @empty
+
+                            @endforelse
                         @empty
                             <h1>no data</h1>
                         @endforelse

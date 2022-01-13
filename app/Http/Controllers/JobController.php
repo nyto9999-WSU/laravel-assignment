@@ -31,16 +31,10 @@ class JobController extends Controller
         //
     }
 
-    public function store(Request $request, Order $order)
+    public function store(Job $job, Order $order)
     {
-        $jobAttributes = $this->validateJob($order);
-        $orderAttributes = $this->validateOrder();
-
-        $order->job()->create($jobAttributes);
-        $order->update($orderAttributes);
-
-        $technician = $order->getTechnician();
-        $technician->update(["tech_available" => 0]);
+        $jobAttributes = $this->validateJob();
+        $job->update($jobAttributes);
 
         return (new PagesController)->orderRequested();
     }
@@ -51,9 +45,13 @@ class JobController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Job $job)
     {
         //
+        $order = Order::find($job->order_id);
+        abort_unless($order->user_id == auth()->id() || auth()->user()->isAdmin(), 403);
+
+        return view('pages.user.order.showOrder', compact('order', 'job'));
     }
 
     /**
@@ -90,37 +88,26 @@ class JobController extends Controller
         //
     }
 
-    protected function validateJob($order)
-    {
-
-        $attributes = request()->validate([
-            'tech_name' => ['nullable'],
-        ]);
-
-        return $data = [
-            'order_id' => $order->id,
-            'tech_name' => $attributes['tech_name'],
-            'created_at' => now(),
-            'updated_at' => now(),
-        ];
-
-    }
-
-    protected function validateOrder()
+    protected function validateJob()
     {
 
         $validation = request()->validate([
-            'job_start_date' => ['nullable'],
-            'job_start_time' => ['nullable'],
+            'start_date' => ['nullable'],
+            'start_time' => ['nullable'],
+            'tech_name' => ['nullable'],
         ]);
 
-        $mySQL_date = Carbon::createFromFormat('d-m-Y', $validation['job_start_date'])->format('Y-m-d');
+        $mySQL_date = Carbon::createFromFormat('d-m-Y', $validation['start_date'])->format('Y-m-d');
         return $data = [
+            'tech_name' => $validation['tech_name'],
             "status" =>  'assigned',
-            'job_start_date' => $mySQL_date,
-            'job_start_time' => $validation["job_start_time"],
+            'start_date' => $mySQL_date,
+            'start_time' => $validation["start_time"],
             'assigned_at' => now(),
         ];
 
+
     }
+
+
 }

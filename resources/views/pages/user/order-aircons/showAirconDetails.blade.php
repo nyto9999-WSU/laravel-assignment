@@ -25,11 +25,24 @@
                         <td>{{ $aircon->equipment_type }}</td>
                     </tr>
 
+                    {{-- domestic_commercial --}}
+                    <tr>
+                        <th>Domestic Commercial</th>
+                        <td>{{ $aircon->domestic_commercial }}</td>
+                    </tr>
+
+                    {{-- install_address --}}
+                    <tr>
+                        <th>Install Address</th>
+                        <td>{{ $aircon->install_address }}</td>
+                    </tr>
+
                     {{-- issue --}}
                     <tr>
                         <th>Issue</th>
                         <td>{{ $aircon->issue }}</td>
                     </tr>
+
                 </table>
             </div>
         </div>

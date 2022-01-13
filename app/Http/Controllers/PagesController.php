@@ -52,10 +52,8 @@ class PagesController extends Controller
     {
         if (auth()->user()->isAdmin()) {
             $orders = Order::with('aircons', 'user')
-                ->where('status', '=', 'Booked')
                 ->orderBy('created_at', 'desc')
                 ->paginate(7);
-
             return view('pages.admin.order.currentOrder', compact('orders'));
         }
     }
@@ -64,10 +62,8 @@ class PagesController extends Controller
     {
         if (auth()->user()->isAdmin()) {
             $orders = Order::with('aircons', 'user')
-                ->where('status', '=', 'assigned')
-                ->orderBy('assigned_at', 'desc')
-                ->paginate(7);
-
+            ->orderBy('assigned_at', 'desc')
+            ->paginate(7);
             return view('pages.admin.order.assignedOrder', compact('orders'));
         }
     }
@@ -76,8 +72,7 @@ class PagesController extends Controller
     {
         if (auth()->user()->isAdmin()) {
             $orders = Order::with('aircons', 'user')
-                ->where('status', '=', 'completed')
-                ->orderBy('job_end_date', 'desc')
+                ->orderBy('updated_at', 'desc')
                 ->paginate(7);
 
             return view('pages.admin.order.completedOrder', compact('orders'));

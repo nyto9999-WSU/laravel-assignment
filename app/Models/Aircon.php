@@ -16,5 +16,8 @@ class Aircon extends Model
         return $this->belongsToMany(Order::class);
     }
 
-
+    public function job()
+    {
+        return $this->hasOne(Job::class);
+    }
 }

@@ -12,42 +12,30 @@
 
                     {{-- order_id --}}
                     <tr>
-                        <td>Order</td>
-                        <td>{{ $order->id }}</td>
+                        <td>Job</td>
+                        <td>{{ $job->id }}</td>
                     </tr>
 
                     {{-- model_number --}}
                     <tr>
                         <td>Model Number</td>
                         <td>
-                            @forelse ($order->aircons as $aircon)
-                                <li>
-                                    <a href="{{ route('aircon.show', [$aircon, $order]) }}">
-                                        {{ $aircon->model_number }}
-                                    </a>
-                                </li>
-                            @empty
-
-                            @endforelse
+                            <a href={{ route('aircon.show', ['id' => $job->aircon_id, $order]) }}>
+                                {{ $aircon->model_number }}
+                            </a>
                         </td>
                     </tr>
 
                     {{-- domestic_commercial --}}
                     <tr>
                         <td>Domestic Commercial</td>
-                        <td>{{ $order->domestic_commercial }}</td>
+                        <td>{{ $aircon->domestic_commercial }}</td>
                     </tr>
 
                     {{-- extra_note --}}
                     <tr>
                         <td>Description</td>
                         <td>{{ $order->extra_note }}</td>
-                    </tr>
-
-                    {{-- status --}}
-                    <tr>
-                        <td>Status</td>
-                        <td>{{ $order->status }}</td>
                     </tr>
 
                     {{-- name --}}
@@ -65,26 +53,9 @@
                     {{-- install_address --}}
                     <tr>
                         <td>Installation Address</td>
-                        <td>{{ $order->install_address }}</td>
+                        <td>{{ $aircon->install_address }}</td>
                     </tr>
 
-                    {{-- state --}}
-                    <tr>
-                        <td>State</td>
-                        <td>{{ $order->state }}</td>
-                    </tr>
-
-                    {{-- suburb --}}
-                    <tr>
-                        <td>Suburb</td>
-                        <td>{{ $order->suburb }}</td>
-                    </tr>
-
-                    {{-- postcode --}}
-                    <tr>
-                        <td>Postcode</td>
-                        <td>{{ $order->postcode }}</td>
-                    </tr>
                     {{-- mobile_number --}}
                     <tr>
                         <td>Mobile</td>
@@ -94,13 +65,25 @@
                     {{-- prefer_time --}}
                     <tr>
                         <td>Prefer Time</td>
-                        <td>{{ $order->prefer_time }}</td>
+                        <td>{{ $job->prefer_time }}</td>
                     </tr>
 
                     {{-- prefer_date --}}
                     <tr>
                         <td>Prefer Date</td>
-                        <td>{{ date('d-m-Y', strtotime($order->prefer_date)) }}</td>
+                        <td>{{ date('d-m-Y', strtotime($job->prefer_date)) }}</td>
+                    </tr>
+
+                    {{-- status --}}
+                    <tr>
+                        <td>Issue</td>
+                        <td>{{ $aircon->issue }}</td>
+                    </tr>
+
+                    {{-- status --}}
+                    <tr>
+                        <td>Status</td>
+                        <td>{{ $job->status }}</td>
                     </tr>
 
                     {{-- success alert --}}
@@ -113,7 +96,7 @@
             {{-- assign table right --}}
             <div class="col-3">
                 <div class="col-12 shadow-sm px-1 py-1 rounded border border-2">
-                    <form action="{{ route('job.store', $order) }}" method="post">
+                    <form action="{{ route('job.store', [$job, $order]) }}" method="post">
                         @csrf
 
                         {{-- choose time title --}}
@@ -124,12 +107,12 @@
                         </div>
 
                         {{-- job_start_date --}}
-                        <label for="job_start_date">Start Date</label>
-                        <input type="text" class="form-select" id="datepicker" name="job_start_date">
+                        <label for="start_date">Start Date</label>
+                        <input type="text" class="form-select" id="datepicker" name="start_date">
 
                         {{-- job_start_time --}}
-                        <label for="assign-time">Start Time</label>
-                        <select class="form-select w-100" name="job_start_time">
+                        <label for="start-time">Start Time</label>
+                        <select class="form-select w-100" name="start_time">
                             <option value="">Choose...</option>
                             <option>Morning</option>
                             <option>Afternoon</option>
@@ -160,7 +143,7 @@
                         <div class="mt-2 mb-2">
                             <ul class="list-group border border-dark" id="js-notes" style="height: 180px; overflow: auto">
 
-                                @forelse ($order->notes as $note)
+                                @forelse ($job->notes as $note)
                                     <li class="wraptext-li">
                                         {{ $note->description }}
                                     </li>
@@ -219,7 +202,7 @@
                     type: "POST",
                     url: '/note/ajax',
                     data: {
-                        'id': {{ $order->id }},
+                        'id': {{ $job->id }},
                         'description': $("#textarea").val()
                     },
                     success: function(response) {

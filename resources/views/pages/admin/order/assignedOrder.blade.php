@@ -31,14 +31,13 @@
                     <thead class="text-white">
                         <tr id="blue">
                             <th>Assign</th>
-                            <th>Order</th>
+                            <th>Job</th>
                             <th>Model</th>
-                            <th>No. of unit</th>
                             <th>Customer</th>
                             <th>Unit Address</th>
                             <th>Phone</th>
                             <th>Requested Date</th>
-                            <th>Preferred Date</th>
+                            <th>Assigned Date</th>
                             <th>Type</th>
                             <th>Extra Note</th>
                             <th>Print</th>
@@ -46,78 +45,64 @@
                     </thead>
                     <tbody id="current_orders">
                         @forelse ($orders as $order)
-                            <tr>
+                            @forelse ($order->jobs as $job)
+                                @if ($job->status == 'assigned')
+                                    <tr>
+                                        {{-- complete button --}}
+                                        <td>
+                                            <a href="{{ route('order.actions', [$order, 'job' => $job]) }}" id="blue"
+                                                class="btn text-white">
+                                                <i class="bi bi-check2"></i>
+                                            </a>
+                                        </td>
 
-                                {{-- complete button --}}
-                                <td>
-                                    <a href="{{ route('order.actions', $order) }}" id="blue" class="btn text-white">
-                                      <i class="bi bi-check2"></i>
-                                    </a>
-                                </td>
+                                        {{-- job_id --}}
+                                        <td>
+                                            <a href="{{ route('job.show', $job) }}">{{ $job->id }}</a>
+                                        </td>
 
-                                <td>
-                                    <a href={{ route('order.show', $order->id) }}>{{ $order->id }}</a>
-                                </td>
+                                        {{-- model_number --}}
+                                        <td>
+                                            <a href={{ route('aircon.show', ['id' => $job->aircon_id, $order]) }}>
+                                                {{ $job->model_number }}
+                                            </a>
+                                        </td>
 
-                                {{-- model_number --}}
-                                <td>
-                                  @if (count($order->aircons) <= 1)
-                                      @forelse ($order->aircons as $aircon)
-                                          <a href={{ route('aircon.show', [$aircon, $order]) }}>
-                                              {{ $aircon->model_number }}
-                                          </a>
-                                      @empty
-                                          N/A
-                                      @endforelse
-                                  @else
-                                      @forelse ($order->aircons as $aircon)
-                                          <li>
-                                              <a href={{ route('aircon.show', [$aircon, $order]) }}>
-                                                  {{ $aircon->model_number }}
-                                              </a>
-                                          </li>
-                                      @empty
-                                          N/A
-                                      @endforelse
-                                      <a href={{ route('aircon.showAll', [$order]) }}>
-                                          All
-                                      </a>
-                                  @endif
-                              </td>
+                                        {{-- name --}}
+                                        <td>{{ $order->name }}</td>
 
-                                {{-- no_of_unit --}}
-                                <td>{{ $order->no_of_unit }}</td>
+                                        {{-- install_address --}}
+                                        <td>{{ $job->install_address }}</td>
 
-                                {{-- name --}}
-                                <td>{{ $order->name }}</td>
+                                        {{-- mobile_number --}}
+                                        <td>{{ $order->mobile_number }}</td>
 
-                                {{-- install_address --}}
-                                <td>{{ $order->install_address }}</td>
+                                        {{-- created_at --}}
+                                        <td>{{ date('d-m-Y', strtotime($order->created_at)) }}</td>
 
-                                {{-- mobile_number --}}
-                                <td>{{ $order->mobile_number }}</td>
+                                        {{-- assigned_at --}}
+                                        <td>{{ date('d-m-Y', strtotime($job->assigned_at)) }}</td>
 
-                                {{-- created_at --}}
-                                <td>{{ date('d-m-Y', strtotime($order->created_at)) }}</td>
+                                        {{-- domestic_commercial --}}
+                                        <td>{{ $job->domestic_commercial }}</td>
 
-                                {{-- prefer_date --}}
-                                <td>{{ date('d-m-Y', strtotime($order->prefer_date)) }}</td>
+                                        {{-- extra_note --}}
+                                        <td>{{ $order->extra_note }}</td>
 
-                                {{-- domestic_commercial --}}
-                                <td>{{ $order->domestic_commercial }}</td>
+                                        {{-- TODO: Print --}}
+                                        <td>
+                                            <a href="{{ route('order.printOrder', $order->id) }}" id="blue"
+                                                class="btn btn-primary">
+                                                <i class="bi bi-printer"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @endif
 
-                                {{-- extra_note --}}
-                                <td>{{ $order->extra_note }}</td>
+                            @empty
 
-                                {{-- TODO: Print --}}
-                                <td>
-                                    <a href="{{ route('order.printOrder', $order->id) }}" id="blue" class="btn btn-primary">
-                                        <i class="bi bi-printer"></i>
-                                    </a>
-                                </td>
+                            @endforelse
 
-
-                            </tr>
                         @empty
                             <h1>no data</h1>
                         @endforelse
@@ -127,7 +112,7 @@
 
             </div>
             <div class="d-flex flex-row-reverse">
-              {!! $orders->links() !!}
+                {!! $orders->links() !!}
             </div>
 
         </div>

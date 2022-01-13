@@ -16,7 +16,6 @@
                         <td>{{ $order->id }}</td>
                     </tr>
 
-
                     {{-- model_number --}}
                     <tr>
                         <td>Model Number</td>
@@ -32,33 +31,11 @@
                         </td>
                     </tr>
 
-                    {{-- domestic_commercial --}}
-                    <tr>
-                        <td>Domestic Commercial</td>
-                        <td>{{ $order->domestic_commercial }}</td>
-                    </tr>
-
-                    <tr>
-                        <td>Technician</td>
-                        <td>
-                            @if (!empty($order->job->tech_name))
-                                {{ $order->job->tech_name }}
-                            @else
-                                N/A
-                            @endif
-                        </td>
-                    </tr>
-
-                    {{-- extra_note --}}
-                    <tr>
-                        <td>Description</td>
-                        <td>{{ $order->extra_note }}</td>
-                    </tr>
 
                     {{-- status --}}
                     <tr>
                         <td>Status</td>
-                        <td>{{ $order->status }}</td>
+                        <td>{{ $job->status }}</td>
                     </tr>
 
                     <!--Owner info-->
@@ -78,13 +55,14 @@
                         <td>{{ $order->email }}</td>
                     </tr>
 
-                    {{-- install_address --}}
+                    {{-- install_addressFIXME: tojob installation address --}}
                     <tr>
                         <td>Address</td>
-                        <td>{{ $order->install_address }}</td>
+                        <td>{{ $order->address }}</td>
                     </tr>
 
                     {{-- state --}}
+
                     <tr>
                         <td>State</td>
                         <td>{{ $order->state }}</td>
@@ -106,8 +84,8 @@
                     <tr>
                         <td>Prefer Date</td>
                         <td>
-                            @if (!empty($order->prefer_date))
-                                {{ date('d-m-Y', strtotime($order->prefer_date)) }}
+                            @if (!empty($job->prefer_date))
+                                {{ date('d-m-Y', strtotime($job->prefer_date)) }}
                             @else
                                 N/A
                             @endif
@@ -118,20 +96,20 @@
                     <tr>
                         <td>prefer_time</td>
                         <td>
-                            @if (!empty($order->prefer_time))
-                                {{ $order->prefer_time }}
+                            @if (!empty($job->prefer_time))
+                                {{ $job->prefer_time }}
                             @else
                                 N/A
                             @endif
                         </td>
                     </tr>
 
-                    {{-- job_start_date --}}
+                    {{-- start_date --}}
                     <tr>
                         <td>Start Date</td>
                         <td>
-                            @if (!empty($order->job_start_date))
-                                {{ date('d-m-Y', strtotime($order->job_start_date)) }}
+                            @if (!empty($job->start_date))
+                                {{ date('d-m-Y', strtotime($job->start_date)) }}
                             @else
                                 N/A
                             @endif
@@ -142,8 +120,8 @@
                     <tr>
                         <td>End Date</td>
                         <td>
-                            @if (!empty($order->job_end_date))
-                                {{ date('d-m-Y', strtotime($order->job_end_date)) }}
+                            @if (!empty($job->end_date))
+                                {{ date('d-m-Y', strtotime($job->end_date)) }}
                             @else
                                 N/A
                             @endif
@@ -160,8 +138,8 @@
                     <tr>
                         <td>Assigned at</td>
                         <td>
-                            @if (!empty($order->assigned_at))
-                                {{ date('d-m-Y h:m:s', strtotime($order->assigned_at)) }}
+                            @if (!empty($job->assigned_at))
+                                {{ date('d-m-Y h:m:s', strtotime($job->assigned_at)) }}
                             @else
                                 N/A
                             @endif
@@ -169,7 +147,8 @@
                     </tr>
                 </table>
                 {{-- edit button --}}
-                <a href="{{ route('order.edit', $order) }}" id="blue" class="w-100 btn btn-primary mb-1">Edit</a>
+                {{-- <a href="{{ route('order.edit', $order) }}" id="blue" class="w-100 btn btn-primary mb-1">Edit</a> --}}
+                <a href="" id="blue" class="w-100 btn btn-primary mb-1">Edit</a>
             </div>
     </div>
 @endsection
