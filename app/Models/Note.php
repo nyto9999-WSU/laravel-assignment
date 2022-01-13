@@ -10,8 +10,8 @@ class Note extends Model
     protected $guarded = [];
     use HasFactory;
 
-    public function order()
+    public function job()
     {
-        return $this->belongsTo(Order::class);
+        return $this->belongsTo(Job::class);
     }
 }

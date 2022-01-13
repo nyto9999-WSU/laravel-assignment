@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\Job;
 use App\Models\Note;
 use Illuminate\Http\Request;
 
@@ -34,15 +35,15 @@ class NoteController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Order $order)
-    {
+    // public function store(Request $request, Order $order)
+    // {
 
-        $attributes = $this->validateAirCon();
+    //     $attributes = $this->validateAirCon();
 
-        $order->notes()->create($attributes);
+    //     $order->notes()->create($attributes);
 
-        return (new OrderController)->actions($order);
-    }
+    //     return (new OrderController)->actions($order);
+    // }
 
     /**
      * Display the specified resource.
@@ -106,9 +107,9 @@ class NoteController extends Controller
         {
             $attributes = $this->validateAirCon();
 
-            $order = Order::find($request->id);
-            $order->notes()->create($attributes);
-            $notes = $order->notes;
+            $job = Job::find($request->id);
+            $job->notes()->create($attributes);
+            $notes = $job->notes;
             // return response()->json(['success'=>'Data successfull loaded','data'=>$request->data, 'id'=>$request->id]);
             // return response()->json($notes);
             return $notes;

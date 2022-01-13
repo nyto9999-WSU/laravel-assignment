@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Aircon;
+use App\Models\Job;
 use App\Models\Order;
 use View;
+use Illuminate\Support\Carbon;
 use function Symfony\Component\String\b;
 
 class AirConController extends Controller
@@ -37,12 +39,20 @@ class AirConController extends Controller
      */
     public function store(Request $request, Order $order)
     {
-
         $order = Order::find($order->id);
+        $airconAtrr = $this->validateAirCon();
+        $jobAttr = $this->validateJob();
 
-        $attributes = $this->validateAirCon();
+        /* create aircon */
+        $order->aircons()->create($airconAtrr);
 
-        $order->aircons()->create($attributes);
+        /* create job */
+        $latestAircon = $order->aircons()->latest()->first();
+        $job = $order->jobs()->create($jobAttr);
+        $job->update([
+            "aircon_id" => $latestAircon->id
+        ]);
+
 
         return view('pages.user.order-aircons.addAircon', compact('order'));
     }
@@ -53,9 +63,12 @@ class AirConController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Aircon $aircon, Order $order)
+    public function show($id, Order $order)
     {
+
         abort_unless($order->user_id == auth()->id() || auth()->user()->isAdmin(), 403);
+
+        $aircon = Aircon::find($id);
 
         return view('pages.user.order-aircons.showAirconDetails', compact('aircon'));
     }
@@ -114,12 +127,48 @@ class AirConController extends Controller
             request()->merge(['equipment_type' => request()->other_type]);
         }
 
-
         return request()->validate([
             'model_number' => ['nullable'],
             'equipment_type' => ['nullable'],
             'other_type' => ['nullable'],
+            'domestic_commercial' => ['nullable'],
+            'install_address' => ['nullable'],
             'issue' => ['nullable'],
         ]);
+
+
+    }
+
+    protected function validateJob()
+    {
+
+        if (!empty(request()->other_type)) {
+            request()->merge(['equipment_type' => request()->other_type]);
+        }
+
+
+        $validation = request()->validate([
+            'prefer_date' => ['nullable'],
+            'prefer_time' => ['nullable'],
+            'domestic_commercial' => ['nullable'],
+            'model_number' => ['nullable'],
+            'equipment_type' => ['nullable'],
+            'other_type' => ['nullable'],
+            'install_address' => ['nullable'],
+            'issue' => ['nullable'],
+        ]);
+
+        $mySQL_date = Carbon::createFromFormat('d-m-Y', $validation['prefer_date'])->format('Y-m-d');
+
+        return $data = [
+            'prefer_date' => $mySQL_date,
+            'prefer_time' => $validation['prefer_time'],
+            'domestic_commercial' => $validation['domestic_commercial'],
+            'model_number' => $validation['model_number'],
+            'equipment_type' => $validation['equipment_type'],
+            'other_type' => $validation['other_type'],
+            'install_address' => $validation['install_address'],
+            'issue' => $validation['issue'],
+        ];
     }
 }

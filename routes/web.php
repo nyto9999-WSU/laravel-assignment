@@ -34,7 +34,7 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 /* Order */
-Route::get('order/{order}/actions', [OrderController::class, 'actions'])->name('order.actions');
+Route::get('order/{order}/job/{job?}/actions', [OrderController::class, 'actions'])->name('order.actions');
 Route::resource('order', OrderController::class);
 
 
@@ -46,14 +46,14 @@ Route::get('/print-order/{id?}', [OrderController::class, 'printOrder'])->name('
 
 
 /* Aircon */
-Route::get('/aircon/{aircon}/order{order}/', [AirConController::class, 'show'])->name('aircon.show');
+Route::get('/aircon/{id}/order{order}', [AirConController::class, 'show'])->name('aircon.show');
 Route::get('/airconall/order{order}/', [AirConController::class, 'showAll'])->name('aircon.showAll');
 Route::post('/aircon/order/{order}', [AirConController::class, 'store'])->name('aircon.store');
 Route::delete('/aircon/delete/{aircon}/order{order}', [AirConController::class, 'destroy'])->name('aircon.destroy');
 Route::resource('aircon', AirConController::class)->except(['store', 'show', 'destroy']);
 
 /* Job */
-Route::post('/job/{order}/order', [JobController::class, 'store'])->name('job.store');
+Route::post('/job/{job}/order/{order}', [JobController::class, 'store'])->name('job.store');
 Route::resource('job', JobController::class)->except(['store']);
 
 /* User */

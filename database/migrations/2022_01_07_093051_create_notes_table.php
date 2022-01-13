@@ -18,7 +18,7 @@ class CreateNotesTable extends Migration
             $table->string('description');
             $table->timestamps();
 
-            $table->foreignId('order_id')
+            $table->foreignId('job_id')
             ->constrained()
             ->onDelete('cascade');
         });

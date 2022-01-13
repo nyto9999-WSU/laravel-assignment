@@ -98,20 +98,17 @@ class UserController extends Controller
             case 'technician':
                 $user->update([
                     "role_id" =>  3,
-                    "tech_available" => 1,
             ]);
 
                 break;
             case 'admin':
                 $user->update([
                     "role_id" =>  2,
-                    "tech_available" => 0,
                 ]);
                 break;
             case 'user':
                 $user->update([
                     "role_id" =>  1,
-                    "tech_available" => 0,
                 ]);
                 break;
             case 'delete':
@@ -160,7 +157,6 @@ class UserController extends Controller
             'name' => ['nullable'],
             'email' => ['nullable'],
             'role_id' => ['nullable'],
-            'tech_available' => ['nullable'],
             'email_verified_at' => ['nullable'],
             'password' => ['nullable'],
             'remember_token' => ['nullable'],
@@ -172,7 +168,6 @@ class UserController extends Controller
             'name' => $attributes['name'],
             'email' => $faker->unique()->safeEmail(),
             'role_id' => $attributes['role_id'],
-            'tech_available' => $attributes['role_id'] = 3 ? 1 : 0,
             'email_verified_at' => now(),
             'password' => Hash::make('aaaa1111'),
             'remember_token' => Str::random(10),

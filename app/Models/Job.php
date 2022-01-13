@@ -15,6 +15,14 @@ class Job extends Model
         return $this->belongsTo(Order::class);
     }
 
+    public function aircon()
+    {
+        return $this->belongsTo(Aircon::class);
+    }
 
+    public function notes()
+    {
+        return $this->hasMany(Note::class);
+    }
 
 }

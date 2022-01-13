@@ -15,7 +15,7 @@
                 {{-- name --}}
                 <div class="col-12">
                     <label for="name" class="form-label">Name</label>
-                    <input type="text" class="form-control" name="name" id="name" placeholder="" value="">
+                    <input type="text" class="form-control" name="name" id="name" value="{{ Auth::user()->name }}">
                     <div class="invalid-feedback">
                         Valid name is required.
                     </div>
@@ -24,7 +24,7 @@
                 {{-- email --}}
                 <div class="col-12">
                     <label for="email" class="form-label">Email Address</label>
-                    <input type="email" class="form-control" name="email" id="email" placeholder="you@example.com">
+                    <input type="email" class="form-control" name="email" id="email" value="{{ Auth::user()->email }}">
                     <div class="invalid-feedback">
                         Please enter a valid email address for shipping updates.
                     </div>
@@ -39,23 +39,13 @@
                     </div>
                 </div>
 
-                {{-- no_of_unit --}}
+
+
+
+                {{-- address --}}
                 <div class="col-12">
-
-                    <label for="no_of_unit" class="form-label">No. of Unit </label>
-                    <input type="text" class="form-control" name="no_of_unit" id="model"
-                        placeholder="Please advise the number of units">
-
-                </div>
-                <div class="invalid-feedback">
-                    error msg
-                </div>
-
-
-                {{-- install_address --}}
-                <div class="col-12">
-                    <label for="install_address" class="form-label">Install Address</label>
-                    <input type="text" class="form-control" name="install_address" id="address"
+                    <label for="ddress" class="form-label">Address</label>
+                    <input type="text" class="form-control" name="address" id="address"
                         placeholder="1234 Main St">
                     <div class="invalid-feedback">
                         Please enter your shipping address.
@@ -103,43 +93,7 @@
                     </div>
                 </div>
 
-
                 <hr class="my-4">
-
-                <div class="row">
-                    {{-- prefer_date --}}
-                    <div class="col-md-4">
-                        <label for="prefer_date">Prefer Date</label>
-                        <input type="text" class="" id="datepicker" name="prefer_date">
-                    </div>
-
-
-                    {{-- prefer_time --}}
-                    <div class="col-md-4">
-
-                        <label for="prefer_time" class="form-label">Prefer Time</label>
-                        <select class="form-select" name="prefer_time" id="prefer_time">
-                            <option value="">Choose...</option>
-                            <option>Morning</option>
-                            <option>Afternoon</option>
-                            <option>Evening</option>
-                        </select>
-
-                    </div>
-
-
-                    {{-- domestic_commercial --}}
-                    <div class="col-md-4">
-                        <label for="domestic_commercial" class="form-label">Domestic / Commercial</label>
-                        <select class="form-select" name="domestic_commercial" id="domestic_commercial">
-                            <option value="">Choose...</option>
-                            <option>Domestic</option>
-                            <option>Commercial</option>
-                        </select>
-                    </div>
-                </div>
-
-
 
                 {{-- extra_note --}}
                 <div class="col-lg-12">
@@ -166,19 +120,4 @@
 
 
 
-@push('css')
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
-@endpush
 
-@push('js')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
-    <script>
-        //在後端改日期匹配mysql格式FIXME:
-        $('#datepicker').datepicker("setDate", new Date());
-        $("#datepicker").datepicker({
-            dateFormat: "dd-mm-yy",
-            minDate: '0'
-        });
-    </script>
-@endpush
