@@ -3,152 +3,201 @@
 @section('content')
     <div class="container">
         <h2 class="text-center">Request Details</h2>
-            <div class="col-12 shadow-sm px-1 rounded border border-2">
-                <table class="table table-hover text-start mb-2 mt-1">
+        <div class="col-12 shadow-sm px-1 rounded border border-2">
+            <table class="table table-hover text-start mb-2 mt-1">
 
-                    {{-- header 1 --}}
-                    <th id="blue" colspan="2" class="text-white">
-                        Job Details
-                    </th>
-                    {{-- order_id --}}
-                    <tr>
-                        <td>Order</td>
-                        <td>{{ $order->id }}</td>
-                    </tr>
+                <th id="blue" colspan="2" class="text-white">
+                    Aircon Details
+                </th>
+                <tr>
+                    <td>Aircon ID</td>
+                    <td>{{ $job->aircon_id }}</td>
+                </tr>
+                <tr>
+                    <td>Install Address</td>
+                    <td>{{ $job->install_address }}</td>
+                </tr>
+                <tr>
+                    <td>Model Number</td>
+                    <td>{{ $job->model_number }}</td>
+                </tr>
+                <tr>
+                    <td>Serial Number</td>
+                    <td>{{ $job->serial_number }}</td>
+                </tr>
+                <tr>
+                    <td>Equipment Type</td>
+                    <td>{{ $job->equipment_type }}</td>
+                </tr>
+                <tr>
+                    <td>Service Type</td>
+                    <td>{{ $job->domestic_commercial }}</td>
+                </tr>
+                <tr>
+                    <td>Issue</td>
+                    <td>{{ $job->issue }}</td>
+                </tr>
 
-                    {{-- model_number --}}
-                    <tr>
-                        <td>Model Number</td>
-                        <td>
-                            @forelse ($order->aircons as $aircon)
-                                <li>
-                                    <a
-                                        href="{{ route('aircon.show', [$aircon, $order]) }}">{{ $aircon->model_number }}</a>
-                                </li>
-                            @empty
+                {{-- job header --}}
+                <th id="blue" colspan="2" class="text-white">
+                    Job Details
+                </th>
+                {{-- order_id --}}
+                <tr>
+                    <td>Job</td>
+                    <td>{{ $job->id }}</td>
+                </tr>
 
-                            @endforelse
-                        </td>
-                    </tr>
+                {{-- prefer_date --}}
+                <tr>
+                    <td>Prefer Date</td>
+                    <td>
+                        @if (!empty($job->prefer_date))
+                            {{ date('d-m-Y', strtotime($job->prefer_date)) }}
+                        @else
+                            N/A
+                        @endif
+                    </td>
+                </tr>
 
+                {{-- prefer_time --}}
+                <tr>
+                    <td>Prefer Time</td>
+                    <td>
+                        @if (!empty($job->prefer_time))
+                            {{ $job->prefer_time }}
+                        @else
+                            N/A
+                        @endif
+                    </td>
+                </tr>
 
-                    {{-- status --}}
-                    <tr>
-                        <td>Status</td>
-                        <td>{{ $job->status }}</td>
-                    </tr>
+                {{-- start_date --}}
+                <tr>
+                    <td>Start Date</td>
+                    <td>
+                        @if (!empty($job->start_date))
+                            {{ date('d-m-Y', strtotime($job->start_date)) }}
+                        @else
+                            N/A
+                        @endif
+                    </td>
+                </tr>
 
-                    <!--Owner info-->
-                    <th id="blue" colspan="2" class="text-white">
-                        Owner Info
-                    </th>
+                {{-- job_end_date --}}
+                <tr>
+                    <td>End Date</td>
+                    <td>
+                        @if (!empty($job->end_date))
+                            {{ date('d-m-Y', strtotime($job->end_date)) }}
+                        @else
+                            N/A
+                        @endif
+                    </td>
+                </tr>
 
-                    {{-- name --}}
-                    <tr>
-                        <td>Name</td>
-                        <td>{{ $order->name }}</td>
-                    </tr>
+                {{-- created_at --}}
+                <tr>
+                    <td>Requested at</td>
+                    <td>{{ date('d-m-Y h:m:s', strtotime($order->created_at)) }}</td>
+                </tr>
 
-                    {{-- email --}}
-                    <tr>
-                        <td>Email Address</td>
-                        <td>{{ $order->email }}</td>
-                    </tr>
+                {{-- assigned_at --}}
+                <tr>
+                    <td>Assigned at</td>
+                    <td>
+                        @if (!empty($job->assigned_at))
+                            {{ date('d-m-Y h:m:s', strtotime($job->assigned_at)) }}
+                        @else
+                            N/A
+                        @endif
+                    </td>
+                </tr>
+                {{-- status --}}
+                <tr>
+                    <td>Status</td>
+                    <td>{{ $job->status }}</td>
+                </tr>
 
-                    {{-- install_addressFIXME: tojob installation address --}}
-                    <tr>
-                        <td>Address</td>
-                        <td>{{ $order->address }}</td>
-                    </tr>
+                {{-- order header --}}
+                <th id="blue" colspan="2" class="text-white">
+                    Order Details
+                </th>
+                {{-- model_number --}}
+                <tr>
+                    <td>Model Number</td>
+                    <td>
+                        @forelse ($order->aircons as $aircon)
+                            <li>
+                                <a
+                                    href="{{ route('aircon.show', [$aircon, $order]) }}">{{ $aircon->model_number }}</a>
+                            </li>
+                        @empty
 
-                    {{-- state --}}
+                        @endforelse
+                    </td>
+                </tr>
+                {{-- serial_number --}}
+                <tr>
+                    <td>Serial Number</td>
+                    <td>
+                        @forelse ($order->aircons as $aircon)
+                            <li>
+                                <a
+                                    href="{{ route('aircon.show', [$aircon, $order]) }}">{{ $aircon->serial_number }}</a>
+                            </li>
+                        @empty
 
-                    <tr>
-                        <td>State</td>
-                        <td>{{ $order->state }}</td>
-                    </tr>
+                        @endforelse
+                    </td>
+                </tr>
 
-                    {{-- suburb --}}
-                    <tr>
-                        <td>Suburb</td>
-                        <td>{{ $order->suburb }}</td>
-                    </tr>
+                <!--Owner info-->
+                <th id="blue" colspan="2" class="text-white">
+                    Owner Info
+                </th>
 
-                    {{-- postcode --}}
-                    <tr>
-                        <td>Postcode</td>
-                        <td>{{ $order->postcode }}</td>
-                    </tr>
+                {{-- name --}}
+                <tr>
+                    <td>Name</td>
+                    <td>{{ $order->name }}</td>
+                </tr>
 
-                    {{-- prefer_date --}}
-                    <tr>
-                        <td>Prefer Date</td>
-                        <td>
-                            @if (!empty($job->prefer_date))
-                                {{ date('d-m-Y', strtotime($job->prefer_date)) }}
-                            @else
-                                N/A
-                            @endif
-                        </td>
-                    </tr>
+                {{-- email --}}
+                <tr>
+                    <td>Email Address</td>
+                    <td>{{ $order->email }}</td>
+                </tr>
 
-                    {{-- prefer_time --}}
-                    <tr>
-                        <td>prefer_time</td>
-                        <td>
-                            @if (!empty($job->prefer_time))
-                                {{ $job->prefer_time }}
-                            @else
-                                N/A
-                            @endif
-                        </td>
-                    </tr>
+                {{-- install_addressFIXME: tojob installation address --}}
+                <tr>
+                    <td>Address</td>
+                    <td>{{ $order->address }}</td>
+                </tr>
 
-                    {{-- start_date --}}
-                    <tr>
-                        <td>Start Date</td>
-                        <td>
-                            @if (!empty($job->start_date))
-                                {{ date('d-m-Y', strtotime($job->start_date)) }}
-                            @else
-                                N/A
-                            @endif
-                        </td>
-                    </tr>
+                {{-- state --}}
 
-                    {{-- job_end_date --}}
-                    <tr>
-                        <td>End Date</td>
-                        <td>
-                            @if (!empty($job->end_date))
-                                {{ date('d-m-Y', strtotime($job->end_date)) }}
-                            @else
-                                N/A
-                            @endif
-                        </td>
-                    </tr>
+                <tr>
+                    <td>State</td>
+                    <td>{{ $order->state }}</td>
+                </tr>
 
-                    {{-- created_at --}}
-                    <tr>
-                        <td>Requested Date</td>
-                        <td>{{ date('d-m-Y h:m:s', strtotime($order->created_at)) }}</td>
-                    </tr>
+                {{-- suburb --}}
+                <tr>
+                    <td>Suburb</td>
+                    <td>{{ $order->suburb }}</td>
+                </tr>
 
-                    {{-- assigned_at --}}
-                    <tr>
-                        <td>Assigned at</td>
-                        <td>
-                            @if (!empty($job->assigned_at))
-                                {{ date('d-m-Y h:m:s', strtotime($job->assigned_at)) }}
-                            @else
-                                N/A
-                            @endif
-                        </td>
-                    </tr>
-                </table>
-                {{-- edit button --}}
-                {{-- <a href="{{ route('order.edit', $order) }}" id="blue" class="w-100 btn btn-primary mb-1">Edit</a> --}}
-                <a href="" id="blue" class="w-100 btn btn-primary mb-1">Edit</a>
-            </div>
+                {{-- postcode --}}
+                <tr>
+                    <td>Postcode</td>
+                    <td>{{ $order->postcode }}</td>
+                </tr>
+
+            </table>
+            {{-- edit button --}}
+            <a href="{{ route('order.edit', ['order' => $order, 'job' => $job]) }}" id="blue"
+                class="w-100 btn btn-primary mb-1">Edit</a>
+        </div>
     </div>
 @endsection

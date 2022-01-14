@@ -30,6 +30,21 @@
                         </td>
                     </tr>
 
+                    {{-- serial_number --}}
+                    <tr>
+                        <td>Serial Number</td>
+                        <td>
+                            @forelse ($order->aircons as $aircon)
+                                <li>
+                                    <a
+                                        href="{{ route('aircon.show', [$aircon, $order]) }}">{{ $aircon->serial_number }}</a>
+                                </li>
+                            @empty
+
+                            @endforelse
+                        </td>
+                    </tr>
+
                     {{-- domestic_commercial --}}
                     <tr>
                         <td>Domestic Commercial</td>

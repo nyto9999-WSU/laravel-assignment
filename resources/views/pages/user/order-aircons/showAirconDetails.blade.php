@@ -18,6 +18,11 @@
                         <th>Model Number</th>
                         <td>{{ $aircon->model_number }}</td>
                     </tr>
+                    {{-- serial_number --}}
+                    <tr>
+                        <th>Serial Number</th>
+                        <td>{{ $aircon->serial_number }}</td>
+                    </tr>
 
                     {{-- equipment_type --}}
                     <tr>

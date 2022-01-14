@@ -67,6 +67,12 @@
                                                 {{ $job->model_number }}
                                             </a>
                                         </td>
+                                        {{-- serail_number --}}
+                                        <td>
+                                            <a href={{ route('aircon.show', ['id' => $job->aircon_id, $order]) }}>
+                                                {{ $job->serial_number }}
+                                            </a>
+                                        </td>
 
                                         {{-- name --}}
                                         <td>{{ $order->name }}</td>
