@@ -71,6 +71,4 @@ class User extends Authenticatable
     {
         $query->where('role_id', '=', 3);
     }
-
-
 }

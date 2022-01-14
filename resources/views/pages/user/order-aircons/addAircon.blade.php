@@ -27,6 +27,13 @@
                     <input type="text" class="form-control" name="model_number" id="model_number"
                         placeholder="eg: XGD78IJD7">
                 </div>
+
+                {{-- serial_number --}}
+                <div class="col-md-12">
+                    <label for="serial_number" class="form-label">Serial Number</label>
+                    <input type="text" class="form-control" name="serial_number" id="serial_number"
+                        placeholder="eg: XGD78IJD7">
+                </div>
                 {{-- equipment_type --}}
                 <div class="col-md-6">
                     <label for="equipment_type" class="form-label">Equipment type</label>
@@ -110,11 +117,13 @@
             @forelse ($order->aircons as $aircon)
                 <table class="table">
                     <th>Model Number</th>
+                    <th>Serial Number</th>
                     <th>Equipment Type</th>
                     <th>Issue</th>
                     <th>Cancel</th>
                     <tr>
                         <td>{{ $aircon->model_number }}</td>
+                        <td>{{ $aircon->serial_number }}</td>
                         <td>{{ $aircon->equipment_type }}</td>
                         <td>{{ $aircon->issue }}</td>
                         <td>

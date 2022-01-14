@@ -33,6 +33,7 @@
                             <th>Assign</th>
                             <th>Job</th>
                             <th>Model</th>
+                            <th>Serial</th>
                             <th>Customer</th>
                             <th>Unit Address</th>
                             <th>Phone</th>
@@ -66,6 +67,12 @@
                                         {{ $job->model_number }}
                                     </a>
                                 </td>
+                                {{-- serial_number --}}
+                                <td>
+                                    <a href={{ route('aircon.show', ['id' => $job->aircon_id, $order]) }}>
+                                        {{ $job->serial_number }}
+                                    </a>
+                                </td>
                                 {{-- name --}}
                                 <td>{{ $order->name }}</td>
 
@@ -79,7 +86,7 @@
                                 <td>{{ date('d-m-Y', strtotime($order->created_at)) }}</td>
 
                                 {{-- prefer_date --}}
-                                <td>{{ date('d-m-Y', strtotime($order->prefer_date)) }}</td>
+                                <td>{{ date('d-m-Y', strtotime($job->prefer_date)) }}</td>
 
                                 {{-- domestic_commercial --}}
                                 <td>{{ $job->domestic_commercial }}</td>

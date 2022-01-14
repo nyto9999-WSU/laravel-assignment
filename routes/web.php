@@ -35,7 +35,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 /* Order */
 Route::get('order/{order}/job/{job?}/actions', [OrderController::class, 'actions'])->name('order.actions');
-Route::resource('order', OrderController::class);
+Route::get('order/{order}/job/{job}/edit', [OrderController::class, 'edit'])->name('order.edit');
+Route::resource('order', OrderController::class)->except(['edit']);
 
 
 

@@ -129,6 +129,7 @@ class AirConController extends Controller
 
         return request()->validate([
             'model_number' => ['nullable'],
+            'serial_number' => ['nullable'],
             'equipment_type' => ['nullable'],
             'other_type' => ['nullable'],
             'domestic_commercial' => ['nullable'],
@@ -152,6 +153,7 @@ class AirConController extends Controller
             'prefer_time' => ['nullable'],
             'domestic_commercial' => ['nullable'],
             'model_number' => ['nullable'],
+            'serial_number' => ['nullable'],
             'equipment_type' => ['nullable'],
             'other_type' => ['nullable'],
             'install_address' => ['nullable'],
@@ -165,6 +167,7 @@ class AirConController extends Controller
             'prefer_time' => $validation['prefer_time'],
             'domestic_commercial' => $validation['domestic_commercial'],
             'model_number' => $validation['model_number'],
+            'serial_number' => $validation['serial_number'],
             'equipment_type' => $validation['equipment_type'],
             'other_type' => $validation['other_type'],
             'install_address' => $validation['install_address'],

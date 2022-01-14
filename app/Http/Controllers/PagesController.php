@@ -10,22 +10,27 @@ use App\Models\Job;
 
 class PagesController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     //
     // function for search admin jobs
     public function searchRequestedJobs(Request $attr)
     {
+
+
         if (auth()->user()->isAdmin()) {
             $orders = Order::with('aircons', 'user')
                 ->where('status', '=', "$attr->status");
-                $value = $attr->s;
-              $orders =  $orders->where(function($query2) use ($value)
-                 {
-                    $query2->where('name', 'like', "%$value%")
-                         ->orWhere('mobile_number', 'like', "%$value%")
-                         ->orWhere('id', $value);
-                 })->limit(7)->get(); //pagination
-                 // dd($orders);
-                $status = $attr->status;
+            $value = $attr->s;
+            $orders =  $orders->where(function ($query2) use ($value) {
+                $query2->where('name', 'like', "%$value%")
+                    ->orWhere('mobile_number', 'like', "%$value%")
+                    ->orWhere('id', $value);
+            })->limit(7)->get(); //pagination
+            // dd($orders);
+            $status = $attr->status;
             return response()->json([
                 'statusCode' => 200,
                 'html' => view('pages.admin.search.current-orders', get_defined_vars())->render(),
@@ -41,10 +46,10 @@ class PagesController extends Controller
             ->where('prefer_date', 'like', "%$attr->s%")
             ->limit(7) //pagination
             ->get();
-            return response()->json([
-                'statusCode' => 200,
-                'html' => view('pages.user.search.current-orders', get_defined_vars())->render(),
-            ]);
+        return response()->json([
+            'statusCode' => 200,
+            'html' => view('pages.user.search.current-orders', get_defined_vars())->render(),
+        ]);
     }
 
 
@@ -62,8 +67,8 @@ class PagesController extends Controller
     {
         if (auth()->user()->isAdmin()) {
             $orders = Order::with('aircons', 'user')
-            ->orderBy('assigned_at', 'desc')
-            ->paginate(7);
+                ->orderBy('assigned_at', 'desc')
+                ->paginate(7);
             return view('pages.admin.order.assignedOrder', compact('orders'));
         }
     }
@@ -82,22 +87,20 @@ class PagesController extends Controller
     public function admins()
     {
         $users = User::where('role_id', '=', 2)
-                     ->paginate(9);
+            ->paginate(9);
 
         return view('pages.admin.userManagement.currentUsers', compact('users'));
     }
     public function technicians()
     {
         $users = User::where('role_id', '=', 3)
-                     ->paginate(9);
+            ->paginate(9);
         return view('pages.admin.userManagement.currentUsers', compact('users'));
     }
     public function users()
     {
         $users = User::where('role_id', '=', 1)
-                     ->paginate(9);
+            ->paginate(9);
         return view('pages.admin.userManagement.currentUsers', compact('users'));
     }
-
-
 }

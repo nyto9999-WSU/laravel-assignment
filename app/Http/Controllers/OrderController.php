@@ -61,7 +61,9 @@ class OrderController extends Controller
 
     public function create()
     {
-        return view('pages.user.order.addOrder');
+        $orderRecord = auth()->user()->orders()->latest()->first();
+
+        return view('pages.user.order.addOrder', compact('orderRecord'));
     }
 
     public function store(Request $request)
@@ -97,9 +99,9 @@ class OrderController extends Controller
 
 
 
-    public function edit(Order $order)
+    public function edit(Order $order, Job $job)
     {
-        return view('pages.user.order.editOrder', compact('order'));
+        return view('pages.user.order.editOrder', compact('order', 'job'));
     }
 
 
