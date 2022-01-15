@@ -167,7 +167,7 @@
                             <textarea id="textarea" name="description" rows="3" class="form-control mb-1"></textarea>
 
                             {{-- js note submit --}}
-                            <button id="js-note-submit" class="w-100 btn btn-secondary border border-secondary text-white mb-1">Add
+                            <button id="js-note-submit" class="w-100 btn btn-secondary border border-secondary text-white mb-1" style="background-color: #2d333b;">Add
                                 Note</button>
                         </div>
 
