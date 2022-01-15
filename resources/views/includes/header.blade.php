@@ -30,6 +30,9 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('order.create') }}">Service Request Form</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('pages.loginHistory') }}">Login History</a>
+                            </li>
                         @else
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('order.create') }}">Service Request Form</a>

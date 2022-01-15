@@ -7,6 +7,9 @@ use App\Models\Aircon;
 use App\Models\Order;
 use App\Models\User;
 use App\Models\Job;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+use Rappasoft\LaravelAuthenticationLog\Models\AuthenticationLog as Log;
 
 class PagesController extends Controller
 {
@@ -102,5 +105,30 @@ class PagesController extends Controller
         $users = User::where('role_id', '=', 1)
             ->paginate(9);
         return view('pages.admin.userManagement.currentUsers', compact('users'));
+    }
+
+    /* login history page */
+    public function loginHistory()
+    {
+
+        $users = User::join('authentication_log', 'users.id', '=', 'authentication_log.authenticatable_id')
+                       ->select('users.*', 'authentication_log.login_at')
+                       ->whereDate('login_at', '=', now())
+                       ->orderBy('login_at', 'desc')
+                       ->paginate(9);
+
+        return view('pages.admin.userManagement.loginHistory', compact('users'));
+    }
+    public function loginSearch(Request $request)
+    {
+
+            $users = User::join('authentication_log', 'users.id', '=', 'authentication_log.authenticatable_id')
+            ->where('users.name', 'like', "%$request->name%")
+            ->select('users.*', 'authentication_log.login_at')
+            ->whereDate('login_at', '=', now())
+            ->orderBy('login_at', 'desc')
+            ->paginate(9);
+
+        return view('pages.admin.userManagement.loginHistory', compact('users'));
     }
 }
