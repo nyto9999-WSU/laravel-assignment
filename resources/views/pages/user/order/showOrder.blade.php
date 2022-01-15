@@ -6,13 +6,14 @@
         <div class="col-12 shadow-sm px-1 rounded border border-2">
             <table class="table table-hover text-start mb-2 mt-1">
 
-                <th id="blue" colspan="2" class="text-white">
-                    Aircon Details
+                <th id="blue" class="text-white">
+                    Aircon ID : {{ $job->aircon_id }}
                 </th>
-                <tr>
-                    <td>Aircon ID</td>
-                    <td>{{ $job->aircon_id }}</td>
-                </tr>
+
+                <th id="blue" class="text-white text-end">
+                    <a href="{{ route('order.edit', ['order' => $order, 'job' => $job]) }}"
+                        class=" btn btn-secondary">Edit</a>
+                </th>
                 <tr>
                     <td>Install Address</td>
                     <td>{{ $job->install_address }}</td>
@@ -42,11 +43,6 @@
                 <th id="blue" colspan="2" class="text-white">
                     Job Details
                 </th>
-                {{-- order_id --}}
-                <tr>
-                    <td>Job</td>
-                    <td>{{ $job->id }}</td>
-                </tr>
 
                 {{-- prefer_date --}}
                 <tr>
@@ -96,6 +92,18 @@
                     </td>
                 </tr>
 
+                {{-- technician --}}
+                <tr>
+                    <td>Technician</td>
+                    <td>
+                        @if (!empty($job->tech_name))
+                            {{ $job->tech_name }}
+                        @else
+                            N/A
+                        @endif
+                    </td>
+                </tr>
+
                 {{-- created_at --}}
                 <tr>
                     <td>Requested at</td>
@@ -123,24 +131,29 @@
                 <th id="blue" colspan="2" class="text-white">
                     Order Details
                 </th>
+
                 {{-- model_number --}}
                 <tr>
                     <td>Model Number</td>
                     <td>
+                        <ol class="p-0 m-0 ms-3">
                         @forelse ($order->aircons as $aircon)
                             <li>
-                                <a
-                                    href="{{ route('aircon.show', [$aircon, $order]) }}">{{ $aircon->model_number }}</a>
+                                <a href="{{ route('aircon.show', [$aircon, $order]) }}">{{ $aircon->model_number }}</a>
                             </li>
-                        @empty
 
-                        @endforelse
+                            @empty
+
+                            @endforelse
+                        </ol>
                     </td>
                 </tr>
+
                 {{-- serial_number --}}
                 <tr>
                     <td>Serial Number</td>
                     <td>
+                        <ol class="p-0 m-0 ms-3">
                         @forelse ($order->aircons as $aircon)
                             <li>
                                 <a
@@ -149,12 +162,22 @@
                         @empty
 
                         @endforelse
+                        </ol>
                     </td>
                 </tr>
 
+                {{-- no.of unit --}}
+                <tr>
+                    <td>No. of Unit</td>
+                    <td>{{ count($order->aircons) }}</td>
+                </tr>
+
                 <!--Owner info-->
+
                 <th id="blue" colspan="2" class="text-white">
                     Owner Info
+                    {{-- edit button --}}
+
                 </th>
 
                 {{-- name --}}
@@ -169,7 +192,12 @@
                     <td>{{ $order->email }}</td>
                 </tr>
 
-                {{-- install_addressFIXME: tojob installation address --}}
+                {{-- mobile number --}}
+                <tr>
+                    <td>Mobile Number</td>
+                    <td>{{ $order->mobile_number }}</td>
+                </tr>
+
                 <tr>
                     <td>Address</td>
                     <td>{{ $order->address }}</td>
@@ -195,9 +223,7 @@
                 </tr>
 
             </table>
-            {{-- edit button --}}
-            <a href="{{ route('order.edit', ['order' => $order, 'job' => $job]) }}" id="blue"
-                class="w-100 btn btn-primary mb-1">Edit</a>
+
         </div>
     </div>
 @endsection

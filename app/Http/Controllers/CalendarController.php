@@ -22,16 +22,30 @@ class CalendarController extends Controller
 
     public function index()
     {
-        $requestedJob = Job::where('status', '=', 'booked')->get();
-        $assignedJob = Job::where('status', '=', 'assigned')->get();
-
+        $requestedJob = Job::join('orders', 'jobs.order_id', '=', 'orders.id')
+                            ->select('jobs.*', 'orders.mobile_number')
+                            ->where('status', '=', 'booked')->get();
+        $assignedJob = Job::join('orders', 'jobs.order_id', '=', 'orders.id')
+                            ->select('jobs.*', 'orders.mobile_number')
+                            ->where('status', '=', 'assigned')->get();
         if(!count($requestedJob)){
             $requested_id = null;
+            $r_model = null;
+            $r_serial = null;
+            $r_mobile = null;
+            $r_install_address = null;
+            $r_dc = null;
             $prefer_start = null;
             $prefer_end = null;
         }
         if(!count($assignedJob)){
             $assigned_id = null;
+            $a_model = null;
+            $a_serial = null;
+            $a_mobile = null;
+            $a_install_address = null;
+            $tech_name = null;
+            $a_dc = null;
             $job_start = null;
             $job_end = null;
 
@@ -63,7 +77,11 @@ class CalendarController extends Controller
                     break;
                 }
                 $requested_id[] = $job->id;
-                // $install_address[] = $order->install_address;
+                $r_model[] = $job->model_number;
+                $r_serial[] = $job->serial_number;
+                $r_mobile[] = $job->mobile_number;
+                $r_install_address[] = $job->install_address;
+                $r_dc[] = $job->domestic_commercial;
                 $prefer_start[] = "${p_date}T${s}";
                 $prefer_end[] = "${p_date}T${e}";
                 // $created_at[] = "${created}";
@@ -93,14 +111,19 @@ class CalendarController extends Controller
                     break;
             }
             $assigned_id[] = $job->id;
-            // $install_address[] = $order->install_address;
+            $a_model[] = $job->model_number;
+            $a_serial[] = $job->serial_number;
+            $a_mobile[] = $job->mobile_number;
+            $a_install_address[] = $job->install_address;
+            $tech_name[] = $job->tech_name;
+            $a_dc[] = $job->domestic_commercial;
             $job_start[] = "${j_date}T${js}";
             $job_end[] = "${j_date}T${je}";
         }
 
-
-
-        return view('pages.admin.calendar', compact('requested_id','prefer_start','prefer_end','assigned_id', 'job_start', 'job_end'));
+        return view('pages.admin.calendar',
+        compact('requested_id','r_model', 'r_serial','prefer_start','prefer_end','r_install_address', 'r_mobile', 'r_dc',
+        'assigned_id','a_model','a_serial','job_start', 'job_end', 'a_install_address', 'tech_name','a_mobile', 'a_dc'));
     }
 
     /**

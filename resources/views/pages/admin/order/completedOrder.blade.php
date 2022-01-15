@@ -22,8 +22,6 @@
                 <hr>
             </div>
 
-
-
             <div class="col-12 shadow-sm rounded border border-2">
 
                 <table class="table table-hover text-start mt-1">
@@ -33,13 +31,13 @@
 
                             <th>Job</th>
                             <th>Model</th>
+                            <th>Serial</th>
                             <th>Customer</th>
                             <th>Unit Address</th>
                             <th>Phone</th>
                             <th>Assigned Date</th>
                             <th>Completed Date</th>
                             <th>Service Type</th>
-                            <th>Extra Note</th>
                         </tr>
                     </thead>
                     <tbody id="current_orders">

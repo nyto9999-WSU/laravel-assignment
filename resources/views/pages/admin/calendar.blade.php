@@ -29,6 +29,7 @@
         var calendarEl = document.getElementById('calendar');
 
         var calendar = new FullCalendar.Calendar(calendarEl, {
+
             plugins: ['interaction', 'dayGrid', 'timeGrid'],
             timeZone: 'UTC',
             allDaySlot: false,
@@ -62,10 +63,10 @@
                     {
                         echo "{
                         id: '$requested_id[$i]',
-                        title: 'Requested Job ID: $requested_id[$i]',
+                        title: 'Requested Job ID: $requested_id[$i] \\n Model: $r_model[$i] \\n Serial: $r_serial[$i] \\n Mobile: $r_mobile[$i] \\n Install Address: $r_install_address[$i] \\n Service Type: $r_dc[$i]',
                         start: '$prefer_start[$i]',
                         end: '$prefer_end[$i]',
-                        backgroundColor: '#ED4928',
+                        backgroundColor: '#B83520',
                         },";
 
                     }
@@ -79,17 +80,21 @@
                     {
                         echo "{
                         id: '$assigned_id[$i]',
-                        title: 'Assigned Job ID: $assigned_id[$i]',
+                        title: 'Assigned Job ID: $assigned_id[$i] \\n Model: $a_model[$i] \\n Serial: $a_serial[$i] \\n Mobile: $a_mobile[$i] \\n Install Address: $a_install_address[$i] \\n Technician: $tech_name[$i] \\n Service Type: $a_dc[$i]',
                         start: '$job_start[$i]',
                         end: '$job_end[$i]',
-                        backgroundColor: '#46EB47',
+                        backgroundColor: '#366B2C',
                         },";
 
                     }
                 }
                 @endphp
 
+
             ],
+
+
+
         });
 
         calendar.render();

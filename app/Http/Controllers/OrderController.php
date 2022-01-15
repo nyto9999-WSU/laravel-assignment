@@ -40,8 +40,7 @@ class OrderController extends Controller
         switch ($job->status) {
 
             case 'booked':
-                $technicians = User::technicians()
-                    ->get();
+                $technicians = User::technicians()->get();
                 $aircon = Aircon::find($job->aircon_id);
                 return view('pages.admin.job.assignJobToTechnician', compact('order','job', 'technicians', 'aircon'));
 
@@ -101,7 +100,8 @@ class OrderController extends Controller
 
     public function edit(Order $order, Job $job)
     {
-        return view('pages.user.order.editOrder', compact('order', 'job'));
+        $technicians = User::technicians()->get();
+        return view('pages.user.order.editOrder', compact('order', 'job', 'technicians'));
     }
 
 
