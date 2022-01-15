@@ -12,7 +12,7 @@
 
                 <th id="blue" class="text-white text-end">
                     <a href="{{ route('order.edit', ['order' => $order, 'job' => $job]) }}"
-                        class=" btn btn-secondary">Edit</a>
+                        class=" btn btn-light text-dark">Edit</a>
                 </th>
                 <tr>
                     <td>Install Address</td>
@@ -124,7 +124,7 @@
                 {{-- status --}}
                 <tr>
                     <td>Status</td>
-                    <td>{{ $job->status }}</td>
+                    <td id="status">{{ $job->status }}</td>
                 </tr>
 
                 {{-- order header --}}
@@ -227,3 +227,20 @@
         </div>
     </div>
 @endsection
+
+@push('js')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        switch($('#status').html()) {
+            case 'booked':
+                $('th').css('background-color', '#B83520');
+                break;
+            case 'completed':
+                $('th').css("background-color", "#366B2C");
+                break;
+            default:
+                $('th').css('background-color', '#005aa4');
+                break
+        }
+    </script>
+@endpush

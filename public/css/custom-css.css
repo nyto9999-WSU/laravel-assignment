@@ -1,6 +1,13 @@
 #blue {
     background-color: #005aa4;
 }
+#red {
+    background-color: #B83520;
+
+}
+#green {
+    background-color: #366B2C;
+}
 
 #desc, .shadow-textarea textarea.form-control::placeholder {
     font-weight: 300;
@@ -27,3 +34,4 @@
     top: -10px;
     left: 5px;
 }
+

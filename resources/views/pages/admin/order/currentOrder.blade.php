@@ -29,7 +29,7 @@
                 <table class="table table-hover text-start mt-1">
 
                     <thead class="text-white">
-                        <tr id="blue">
+                        <tr id="red">
                             <th>Assign</th>
                             <th>Job</th>
                             <th>Model</th>
@@ -50,7 +50,7 @@
                             <tr>
                                 {{-- assign button --}}
                                 <td>
-                                    <a href="{{ route('order.actions', [$order, 'job' => $job]) }}" id="blue" class="btn text-white">
+                                    <a href="{{ route('order.actions', [$order, 'job' => $job]) }}" id="red" class="btn text-white">
                                         <i id="id=" blue"" class="bi bi-pen"></i>
                                     </a>
                                 </td>

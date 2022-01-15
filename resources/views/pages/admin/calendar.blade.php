@@ -83,7 +83,7 @@
                         title: 'Assigned Job ID: $assigned_id[$i] \\n Model: $a_model[$i] \\n Serial: $a_serial[$i] \\n Mobile: $a_mobile[$i] \\n Install Address: $a_install_address[$i] \\n Technician: $tech_name[$i] \\n Service Type: $a_dc[$i]',
                         start: '$job_start[$i]',
                         end: '$job_end[$i]',
-                        backgroundColor: '#366B2C',
+                        backgroundColor: '#005aa4',
                         },";
 
                     }
