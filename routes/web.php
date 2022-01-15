@@ -73,6 +73,8 @@ Route::get('/pages/user/users', [PagesController::class, 'users'])->name('pages.
 Route::get('/pages/order/requested', [PagesController::class, 'orderRequested'])->name('pages.orderRequested');
 Route::get('/pages/order/assigned', [PagesController::class, 'orderAssigned'])->name('pages.orderAssigned');
 Route::get('/pages/order/completed', [PagesController::class, 'orderCompleted'])->name('pages.orderCompleted');
+Route::get('/pages/login-history', [PagesController::class, 'loginHistory'])->name('pages.loginHistory');
+Route::get('/pages/login-history/search', [PagesController::class, 'loginSearch'])->name('pages.loginSearch');
 
 // search  route for all 3 jobs for admin
 Route::get('/pages/order/search-requested-jobs', [PagesController::class, 'searchRequestedJobs']);
@@ -88,3 +90,5 @@ Route::resource('note', NoteController::class)->except(['store']);
 
 // search route for roles and permission on the admin side
 Route::get('/admin/role-permission-search', [UserController::class, 'SearchUser']);
+
+/* login history */
