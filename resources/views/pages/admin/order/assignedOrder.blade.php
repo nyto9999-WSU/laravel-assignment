@@ -51,11 +51,36 @@
                                     <tr>
                                         {{-- complete button --}}
                                         <td>
-                                            <a href="{{ route('order.actions', [$order, 'job' => $job]) }}" id="blue"
-                                                class="btn text-white">
-                                                <i class="bi bi-check2"></i>
-                                            </a>
+                                            <button type="button" id="blue" class="btn btn-primary" data-bs-toggle="modal"
+                                            data-bs-target="#exampleModal">
+                                            <i class="bi bi-check2"></i>
+                                            </button>
                                         </td>
+
+                                        <!-- Modal -->
+                                        <div class="modal" id="exampleModal" tabindex="-1"
+                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Job ID: {{ $job->id }}</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                            Are you sure?
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">Close</button>
+                                                            <a href="{{ route('order.actions', [$order, 'job' => $job]) }}" id="blue"
+                                                                class="btn text-white">
+                                                                Complete!
+                                                            </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
 
                                         {{-- job_id --}}
                                         <td>

@@ -225,7 +225,9 @@
             </table>
 
         </div>
+
     </div>
+
 @endsection
 
 @push('js')
