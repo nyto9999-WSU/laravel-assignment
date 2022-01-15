@@ -9,108 +9,132 @@
                     @csrf
                     @method('PATCH')
 
-                    {{-- name --}}
-                    <div class="col-12">
-                        <label for="name" class="form-label">Name</label>
-                        <input type="text" class="form-control" name="name" id="name" value="{{ $order->name }}">
-                        <div class="invalid-feedback">
-                            Valid name is required.
-                        </div>
-                    </div>
 
-                    {{-- email --}}
-                    <div class="col-12">
-                        <label for="email" class="form-label">Email Address</label>
-                        <input type="email" class="form-control" name="email" id="email" value="{{ $order->email }}">
-
-                    </div>
-
-                    {{-- mobile_number --}}
-                    <div class="col-12">
-                        <label for="mobile_number" class="form-label">Mobile Number</label>
-                        <input type="tel" class="form-control" name="mobile_number" id="mobile"
-                            value="{{ $order->mobile_number }}">
-                    </div>
-
-                    {{-- address --}}
-                    <div class="col-12">
-                        <label for="install_address" class="form-label">Address</label>
-                        <input type="text" class="form-control" name="ddress" id="install_address"
-                            value="{{ $job->install_address }}">
-                        <div class="invalid-feedback">
-                            Please enter your shipping address.
-                        </div>
-                    </div>
 
                     <div class="row">
-                        {{-- prefer_date --}}
-                        <div class="col-md-6">
 
-                            <label for="prefer_date">Prefer Date</label>
-                            <input type="text" class="form-control" id="datepicker" name="prefer_date"
-                                value="{{ date('d-m-Y', strtotime($job->prefer_date)) }}">
+                        <h3>Aircon Info</h3>
+                        <hr class="my-2">
+                        {{-- model --}}
+                        <div class="col-md-6">
+                            <label for="model_number">Model</label>
+                            <input type="text" name="model_number" class="form-control" value="{{ $job->model_number }}">
                         </div>
-                        <div class="col-md-6">
 
-                            {{-- prefer_time --}}
-                            <label for="prefer_time">Prefer Time</label>
-                            <select class="form-select w-100" name="prefer_time">
-                                <option value="">{{ $job->prefer_time }}</option>
-                                <option>Morning</option>
-                                <option>Afternoon</option>
-                                <option>Evening</option>
+                        {{-- serial --}}
+                        <div class="col-md-6">
+                            <label for="serial_number">Serial</label>
+                            <input type="text" name="serial_number" class="form-control"
+                                value="{{ $job->serial_number }}">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="equipment_type">{{ $job->equipment_type }}</label>
+                            <select class="form-select" name="equipment_type">
+                                <option value="{{ $job->equipment_type }}">{{ $job->equipment_type }}</option>
+                                <option>Spilt System</option>
+                                <option>Ducted System</option>
+                                <option>Package unit</option>
+                                <option>Watercool unit</option>
+                                <option>Mini VRF</option>
                             </select>
                         </div>
 
-                    </div>
-
-                    <div class="row">
+                        {{-- domestic_commercial --}}
                         <div class="col-md-6">
-                            {{-- start_date --}}
-                            <label for="start_date">Start Date</label>
+                            <label for="domestic_commercial" class="form-label m-0">Domestic / Commercial</label>
+                            <select class="form-select" name="domestic_commercial" id="domestic_commercial">
+                                <option value="">{{ $job->domestic_commercial }}</option>
+                                <option>Domestic</option>
+                                <option>Commercial</option>
+                            </select>
+                        </div>
 
-                            @if (!empty($job->start_date))
-                            <input type="text" class="form-control" id="datepicker-start-date" name="start_date"
-                                value="{{ date('d-m-Y', strtotime($job->start_date)) }}">
+                        <div class="col-md-6">
+
+                            {{-- prefer_date --}}
+                            <label for="start_date">Client {{ $order->name }} Prefer Date</label>
+
+                            @if (!empty($job->prefer_date))
+                                <input type="text" class="form-control" id="datepicker" name="prefer_date"
+                                    value="{{ date('d-m-Y', strtotime($job->prefer_date)) }}">
                             @else
-                            <input type="text" class="form-control" id="datepicker-start-date" name="start_date">
+                                <input type="text" class="form-control" id="datepicker" name="prefer_date">
                             @endif
 
                         </div>
-                        <div class="col-md-6">
 
-                            {{-- prefer_time --}}
-                            <label for="prefer_time-time">Start Time</label>
+                        {{-- prefer_time --}}
+                        <div class="col-md-6">
+                            <label for="prefer_time-time">Client {{ $order->name }} Prefer Time</label>
                             <select class="form-select w-100" name="prefer_time">
-                                <option value="">{{ $job->start_time }}</option>
+                                <option value="{{ $job->prefer_time }}">{{ $job->prefer_time }}</option>
                                 <option>Morning</option>
                                 <option>Afternoon</option>
                                 <option>Evening</option>
                             </select>
                         </div>
+
                     </div>
 
-                    {{-- domestic_commercial --}}
-                    <div class="col-md-12">
-                        <label for="domestic_commercial" class="form-label">Domestic / Commercial</label>
-                        <select class="form-select" name="domestic_commercial" id="domestic_commercial">
-                            <option value="">{{ $job->domestic_commercial }}</option>
-                            <option>Domestic</option>
-                            <option>Commercial</option>
-                        </select>
-                    </div>
-
-                    {{-- extra_note --}}
+                    {{-- issue --}}
                     <div class="col-lg-12">
-                        <div class="description">
-                            <label for="extra_note" class="form-label">Extra note</label>
-                            <textarea class="form-control" name="extra_note" id="extra_note" cols="30"
-                                rows="2">{{ $order->extra_note }}</textarea>
-
-                            <hr class="my-4">
-                            <button type="save" class="w-100 btn btn-primary">Save</button>
-                        </div>
+                        <label for="issue" class="form-label">Issue</label>
+                        <textarea class="form-control" name="issue" cols="30" rows="2">{{ $job->issue }}</textarea>
                     </div>
+
+
+
+
+                    @if ($job->status != 'booked')
+                        {{-- title 2 --}}
+                        <h3>Job Info</h3>
+
+                        <div class="row">
+
+                            <div class="col-md-6">
+                                {{-- start_date --}}
+                                <label for="start_date">Start Date</label>
+
+                                @if (!empty($job->start_date))
+                                    <input type="text" class="form-control" id="datepicker-start-date" name="start_date"
+                                        value="{{ date('d-m-Y', strtotime($job->start_date)) }}">
+                                @else
+                                    <input type="text" class="form-control" id="datepicker-start-date" name="start_date">
+                                @endif
+
+                            </div>
+                            <div class="col-md-6">
+
+                                {{-- start_time --}}
+                                <label for="start_time">Start Time</label>
+                                <select class="form-select w-100" name="start_time">
+                                    <option value="{{ $job->start_time }}">{{ $job->start_time }}</option>
+                                    <option>Morning</option>
+                                    <option>Afternoon</option>
+                                    <option>Evening</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        {{-- technician --}}
+                        <div class="mt-2 mb-2">
+                            <label for="tech_name">Techinicain</label>
+                            <select class="form-select" name="tech_name">
+                                <option value="{{ $job->tech_name }}">{{ $job->tech_name }}</option>
+                                @forelse ($technicians as $t)
+                                    <option value="{{ $t->name }}">{{ $t->name }}</option>
+                                @empty
+
+                                @endforelse
+                            </select>
+                        </div>
+
+
+                    @endif
+                    <hr class="my-2">
+
+                    <button type="save" class="w-100 btn btn-primary">Save</button>
                 </form>
             </div>
         </div>

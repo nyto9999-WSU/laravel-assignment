@@ -70,7 +70,6 @@
                                         @endif
                                     </td>
 
-                                    {{-- Technician FIXME: #30: --}}
                                     <td>
                                         @if (!empty($job->tech_name))
                                             {{ $job->tech_name }}

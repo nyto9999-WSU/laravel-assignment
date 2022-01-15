@@ -30,16 +30,17 @@
 
                     <thead class="text-white">
                         <tr id="blue">
-                            <th>Assign</th>
+                            <th>Complete</th>
                             <th>Job</th>
                             <th>Model</th>
+                            <th>Serial</th>
                             <th>Customer</th>
                             <th>Unit Address</th>
                             <th>Phone</th>
                             <th>Requested Date</th>
                             <th>Assigned Date</th>
                             <th>Type</th>
-                            <th>Extra Note</th>
+                            <th>Technician</th>
                             <th>Print</th>
                         </tr>
                     </thead>
@@ -93,7 +94,7 @@
                                         <td>{{ $job->domestic_commercial }}</td>
 
                                         {{-- extra_note --}}
-                                        <td>{{ $order->extra_note }}</td>
+                                        <td>{{ $job->tech_name }}</td>
 
                                         {{-- TODO: Print --}}
                                         <td>
