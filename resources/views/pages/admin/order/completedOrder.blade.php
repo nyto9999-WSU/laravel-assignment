@@ -27,7 +27,7 @@
                 <table class="table table-hover text-start mt-1">
 
                     <thead class="text-white">
-                        <tr id="blue">
+                        <tr id="green">
 
                             <th>Job</th>
                             <th>Model</th>
