@@ -24,31 +24,64 @@ class PagesController extends Controller
 
 
         if (auth()->user()->isAdmin()) {
-            $orders = Order::with('aircons', 'user')
-                ->where('status', '=', "$attr->status");
+
+          if($attr->status == 'Booked')
+          {
+            $orders = Order::with('aircons', 'user');
             $value = $attr->s;
             $orders =  $orders->where(function ($query2) use ($value) {
                 $query2->where('name', 'like', "%$value%")
                     ->orWhere('mobile_number', 'like', "%$value%")
                     ->orWhere('id', $value);
-            })->limit(7)->get(); //pagination
-            // dd($orders);
-            $status = $attr->status;
+            })->orderBy('created_at', 'desc')->limit(7)->get(); //pagination
+
             return response()->json([
                 'statusCode' => 200,
-                'html' => view('pages.admin.search.current-orders', get_defined_vars())->render(),
+                'html' => view('pages.admin.search.requested-jobs', get_defined_vars())->render(),
             ]);
+          }
+
+          if($attr->status == 'assigned')
+          {
+            $orders = Order::with('aircons', 'user');
+            $value = $attr->s;
+            $orders =  $orders->where(function ($query2) use ($value) {
+                $query2->where('name', 'like', "%$value%")
+                    ->orWhere('mobile_number', 'like', "%$value%")
+                    ->orWhere('id', $value);
+            })->orderBy('assigned_at', 'desc')->limit(7)->get(); //pagination
+
+            return response()->json([
+                'statusCode' => 200,
+                'html' => view('pages.admin.search.assigned-jobs', get_defined_vars())->render(),
+            ]);
+          }
+
+          if($attr->status == 'completed')
+          {
+            $orders = Order::with('aircons', 'user');
+            $value = $attr->s;
+            $orders =  $orders->where(function ($query2) use ($value) {
+                $query2->where('name', 'like', "%$value%")
+                    ->orWhere('mobile_number', 'like', "%$value%")
+                    ->orWhere('id', $value);
+            })->orderBy('updated_at', 'desc')->limit(7)->get(); //pagination
+
+            return response()->json([
+                'statusCode' => 200,
+                'html' => view('pages.admin.search.completed-jobs', get_defined_vars())->render(),
+            ]);
+          }
         }
     }
 
     // function for search user requested history
     public function searchRequesteHistory(Request $attr)
     {
-        $orders = Order::with('aircons', 'user')
-            ->where('user_id', auth()->id())
-            ->where('prefer_date', 'like', "%$attr->s%")
-            ->limit(7) //pagination
-            ->get();
+      $jobs = Job::where('prefer_date', 'like', "%$attr->s%")->pluck('order_id');
+      $orders = Order::with('aircons', 'user', 'jobs')
+          ->where('user_id', auth()->id())
+          ->whereIn('id', $jobs)->get();
         return response()->json([
             'statusCode' => 200,
             'html' => view('pages.user.search.current-orders', get_defined_vars())->render(),
