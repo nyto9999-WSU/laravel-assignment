@@ -27,7 +27,7 @@
                         <div class="col-md-6 p-0">
                             <div class="card">
                                 <div class="card-header">
-                                    Weekly Completed Job (Unfinished)
+                                    Weekly Completed Job
                                 </div>
                                 @if ($weeklyName != null)
                                     <div id="weekly_completed_job" class=""></div>
@@ -41,7 +41,7 @@
                         <div class="col-md-4 ps-2">
                             <div class="card">
                                 <div class="card-header">
-                                    Today Jobs (Unfinished)
+                                    Today Jobs
                                 </div>
                                 @if ($orderAssignQuantity != null)
                                     <div  id="today_jobs"></div>

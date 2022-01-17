@@ -12,8 +12,7 @@
                     <thead class="text-black text-wrap">
                         <tr>
                             <th>Job ID</th>
-                            <th style="">Model</th>
-                            <th style="">Serial</th>
+                            <th style="">Model/Serial</th>
                             <th style="">Requested Date</th>
                             <th style="">Assigned Date</th>
                             <th style="">Completed Date</th>
@@ -30,45 +29,45 @@
                                     <td>
                                         <a href="{{ route('job.show', $job) }}">{{ $job->id }}</a>
                                     </td>
+
                                     {{-- model_number --}}
                                     <td>
-                                        <a href={{ route('aircon.show', ['id' => $job->aircon_id, $order]) }}>
-                                            {{ $job->model_number }}
-                                        </a>
-                                        <a href="{{ route('aircon.showAll', [$order]) }}" class="position-relative">
-                                            all
-                                        </a>
-                                    </td>
-                                    {{-- serial_number --}}
-                                    <td>
-                                        <a href={{ route('aircon.show', ['id' => $job->aircon_id, $order]) }}>
-                                            {{ $job->serial_number }}
-                                        </a>
-                                        <a href="{{ route('aircon.showAll', [$order]) }}" class="position-relative">
-                                            all
-                                        </a>
+                                        <li>
+                                            <a href={{ route('aircon.show', ['id' => $job->aircon_id, $order]) }}>
+                                                Model: {{ $job->model_number }}
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href={{ route('aircon.show', ['id' => $job->aircon_id, $order]) }}>
+                                                Serial: {{ $job->serial_number }}
+                                            </a>
+                                        </li>
                                     </td>
 
                                     {{-- Requested date --}}
-                                    <td>{{ date('d-m-Y', strtotime($job->prefer_date)) }}</td>
+                                    <td class="text-danger fw-bold">{{ date('d-M-Y', strtotime($order->created_at)) }}</td>
 
                                     {{-- job_start_date --}}
-                                    <td>
-                                        @if (!empty($job->start_date))
-                                            {{ $job->start_date }}
-                                        @else
+                                    @if (!empty($job->start_date))
+                                        <td class="text-primary fw-bold">
+                                            {{ date('d-M-Y', strtotime($job->start_date)) }}
+                                        </td>
+                                    @else
+                                        <td>
                                             N/A
-                                        @endif
-                                    </td>
+                                        </td>
+                                    @endif
 
                                     {{-- job_end_date --}}
-                                    <td>
-                                        @if (!empty($job->end_date))
-                                            {{ $job->end_date }}
-                                        @else
+                                    @if (!empty($job->end_date))
+                                        <td class="text-success fw-bold">
+                                            {{ date('d-M-Y', strtotime($job->end_date)) }}
+                                        </td>
+                                    @else
+                                        <td>
                                             N/A
-                                        @endif
-                                    </td>
+                                        </td>
+                                    @endif
 
                                     <td>
                                         @if (!empty($job->tech_name))
@@ -79,7 +78,7 @@
                                     </td>
 
                                     {{-- Status --}}
-                                    <td class="text-capitalize">{{ $job->status }}</td>
+                                    <td class="text-capitalize" id="status">{{ $job->status }}</td>
 
                                 </tr>
                             @empty
@@ -122,6 +121,23 @@
                 'csrftoken': '{{ csrf_token() }}'
             }
         });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        /* FIXME: for loop */
+        switch ($('#status').html()) {
+            case 'booked':
+                $('#status').css('color', '#A33431');
+                break;
+
+            case 'completed':
+                $('#status').css('color', '#366B2C');
+                break;
+
+            default:
+                $('#status').css('color', '#005aa4');
+                break
+        }
     </script>
 
 @endsection

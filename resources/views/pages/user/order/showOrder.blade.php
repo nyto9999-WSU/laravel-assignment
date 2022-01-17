@@ -2,18 +2,29 @@
 
 @section('content')
     <div class="container">
-        <h2 class="text-center">Request Details</h2>
+        <h3 class="mt-3">Status {{ $job->status }}</h3>
+        <hr class="my-2">
         <div class="col-12 shadow-sm px-1 rounded border border-2">
+
             <table class="table table-hover text-start mb-2 mt-1">
 
+
+                @if (Auth::user()->isAdmin())
                 <th id="blue" class="text-white">
                     Aircon ID : {{ $job->aircon_id }}
                 </th>
-
                 <th id="blue" class="text-white text-end p-0">
                     <a href="{{ route('order.edit', ['order' => $order, 'job' => $job]) }}"
                         class=" btn btn-light text-dark m-1 py-1 fw-bold">Edit</a>
                 </th>
+
+                @else
+                <th id="blue" colspan="2" class="text-white">
+                    Aircon ID : {{ $job->aircon_id }}
+                </th>
+
+                @endif
+
                 <tr>
                     <td>Install Address</td>
                     <td>{{ $job->install_address }}</td>
@@ -44,54 +55,6 @@
                     Job Details
                 </th>
 
-                {{-- prefer_date --}}
-                <tr>
-                    <td>Prefer Date</td>
-                    <td>
-                        @if (!empty($job->prefer_date))
-                            {{ date('d-m-Y', strtotime($job->prefer_date)) }}
-                        @else
-                            N/A
-                        @endif
-                    </td>
-                </tr>
-
-                {{-- prefer_time --}}
-                <tr>
-                    <td>Prefer Time</td>
-                    <td>
-                        @if (!empty($job->prefer_time))
-                            {{ $job->prefer_time }}
-                        @else
-                            N/A
-                        @endif
-                    </td>
-                </tr>
-
-                {{-- start_date --}}
-                <tr>
-                    <td>Start Date</td>
-                    <td>
-                        @if (!empty($job->start_date))
-                            {{ date('d-m-Y', strtotime($job->start_date)) }}
-                        @else
-                            N/A
-                        @endif
-                    </td>
-                </tr>
-
-                {{-- job_end_date --}}
-                <tr>
-                    <td>End Date</td>
-                    <td>
-                        @if (!empty($job->end_date))
-                            {{ date('d-m-Y', strtotime($job->end_date)) }}
-                        @else
-                            N/A
-                        @endif
-                    </td>
-                </tr>
-
                 {{-- technician --}}
                 <tr>
                     <td>Technician</td>
@@ -104,10 +67,76 @@
                     </td>
                 </tr>
 
+                {{-- prefer_date --}}
+                <tr>
+                    <td>Prefer Date</td>
+                    <td class="text-danger fw-bold">
+                        @if (!empty($job->prefer_date))
+                            {{ date('d - M - Y', strtotime($job->prefer_date)) }}
+                        @else
+                            N/A
+                        @endif
+                    </td>
+                </tr>
+
+                {{-- prefer_time --}}
+                <tr>
+                    <td>Prefer Time</td>
+                    <td class="text-danger fw-bold">
+                        @if (!empty($job->prefer_time))
+                            {{ $job->prefer_time }}
+                        @else
+                            N/A
+                        @endif
+                    </td>
+                </tr>
+
+                {{-- start_date --}}
+                <tr>
+                    <td>Start Date</td>
+                    @if (!empty($job->start_date))
+                        <td class="text-primary fw-bold">
+                            {{ date('d - M - Y', strtotime($job->start_date)) }}
+                        </td>
+                    @else
+                        <td>
+                            N/A
+                        </td>
+                    @endif
+                </tr>
+
+                {{-- start_time --}}
+                <tr>
+                    <td>Start Time</td>
+                    @if (!empty($job->start_time))
+                        <td class="text-primary fw-bold">
+                            {{ $job->start_time }}
+                        </td>
+                    @else
+                        <td>
+                            N/A
+                        </td>
+                    @endif
+                </tr>
+
+                {{-- job_end_date --}}
+                <tr>
+                    <td>End Date</td>
+                    @if (!empty($job->end_date))
+                        <td class="text-success fw-bold">
+                            {{ date('d - M - Y h:iA', strtotime($job->end_date)) }}
+                        </td>
+                    @else
+                        <td>
+                            N/A
+                        </td>
+                    @endif
+                </tr>
+
                 {{-- created_at --}}
                 <tr>
                     <td>Requested at</td>
-                    <td>{{ date('d-m-Y h:m:s', strtotime($order->created_at)) }}</td>
+                    <td>{{ date('d - M - Y h:iA', strtotime($order->created_at)) }}</td>
                 </tr>
 
                 {{-- assigned_at --}}
@@ -115,7 +144,7 @@
                     <td>Assigned at</td>
                     <td>
                         @if (!empty($job->assigned_at))
-                            {{ date('d-m-Y h:m:s', strtotime($job->assigned_at)) }}
+                            {{ date('d - M - Y h:iA', strtotime($job->assigned_at)) }}
                         @else
                             N/A
                         @endif
@@ -137,11 +166,12 @@
                     <td>Model Number</td>
                     <td>
                         <ol class="p-0 m-0 ms-3">
-                        @forelse ($order->aircons as $aircon)
-                            <li>
-                                <a href="{{ route('aircon.show', [$aircon, $order]) }}">{{ $aircon->model_number }}</a>
-                            </li>
-
+                            @forelse ($order->aircons as $aircon)
+                                <li>
+                                    <a href="{{ route('aircon.show', [$aircon, $order]) }}">
+                                        Model: {{ $aircon->model_number }} / Serial:
+                                        {{ $aircon->serial_number }}</a></a>
+                                </li>
                             @empty
 
                             @endforelse
@@ -149,35 +179,23 @@
                     </td>
                 </tr>
 
-                {{-- serial_number --}}
-                <tr>
-                    <td>Serial Number</td>
-                    <td>
-                        <ol class="p-0 m-0 ms-3">
-                        @forelse ($order->aircons as $aircon)
-                            <li>
-                                <a
-                                    href="{{ route('aircon.show', [$aircon, $order]) }}">{{ $aircon->serial_number }}</a>
-                            </li>
-                        @empty
-
-                        @endforelse
-                        </ol>
-                    </td>
-                </tr>
-
                 {{-- no.of unit --}}
                 <tr>
                     <td>No. of Unit</td>
-                    <td>{{ count($order->aircons) }}</td>
+                    <td> <a href={{ route('aircon.showAll', ['id' => $job->aircon_id, $order]) }}>
+                            {{ count($order->aircons) }} units see all
+                        </a></td>
+                </tr>
+
+                <tr>
+                    <td>Extra note</td>
+                    <td>{{ $order->extra_note }}</td>
                 </tr>
 
                 <!--Owner info-->
 
                 <th id="blue" colspan="2" class="text-white">
                     Owner Info
-                    {{-- edit button --}}
-
                 </th>
 
                 {{-- name --}}
@@ -233,7 +251,7 @@
 @push('js')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
-        switch($('#status').html()) {
+        switch ($('#status').html()) {
             case 'booked':
                 $('th').css('background-color', '#A33431');
                 $('#status').css('color', '#A33431');
