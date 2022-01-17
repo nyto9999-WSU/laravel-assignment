@@ -10,42 +10,47 @@
                     {{-- aircon_id --}}
                     <tr>
                         <th>ID</th>
-                        <td>{{ $aircon->id }}</td>
+                        <td>{{ $job->id }}</td>
                     </tr>
 
                     {{-- model_number --}}
                     <tr>
                         <th>Model Number</th>
-                        <td>{{ $aircon->model_number }}</td>
+                        <td>{{ $job->model_number }}</td>
                     </tr>
                     {{-- serial_number --}}
                     <tr>
                         <th>Serial Number</th>
-                        <td>{{ $aircon->serial_number }}</td>
+                        <td>{{ $job->serial_number }}</td>
                     </tr>
 
                     {{-- equipment_type --}}
                     <tr>
                         <th>Equipment Type</th>
-                        <td>{{ $aircon->equipment_type }}</td>
+                        <td>{{ $job->equipment_type }}</td>
                     </tr>
 
                     {{-- domestic_commercial --}}
                     <tr>
                         <th>Domestic Commercial</th>
-                        <td>{{ $aircon->domestic_commercial }}</td>
+                        <td>{{ $job->domestic_commercial }}</td>
                     </tr>
 
                     {{-- install_address --}}
                     <tr>
                         <th>Install Address</th>
-                        <td>{{ $aircon->install_address }}</td>
+                        <td>{{ $job->install_address }}</td>
                     </tr>
 
                     {{-- issue --}}
                     <tr>
                         <th>Issue</th>
-                        <td>{{ $aircon->issue }}</td>
+                        <td>{{ $job->issue }}</td>
+                    </tr>
+                    {{-- status --}}
+                    <tr>
+                        <th>Status</th>
+                        <td>{{ $job->status }}</td>
                     </tr>
 
                 </table>

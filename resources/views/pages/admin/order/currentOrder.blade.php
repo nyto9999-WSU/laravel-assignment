@@ -32,69 +32,78 @@
                         <tr id="red">
                             <th>Assign</th>
                             <th>Job</th>
-                            <th>Model</th>
-                            <th>Serial</th>
-                            <th>Customer</th>
+                            <th>Model/Serial</th>
                             <th>Unit Address</th>
+                            <th>Preferred Date</th>
+                            <th>Preferred Time</th>
+                            <th>Type</th>
+                            <th>Customer</th>
                             <th>Phone</th>
                             <th>Requested Date</th>
-                            <th>Preferred Date</th>
-                            <th>Type</th>
-                            <th>Extra Note</th>
+
                         </tr>
                     </thead>
                     <tbody id="current_orders">
                         @forelse ($orders as $order)
                             @forelse ($order->jobs as $job)
-                            @if ($job->status == 'booked')
-                            <tr>
-                                {{-- assign button --}}
-                                <td>
-                                    <a href="{{ route('order.actions', [$order, 'job' => $job]) }}" id="red" class="btn text-white">
-                                        <i id="id=" blue"" class="bi bi-pen"></i>
-                                    </a>
-                                </td>
+                                @if ($job->status == 'booked')
+                                    <tr>
+                                        {{-- assign button --}}
+                                        <td>
+                                            <a href="{{ route('order.actions', [$order, 'job' => $job]) }}" id="red"
+                                                class="btn text-white">
+                                                <i id="id=" blue"" class="bi bi-pen"></i>
+                                            </a>
+                                        </td>
 
-                                {{-- job_id --}}
-                                <td>
-                                    <a href="{{ route('job.show', $job) }}">{{ $job->id }}</a>
-                                </td>
+                                        {{-- job_id --}}
+                                        <td>
+                                            <a href="{{ route('job.show', $job) }}">{{ $job->id }}</a>
+                                        </td>
+
+                                        {{-- model_number/serial_number --}}
+                                        <td>
+                                            <li>
+                                                <a href={{ route('aircon.show', ['id' => $job->aircon_id, $order]) }}>
+                                                    Model: {{ $job->model_number }}
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href={{ route('aircon.show', ['id' => $job->aircon_id, $order]) }}>
+                                                    Serial: {{ $job->serial_number }}
+                                                </a>
+                                            </li>
+                                        </td>
+
+                                        {{-- install_address --}}
+                                        <td>{{ $job->install_address }}</td>
+
+                                        {{-- prefer_date --}}
+                                        <td class="fw-bold text-danger">
+                                            {{ date('d - M - Y', strtotime($job->prefer_date)) }}</td>
+
+                                        {{-- prefer_time --}}
+                                        <td class="fw-bold text-danger">{{ $job->prefer_time }}</td>
+
+                                        {{-- domestic_commercial --}}
+                                        <td>{{ $job->domestic_commercial }}</td>
+
+                                        {{-- name --}}
+                                        <td>{{ $order->name }}</td>
 
 
-                                {{-- model_number --}}
-                                <td>
-                                    <a href={{ route('aircon.show', ['id' => $job->aircon_id, $order]) }}>
-                                        {{ $job->model_number }}
-                                    </a>
-                                </td>
-                                {{-- serial_number --}}
-                                <td>
-                                    <a href={{ route('aircon.show', ['id' => $job->aircon_id, $order]) }}>
-                                        {{ $job->serial_number }}
-                                    </a>
-                                </td>
-                                {{-- name --}}
-                                <td>{{ $order->name }}</td>
 
-                                {{-- install_address --}}
-                                <td>{{ $job->install_address }}</td>
+                                        {{-- mobile_number --}}
+                                        <td>{{ $order->mobile_number }}</td>
 
-                                {{-- mobile_number --}}
-                                <td>{{ $order->mobile_number }}</td>
+                                        {{-- created_at --}}
+                                        <td>{{ date('d - M - Y h:iA', strtotime($order->created_at)) }}</td>
 
-                                {{-- created_at --}}
-                                <td>{{ date('d-m-Y', strtotime($order->created_at)) }}</td>
 
-                                {{-- prefer_date --}}
-                                <td>{{ date('d-m-Y', strtotime($job->prefer_date)) }}</td>
 
-                                {{-- domestic_commercial --}}
-                                <td>{{ $job->domestic_commercial }}</td>
 
-                                {{-- extra_note --}}
-                                <td>{{ $order->extra_note }}</td>
-                            </tr>
-                            @endif
+                                    </tr>
+                                @endif
 
                             @empty
 
@@ -124,7 +133,7 @@
                 url: '/pages/order/search-requested-jobs',
                 data: {
                     's': $value,
-                    status: 'Booked'
+                    status: 'booked'
                 },
                 success: function(data) {
                     // console.log(data);

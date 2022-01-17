@@ -68,20 +68,19 @@ class AirConController extends Controller
 
         abort_unless($order->user_id == auth()->id() || auth()->user()->isAdmin(), 403);
 
-        $aircon = Aircon::find($id);
-
-        return view('pages.user.order-aircons.showAirconDetails', compact('aircon'));
+        $job = Job::find($id);
+        return view('pages.user.order-aircons.showAirconDetails', compact('job'));
     }
 
     /* TODO:Show all aircons details */
     public function showAll(Order $order)
     {
 
-        $aircons = $order->aircons;
+        $jobs = $order->jobs;
 
         abort_unless($order->user_id == auth()->id() || auth()->user()->isAdmin(), 403);
 
-        return view('pages.user.order-aircons.showAllAirconDetails', compact('aircons'));
+        return view('pages.user.order-aircons.showAllAirconDetails', compact('jobs'));
     }
 
     /**

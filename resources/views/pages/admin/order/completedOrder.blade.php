@@ -30,17 +30,16 @@
                         <tr id="green">
 
                             <th>Job</th>
-                            <th>Model</th>
-                            <th>Serial</th>
-                            <th>Customer</th>
+                            <th>Model&Serial</th>
                             <th>Unit Address</th>
-                            <th>Phone</th>
                             <th>Assigned Date</th>
                             <th>Completed Date</th>
                             <th>Service Type</th>
+                            <th>Customer</th>
+                            <th>Phone</th>
                         </tr>
                     </thead>
-                    <tbody id="current_orders">
+                    <tbody>
                         @forelse ($orders as $order)
                             @forelse ($order->jobs as $job)
                                 @if ($job->status == 'completed')
@@ -53,34 +52,35 @@
 
                                         {{-- model_number --}}
                                         <td>
-                                            <a href={{ route('aircon.show', ['id' => $job->aircon_id, $order]) }}>
-                                                {{ $job->model_number }}
-                                            </a>
+                                            <li>
+                                                <a href={{ route('aircon.show', ['id' => $job->aircon_id, $order]) }}>
+                                                    Model: {{ $job->model_number }}
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href={{ route('aircon.show', ['id' => $job->aircon_id, $order]) }}>
+                                                    Serial: {{ $job->serial_number }}
+                                                </a>
+                                            </li>
                                         </td>
-                                        {{-- serial_number --}}
-                                        <td>
-                                            <a href={{ route('aircon.show', ['id' => $job->aircon_id, $order]) }}>
-                                                {{ $job->serial_number }}
-                                            </a>
-                                        </td>
-
-                                        {{-- name --}}
-                                        <td>{{ $order->name }}</td>
 
                                         {{-- install_address --}}
                                         <td>{{ $order->address }}</td>
 
-                                        {{-- mobile_number --}}
-                                        <td>{{ $order->mobile_number }}</td>
+                                        {{-- assigned_at --}}
+                                        <td class="">{{ date('d - M - Y h:iA', strtotime($job->assigned_at)) }}</td>
 
-                                        {{-- created_at --}}
-                                        <td>{{ date('d-m-Y', strtotime($job->assigned_at)) }}</td>
-
-                                        {{-- prefer_date --}}
-                                        <td>{{ date('d-m-Y', strtotime($job->end_date)) }}</td>
+                                        {{-- end_date --}}
+                                        <td class="text-success fw-bold">{{ date('d - M - Y h:iA', strtotime($job->end_date)) }}</td>
 
                                         {{-- domestic_commercial --}}
                                         <td>{{ $job->domestic_commercial }}</td>
+
+                                        {{-- name --}}
+                                        <td>{{ $order->name }}</td>
+
+                                        {{-- mobile_number --}}
+                                        <td>{{ $order->mobile_number }}</td>
                                     </tr>
                                 @endif
 
@@ -130,6 +130,7 @@
             }
         });
     </script>
+
 
 
 @endsection

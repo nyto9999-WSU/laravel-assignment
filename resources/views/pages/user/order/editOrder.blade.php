@@ -8,11 +8,7 @@
                 <form action="{{ route('order.update', $order) }}" method="post">
                     @csrf
                     @method('PATCH')
-
-
-
                     <div class="row">
-
                         <h3>Aircon Info</h3>
                         <hr class="my-2">
                         {{-- model --}}
@@ -129,6 +125,23 @@
                                 @endforelse
                             </select>
                         </div>
+                        @if ($job->status == 'assigned')
+                            {{-- status-assigned to booked --}}
+                            <div class="mt-2 mb-2">
+                                <label for="status">Current Status : {{ $job->status }}</label><br>
+                                <p class="text-danger" name="status">Would you like to return the status to "Booked" ?
+                                    <input type="checkbox" class="form-check-input" name="status">
+                                </p>
+                            </div>
+                        @else
+                            {{-- status-completed to assigned --}}
+                            <div class="mt-2 mb-2">
+                                <label for="status">Current Status : {{ $job->status }}</label><br>
+                                <p class="text-danger" name="status">Would you like to return the status to "Assigned" ?
+                                    <input type="checkbox" class="form-check-input" name="status">
+                                </p>
+                            </div>
+                        @endif
 
 
                     @endif

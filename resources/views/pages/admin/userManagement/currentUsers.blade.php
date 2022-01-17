@@ -69,7 +69,7 @@
                     @forelse ($users as $user)
                         <tr>
                             {{-- user id --}}
-                            <th scope="row">{{ $user->id }}</th>
+                            <th>{{ $user->id }}</th>
 
                             {{-- user name --}}
                             <td>
@@ -82,7 +82,7 @@
                                     @method('PATCH')
                                     @csrf
 
-                                    <select class="" name="action" onchange="this.form.submit()">
+                                    <select class="form-control-sm" name="action" onchange="this.form.submit()">
                                         <option disabled selected value>{{ $user->getRole() }}</option>
                                         <option value="user">User</option>
                                         <option value="technician">Technician</option>
@@ -105,6 +105,7 @@
                                     <button type="submit" class="btn btn-primary"><i class="bi bi-trash"></i></button>
                                 </form>
                             </td>
+
                         </tr>
                         @empty
                         <h1>no data</h1>
