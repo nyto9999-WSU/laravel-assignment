@@ -28,8 +28,8 @@
                 <h1 class="text-center">Welcome to Pioneer International</h1>
                 <br>
 
-                <a class="btn btn-primary btn-squared-default btn-lg m-2 border border-dark border border-2"
-                    href="{{ route('login') }}" role="button">
+                <a class="btn btn-secondary btn-squared-default btn-lg m-2 border border-dark border border-2"
+                    href="{{ route('login') }}" role="button" >
                     <svg class="svg-inline--fa fa-user-circle fa-w-16 fa-6x mb-3" viewBox="0 0 496 512">
                         {{-- viewBox size x,y,w,h --}}
                         <path fill="currentColor"
@@ -37,7 +37,7 @@
                         </path>
                     </svg>Login</a>
 
-                <a class="btn btn-warning btn-squared-default btn-lg m-2 border border-dark border border-2"
+                <a class="btn btn-secondary btn-squared-default btn-lg m-2 border border-dark border border-2"
                     href="{{ route('register') }}" role="button">
                     <svg class="svg-inline--fa fa-user-circle fa-w-16 fa-6x mb-3" viewBox="0 0 496 512">
                         <path fill="currentColor"
