@@ -31,6 +31,7 @@
                     <th id="blue" class="text-white">Name</th>
                     <th id="blue" class="text-white">Role</th>
                     <th id="blue" class="text-white">Login At</th>
+                    <th id="blue" class="text-white">Last Login At</th>
                     <th id="blue" class="text-white">Last IP</th>
 
                     @forelse ($users as $user)
@@ -44,7 +45,7 @@
                         @else
                         <td>{{ date('d-M-Y h:i A', strtotime($user->login_at)) }}</td>
                         @endif
-                        {{-- <td><button type="button" class="btn btn-lg btn-danger" data-toggle="popover" title="Popover title" data-bs-content="And here's some amazing content. It's very engaging. Right?">Click to toggle popover</button></td> --}}
+                        <td>{{ date('d-M-Y h:i A', strtotime($user->lastSuccessfulLoginAt())) }}</td>
                         <td>{{ $user->lastSuccessfulLoginIp() }}</td>
 
                     </tr>

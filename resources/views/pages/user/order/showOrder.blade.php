@@ -10,9 +10,9 @@
                     Aircon ID : {{ $job->aircon_id }}
                 </th>
 
-                <th id="blue" class="text-white text-end">
+                <th id="blue" class="text-white text-end p-0">
                     <a href="{{ route('order.edit', ['order' => $order, 'job' => $job]) }}"
-                        class=" btn btn-light text-dark">Edit</a>
+                        class=" btn btn-light text-dark m-1 py-1 fw-bold">Edit</a>
                 </th>
                 <tr>
                     <td>Install Address</td>
@@ -124,7 +124,7 @@
                 {{-- status --}}
                 <tr>
                     <td>Status</td>
-                    <td id="status">{{ $job->status }}</td>
+                    <td id="status" class="text-capitalize fw-bold">{{ $job->status }}</td>
                 </tr>
 
                 {{-- order header --}}
@@ -235,13 +235,18 @@
     <script>
         switch($('#status').html()) {
             case 'booked':
-                $('th').css('background-color', '#B83520');
+                $('th').css('background-color', '#A33431');
+                $('#status').css('color', '#A33431');
                 break;
+
             case 'completed':
                 $('th').css("background-color", "#366B2C");
+                $('#status').css('color', '#366B2C');
                 break;
+
             default:
                 $('th').css('background-color', '#005aa4');
+                $('#status').css('color', '#005aa4');
                 break
         }
     </script>

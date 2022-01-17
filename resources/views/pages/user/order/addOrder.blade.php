@@ -23,7 +23,7 @@
                 {{-- email --}}
                 <div class="col-12">
                     <label for="email" class="form-label">Email Address</label>
-                    <input type="email" class="form-control" name="email" id="email" value="{{ @$orderRecord['email'] }}">
+                    <input type="email" class="form-control" name="email" id="email" value="{{ Auth::user()->email }}">
                     <div class="invalid-feedback">
                         Please enter a valid email address for shipping updates.
                     </div>

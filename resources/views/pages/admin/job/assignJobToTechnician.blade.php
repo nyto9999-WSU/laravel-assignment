@@ -150,14 +150,14 @@
 
                         {{-- notes record --}}
                         <div class="mt-2 mb-2">
-                            <ul class="list-group border border-dark" id="js-notes" style="height: 180px; overflow: auto">
+                            <ul class="list-group bg-white" id="js-notes" style="height: 180px; overflow: auto">
 
                                 @forelse ($job->notes as $note)
                                     <li class="wraptext-li">
                                         {{ $note->description }}
                                     </li>
                                 @empty
-                                    N/A
+
                                 @endforelse
                             </ul>
                         </div>
@@ -167,7 +167,7 @@
                             <textarea id="textarea" name="description" rows="3" class="form-control mb-1"></textarea>
 
                             {{-- js note submit --}}
-                            <button id="js-note-submit" class="w-100 btn btn-secondary border border-secondary text-white mb-1" style="background-color: #2d333b;">Add
+                            <button id="js-note-submit" class="w-100 btn btn-secondary text-white mb-1">Add
                                 Note</button>
                         </div>
 
@@ -190,7 +190,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
     <script>
-        //在後端改日期匹配mysql格式FIXME:
+
         $('#datepicker').datepicker("setDate", new Date());
         $("#datepicker").datepicker({
             dateFormat: "dd-mm-yy",

@@ -125,7 +125,7 @@ class PagesController extends Controller
             $users = User::join('authentication_log', 'users.id', '=', 'authentication_log.authenticatable_id')
             ->where('users.name', 'like', "%$request->name%")
             ->select('users.*', 'authentication_log.login_at')
-            ->whereDate('login_at', '=', now())
+            ->whereBetween('login_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
             ->orderBy('login_at', 'desc')
             ->paginate(9);
 
