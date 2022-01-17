@@ -4,6 +4,17 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
+
+            <div class="forgot">
+                <h2>Forgot your password?</h2>
+                <p>Change your password in three easy steps. This will help you to secure your account!</p>
+                <ol class="list-unstyled">
+                    <li><span class="text-primary text-medium">1. </span>Enter your email address below.</li>
+                    <li><span class="text-primary text-medium">2. </span>Our system will send you a temporary link</li>
+                    <li><span class="text-primary text-medium">3. </span>Use the link to reset your password</li>
+                </ol>
+            </div>
+            
             <div class="card">
                 <div class="card-header">{{ __('Reset Password') }}</div>
 
