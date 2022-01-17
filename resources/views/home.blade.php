@@ -141,17 +141,7 @@
             ]);
 
             var options = {
-                title: @php
-                    if($orderAssignQuantity != null)
-                    {
-                        echo strval($orderAssignQuantity[1]/$orderAssignQuantity[0] * 100);
-                    }
-                    else
-                    {
-                        echo 'nodata';
-                    }
-
-                @endphp,
+                title:'test',
                 colors : ['#EB9E00', '5F7C9E'],
                 pieHole: 0.4,
                 pieSliceText: 'none',

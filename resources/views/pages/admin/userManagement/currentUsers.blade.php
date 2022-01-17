@@ -42,7 +42,14 @@
       </div>
 
       <div class="col-3">
-          <input type="text" class="form-control" id="search" placeholder="Search roles">
+          {{-- Search bar --}}
+          <form type="get" action="/admin/role-permission-search">
+            <div class="input-group mb-3">
+                <input type="search" class="form-control mr-2" name="query" placeholder="Recipient's username"
+                    aria-label="Recipient's username" aria-describedby="button-addon2" value="{{!empty($name) ? $name : ''}}">
+                <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Search</button>
+            </div>
+        </form>
           <hr>
       </div>
 
@@ -62,22 +69,23 @@
                     </div>
                 </div>
             
-
-                {{-- create user --}}
-                <a href="{{ route('user.create') }}" class="btn btn-primary">Add</a>
+                
 
                 {{-- Users table --}}
                 <div class="col-12 shadow-sm rounded border border-2">
 
-                    <table class="table table-hover text-start mt-1">
+                    <table class="table table-hover text-start text-center mt-1">
           
-                        <thead class="text-white">
+                        <thead id="blue"class="text-white">
                         <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Role</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Role</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                        <th id="button" class="text-white text-end">
+                        <a href="{{ route('user.create') }}" class="btn-sm btn-light text-dark">Add</a>
+                        </th>
                         </tr>
                         </thead>
                     @forelse ($users as $user)
@@ -129,19 +137,7 @@
                         {!! $users->links() !!}
                     </div>
                 </div>
-                <nav aria-label="Page navigation example ">
-                    <ul class="pagination justify-content-end ">
-                      <li class="page-item disabled ">
-                        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-                      </li>
-                      <li class="page-item"><a class="page-link " href="#">1</a></li>
-                      <li class="page-item"><a class="page-link " href="#">2</a></li>
-                      <li class="page-item"><a class="page-link " href="#">3</a></li>
-                      <li class="page-item">
-                        <a class="page-link  text-dark" href="#">Next</a>
-                      </li>
-                    </ul>
-                  </nav>
+                
             </div>
         </div>
 
