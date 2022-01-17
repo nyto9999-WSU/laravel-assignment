@@ -1,4 +1,5 @@
 @forelse ($orders as $order)
+    @forelse ($order->jobs as $job)
     <tr>
         {{-- assign button --}}
         <td>
@@ -74,5 +75,7 @@
         @endif
     </tr>
 @empty
+@endforelse
+ @empty
     <h1>no data</h1>
 @endforelse
