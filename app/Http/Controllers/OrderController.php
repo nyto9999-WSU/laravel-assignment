@@ -10,6 +10,8 @@ use App\Models\Job;
 use DB;
 use Illuminate\Support\Carbon;
 
+use function PHPUnit\Framework\isNull;
+
 class OrderController extends Controller
 {
     /**
@@ -20,8 +22,7 @@ class OrderController extends Controller
     public function index()
     {
 
-        if(auth()->user()->isAdmin())
-        {
+        if (auth()->user()->isAdmin()) {
             $orders = Order::with('aircons', 'user')->get();
 
             return view('pages.admin.order.currentOrder', compact('orders'));
@@ -42,7 +43,7 @@ class OrderController extends Controller
             case 'booked':
                 $technicians = User::technicians()->get();
                 $aircon = Aircon::find($job->aircon_id);
-                return view('pages.admin.job.assignJobToTechnician', compact('order','job', 'technicians', 'aircon'));
+                return view('pages.admin.job.assignJobToTechnician', compact('order', 'job', 'technicians', 'aircon'));
 
             case 'assigned':
 
@@ -70,8 +71,8 @@ class OrderController extends Controller
         $attributes = $this->validateOrder();
         auth()->user()->orders()->create($attributes);
         $order = Order::where('user_id', '=', auth()->user()->id)
-                        ->orderBy('created_at', 'desc')
-                        ->first();
+            ->orderBy('created_at', 'desc')
+            ->first();
 
         return view('pages.user.order-aircons.addAircon', compact('order'));
     }
@@ -79,9 +80,9 @@ class OrderController extends Controller
 
     public function show($id, Job $job)
     {
-            // abort_unless($order->user_id == auth()->id() || auth()->user()->isAdmin(), 403);
+        // abort_unless($order->user_id == auth()->id() || auth()->user()->isAdmin(), 403);
 
-            // $technician = $order->getTechnician();
+        // $technician = $order->getTechnician();
 
         return view('pages.user.order.showOrder', compact('order', 'technician'));
     }
@@ -105,11 +106,14 @@ class OrderController extends Controller
     }
 
 
-    public function update(Request $request, Order $order)
+    public function update(Request $request, Order $order, Job $job)
     {
-        $attributes = $this->validateEditOrder();
+        $attributes = $this->validateUpdateJob();
+        $attributes2 = $this->validateUpdateAircon();
+        $aircon = Aircon::find($job->aircon_id);
 
-        $order->update($attributes);
+        $job->update($attributes);
+        $aircon->update($attributes2);
 
         return back();
     }
@@ -122,55 +126,80 @@ class OrderController extends Controller
      */
     public function destroy(Order $order)
     {
-        if($order->relation)
-        {
+        // if($order->relation)
+        // {
 
-            $order->job()->delete();
+        //     $order->job()->delete();
+        // }
+
+        // $order->aircons->each->delete();
+
+        // $order->delete();
+
+
+        // return back();
+    }
+
+
+
+    // $mySQL_date = Carbon::createFromFormat('d-m-Y', $validation['prefer_date'])->format('Y-m-d');
+
+    // return $data = [
+    //     'prefer_date' => $mySQL_date,
+    // ];
+
+
+    protected function validateUpdateJob()
+    {
+
+        if(isset(request()->prefer_date)){
+            $prefer_date = Carbon::createFromFormat('d-m-Y', request()->prefer_date)->format('Y-m-d');
+            request()->merge(['prefer_date' => $prefer_date]);
         }
 
-        $order->aircons->each->delete();
+        if(isset(request()->start_date))
+        {
+            $start_date = Carbon::createFromFormat('d-m-Y', request()->start_date)->format('Y-m-d');
+            request()->merge(['start_date' => $start_date]);
+        }
+        if(isset(request()->booked))
+        {
+            request()->merge(['status' => 'booked']);
+            request()->merge(['start_date' => null]);
+            request()->merge(['start_time' => null]);
+            request()->merge(['tech_name' => null]);
+        }
+        if(isset(request()->assigned))
+        {
+            request()->merge(['status' => 'assigned']);
+        }
 
-        $order->delete();
-
-
-        return back();
-    }
-
-
-    //validation area
-    protected function validateAirCon()
-    {
         return request()->validate([
-            'equipment_type' => ['nullable']
+            'model_number' => ['nullable'],
+            'serial_number' => ['nullable'],
+            'install_address' => ['nullable'],
+            'equipment_type' => ['nullable'],
+            'domestic_commercial' => ['nullable'],
+            'prefer_date' => ['nullable'],
+            'prefer_time' => ['nullable'],
+            'issue' => ['nullable'],
+            'start_date' => ['nullable'],
+            'start_time' => ['nullable'],
+            'tech_name' => ['nullable'],
+            'status' => ['nullable'],
         ]);
     }
 
-    protected function validateOrder()
-    {
-         return request()->validate([
-            'name' => ['nullable'],
-            'email' => ['nullable'],
-            'mobile_number' => ['nullable'],
-            'address' => ['nullable'],
-            'state' => ['nullable'],
-            'suburb' => ['nullable'],
-            'postcode' => ['nullable'],
-            'extra_note' => ['nullable'],
-        ]);
 
-        // $mySQL_date = Carbon::createFromFormat('d-m-Y', $validation['prefer_date'])->format('Y-m-d');
-
-        // return $data = [
-        //     'prefer_date' => $mySQL_date,
-        // ];
-
-    }
-
-    protected function validateEditOrder()
+    protected function validateUpdateAircon()
     {
         return request()->validate([
-            'extra_note' => ['nullable'],
-
+            'model_number' => ['nullable'],
+            'serial_number' => ['nullable'],
+            'install_address' => ['nullable'],
+            'equipment_type' => ['nullable'],
+            'domestic_commercial' => ['nullable'],
+            'issue' => ['nullable'],
         ]);
     }
 }
