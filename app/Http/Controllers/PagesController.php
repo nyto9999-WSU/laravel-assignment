@@ -103,7 +103,7 @@ class PagesController extends Controller
     {
         if (auth()->user()->isAdmin()) {
             $orders = Order::with('aircons', 'user')
-                ->orderBy('assigned_at', 'desc')
+                ->orderBy('updated_at', 'desc')
                 ->paginate(7);
             return view('pages.admin.order.assignedOrder', compact('orders'));
         }

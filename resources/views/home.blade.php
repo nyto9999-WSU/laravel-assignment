@@ -28,7 +28,7 @@
                                 <div class="card-header">
                                     Weekly Completed Job
                                 </div>
-                                @if ($weeklyName != null)
+                                @if (count($weeklyEffortChart) != 0)
                                     <div id="weekly_completed_job" class=""></div>
                                 @else
                                     <div class="bg-white text-center" style="height: 199px">
@@ -94,11 +94,10 @@
         function weeklyCompletedJob() {
             var data = google.visualization.arrayToDataTable([
                         ['name', 'number', { role: 'style' }],
-
                 @php
-                    for($i = 0; $i < count($weeklyCount) ; $i++)
+                    for($i = 0; $i < count($weeklyEffortChart)/2 ; $i++)
                     {
-                        echo "['$weeklyName[$i]' , ".$weeklyCount[$i].", '5F7C9E'],";
+                        echo "['".$weeklyEffortChart[$i*2]."', ".$weeklyEffortChart[$i*2+1].", '5F7C9E'],";
                     }
                 @endphp
             ]);
