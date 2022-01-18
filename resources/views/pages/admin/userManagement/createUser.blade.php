@@ -13,6 +13,8 @@
 
                     <label for="name">Name</label>
                     <input type="text" name="name">
+                    <label for="email">Email</label>
+                    <input type="text" name="email">
 
                     <select class="" name="role_id">
                         <option disabled selected value>Role</option>
