@@ -140,14 +140,20 @@ class OrderController extends Controller
         // return back();
     }
 
+    protected function validateOrder()
+    {
+         return request()->validate([
+            'name' => ['nullable'],
+            'email' => ['nullable'],
+            'mobile_number' => ['nullable'],
+            'address' => ['nullable'],
+            'state' => ['nullable'],
+            'suburb' => ['nullable'],
+            'postcode' => ['nullable'],
+            'extra_note' => ['nullable'],
+        ]);
 
-
-    // $mySQL_date = Carbon::createFromFormat('d-m-Y', $validation['prefer_date'])->format('Y-m-d');
-
-    // return $data = [
-    //     'prefer_date' => $mySQL_date,
-    // ];
-
+    }
 
     protected function validateUpdateJob()
     {
@@ -172,6 +178,7 @@ class OrderController extends Controller
         if(isset(request()->assigned))
         {
             request()->merge(['status' => 'assigned']);
+            request()->merge(['end_date' => null]);
         }
 
         return request()->validate([
@@ -185,6 +192,7 @@ class OrderController extends Controller
             'issue' => ['nullable'],
             'start_date' => ['nullable'],
             'start_time' => ['nullable'],
+            'end_date' => ['nullable'],
             'tech_name' => ['nullable'],
             'status' => ['nullable'],
         ]);

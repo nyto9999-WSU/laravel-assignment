@@ -138,22 +138,18 @@ class UserController extends Controller
 
     protected function validateUserProfile($user)
     {
-
-        // $faker = Faker::create();
-        $attributes = request()->validate([
+        return request()->validate([
             'name' => ['nullable'],
         ]);
-
-        return $data = [
-            'name' => $attributes['name'],
-        ];
     }
 
     protected function validateUserCreate()
     {
-        $faker = Faker::create();
 
-        $attributes = request()->validate([
+        request()->merge(['password' => Hash::make('aaaa1111')]);
+        request()->merge(['remember_token' => Str::random(10)]);
+
+        return request()->validate([
             'name' => ['nullable'],
             'email' => ['nullable'],
             'role_id' => ['nullable'],
@@ -164,14 +160,6 @@ class UserController extends Controller
         ]);
 
 
-        return $data = [
-            'name' => $attributes['name'],
-            'email' => $faker->unique()->safeEmail(),
-            'role_id' => $attributes['role_id'],
-            'email_verified_at' => now(),
-            'password' => Hash::make('aaaa1111'),
-            'remember_token' => Str::random(10),
-        ];
     }
 
 }

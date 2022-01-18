@@ -27,7 +27,6 @@ class CreateOrdersTable extends Migration
 
             $table->string('extra_note')->nullable();
 
-            $table->dateTime('assigned_at')->nullable();
             $table->timestamps();
 
             $table->foreignId('user_id')

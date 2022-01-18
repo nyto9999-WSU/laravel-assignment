@@ -136,13 +136,13 @@
                     @endif
                 </tr>
 
+                {{-- FIXME: --}}
                 {{-- created_at --}}
-                <tr>
+                {{-- <tr>
                     <td>Requested at</td>
                     <td>{{ date('d - M - Y h:iA', strtotime($order->created_at)) }}</td>
                 </tr>
 
-                {{-- assigned_at --}}
                 <tr>
                     <td>Assigned at</td>
                     <td>
@@ -152,7 +152,7 @@
                             N/A
                         @endif
                     </td>
-                </tr>
+                </tr> --}}
                 {{-- status --}}
                 <tr>
                     <td>Status</td>
