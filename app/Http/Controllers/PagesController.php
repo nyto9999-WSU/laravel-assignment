@@ -22,7 +22,6 @@ class PagesController extends Controller
     public function searchRequestedJobs(Request $attr)
     {
 
-
         if (auth()->user()->isAdmin()) {
             $orders = Order::with('aircons', 'user')
                 ->where('status', '=', "$attr->status");
@@ -70,7 +69,7 @@ class PagesController extends Controller
     {
         if (auth()->user()->isAdmin()) {
             $orders = Order::with('aircons', 'user')
-                ->orderBy('updated_at', 'desc')
+                ->orderBy('created_at', 'desc')
                 ->paginate(7);
             return view('pages.admin.order.assignedOrder', compact('orders'));
         }
@@ -80,7 +79,7 @@ class PagesController extends Controller
     {
         if (auth()->user()->isAdmin()) {
             $orders = Order::with('aircons', 'user')
-                ->orderBy('updated_at', 'desc')
+                ->orderBy('created_at', 'desc')
                 ->paginate(7);
 
             return view('pages.admin.order.completedOrder', compact('orders'));
