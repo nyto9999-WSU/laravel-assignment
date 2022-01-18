@@ -2,152 +2,152 @@
 
 @section('content')
     <div class="container">
-        <h1>Role: {{ Auth::user()->getRole() }}</h1>
-        <h1>editOrder.blade</h1>
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <h1>order.update</h1>
-
-                {{-- TODO: change current input type --}}
-                <form action="{{ route('order.update', $order) }}" method="post">
+                <form action="{{ route('order.update', [$order, $job]) }}" method="post">
                     @csrf
                     @method('PATCH')
-                    {{-- name --}}
-                    <div class="col-12">
-                <label for="name" class="form-label">Name</label>
-                <input type="text" class="form-control" name="name" id="name" placeholder="{{ $order->name }}" value="" >
-                <div class="invalid-feedback">
-                  Valid name is required.
-                </div>
-              </div>
+                    <div class="row g-2">
+                        <h3 class="mb-0">Aircon Info</h3>
 
-                    {{-- email --}}
-                    <div class="col-12">
-                <label for="email" class="form-label">Email Address</label>
-                <input type="email" class="form-control" name="email" id="email" placeholder="{{ $order->email }}" >
-                <div class="invalid-feedback">
-                  Please enter a valid email address for shipping updates.
-                </div>
-              </div>
-                    
+                        {{-- model --}}
+                        <div class="col-md-6">
+                            <label for="model_number">Model</label>
+                            <input type="text" name="model_number" class="form-control" value="{{ $job->model_number }}">
+                        </div>
 
-                    {{-- mobile_number --}}
-                    <div class="col-12">
-                <label for="mobile_number" class="form-label">Mobile Number</label>
-                <input type="number" class="form-control" name="mobile_number" id="mobile" placeholder="{{ $order->mobile_number }}" >
-                <div class="invalid-feedback">
-                  Please enter a valid email address for shipping updates.
-                </div>
-              </div>
-                    
+                        {{-- serial --}}
+                        <div class="col-md-6">
+                            <label for="serial_number">Serial</label>
+                            <input type="text" name="serial_number" class="form-control"
+                                value="{{ $job->serial_number }}">
+                        </div>
 
-                    {{-- no_of_unit --}}
-                    <div class="col-12">
+                        {{-- install_address --}}
+                        <div class="col-md-12">
+                            <label for="install_address">Install Address</label>
+                            <input type="text" name="install_address" class="form-control"
+                                value="{{ $job->install_address }}">
+                        </div>
 
-                <label for="no_of_unit" class="form-label">No. of Unit </label>
-                <input type="text" class="form-control" name="no_of_unit" id="model" placeholder="{{ $order->no_of_unit }}" >
+                        {{-- equipment_type --}}
+                        <div class="col-md-6">
+                            <label for="equipment_type">Equipment Type</label>
+                            <select class="form-select" name="equipment_type">
+                                <option value="{{ $job->equipment_type }}">{{ $job->equipment_type }}</option>
+                                <option>Spilt System</option>
+                                <option>Ducted System</option>
+                                <option>Package unit</option>
+                                <option>Watercool unit</option>
+                                <option>Mini VRF</option>
+                            </select>
+                        </div>
 
-              </div>
-              <div class="invalid-feedback">
-              error msg
-              </div>
-                    
+                        {{-- domestic_commercial --}}
+                        <div class="col-md-6">
+                            <label for="domestic_commercial" class="form-label m-0">Domestic / Commercial</label>
+                            <select class="form-select" name="domestic_commercial" id="domestic_commercial">
+                                <option value="{{ $job->domestic_commercial }}">{{ $job->domestic_commercial }}</option>
+                                <option>Domestic</option>
+                                <option>Commercial</option>
+                            </select>
+                        </div>
 
-                    {{-- install_address --}}
-                    <div class="col-12">
-                <label for="install_address" class="form-label">Install Address</label>
-                <input type="text" class="form-control" name="install_address" id="address" placeholder="{{ $order->install_address }}" >
-                <div class="invalid-feedback">
-                  Please enter your shipping address.
-                </div>
-              </div>
-                    
+                        {{-- prefer_date --}}
+                        <div class="col-md-6">
 
-                    {{-- state --}}
-                    <div class="col-md-4">
-                <label for="state" class="form-label">State</label>
-                <select class="form-select" name="state" id="state" placeholder="{{ $order->state }}">
-                  <option value="">Choose...</option>
-                  <option>NSW</option>
-                  <option>Sydney</option>
-                  <option>California</option>
-                </select>
-                <div class="invalid-feedback">
-                  Please provide a valid state.
-                </div>
-              </div>
-                    
+                            <label for="start_date">Client {{ $order->name }} Prefer Date</label>
 
-                    {{-- suburb --}}
-                    <div class="col-md-4">
-                <label for="suburb" class="form-label">Suburb</label>
-                <input type="text" class="form-control" name="suburb" id="Suburb" placeholder="{{ $order->suburb }}" >
-                <div class="invalid-feedback">
-                  Suburb required.
-                </div>
-              </div>
-                    
+                            @if (!empty($job->prefer_date))
+                                <input type="text" class="form-control" id="datepicker" name="prefer_date"
+                                    value="{{ date('d-m-Y', strtotime($job->prefer_date)) }}">
+                            @else
+                                <input type="text" class="form-control" id="datepicker" name="prefer_date">
+                            @endif
 
-                    {{-- postcode --}}
-                    <div class="col-md-4">
-                <label for="postcode" class="form-label">Postcode</label>
-                <input type="text" class="form-control" name="postcode" id="postcode" placeholder="{{ $order->postcode }}" >
-                <div class="invalid-feedback">
-                  Postcode required.
-                </div>
-              </div>
-                    
+                        </div>
 
-                    {{-- prefer_date --}}
-                    <label for="prefer_date">Prefer Date</label>
-                    <input type="text" class="" id="datepicker" name="prefer_date" placeholder="{{ $order->prefer_date }}">
-                    
+                        {{-- prefer_time --}}
+                        <div class="col-md-6">
+                            <label for="prefer_time">Client {{ $order->name }} Prefer Time</label>
+                            <select class="form-select w-100" name="prefer_time">
+                                <option value="{{ $job->prefer_time }}">{{ $job->prefer_time }}</option>
+                                <option>Morning</option>
+                                <option>Afternoon</option>
+                                <option>Evening</option>
+                            </select>
+                        </div>
 
-                    {{-- prefer_time --}}
-                    <div class="col-md-4">
-                <b class="">Perfer time</b>
-                <div class="form-check">
-                  <input id="credit" name="prefer_time" type="radio" class="form-check-input" checked >
-                  <label class="form-check-label" for="credit">Morning</label>
-                </div>
+                        {{-- issue --}}
+                        <div class="col-md-12">
+                            <label for="issue" class="form-label mb-0">Issue</label>
+                            <textarea class="form-control" name="issue" cols="30" rows="2">{{ $job->issue }}</textarea>
+                        </div>
 
-                <div class="form-check">
-                  <input id="debit" name="prefer_time" type="radio" class="form-check-input" >
-                  <label class="form-check-label" for="debit">Afternoon</label>
-                </div>
+                        @if ($job->status != 'booked')
+                            {{-- title 2 --}}
+                            <h3 class="mb-0">Job Info</h3>
 
-                <div class="form-check">
-                  <input id="paypal" name="prefer_time" type="radio" class="form-check-input" >
-                  <label class="form-check-label" for="paypal">Evening</label>
-                </div>
-              </div>
-                    
+                            <div class="col-md-6">
+                                {{-- start_date --}}
+                                <label for="start_date">Start Date</label>
 
-                    {{-- domestic_commercial --}}
-                    <div class="col-md-4">
-                <label for="domestic_commercial" class="form-label">Domestic / Commercial</label>
-                <select class="form-select" name="domestic_commercial" id="domestic_commercial">
-                  <option value="">Choose...</option>
-                  <option>Domestic</option>
-                  <option>Commercial</option>
-                </select>
+                                @if (!empty($job->start_date))
+                                    <input type="text" class="form-control" id="datepicker-start-date" name="start_date"
+                                        value="{{ date('d-m-Y', strtotime($job->start_date)) }}">
+                                @else
+                                    <input type="text" class="form-control" id="datepicker-start-date" name="start_date">
+                                @endif
 
-              </div>
-                    
+                            </div>
+                            <div class="col-md-6">
 
-                    {{-- extra_note --}}
-                    <div class="col-lg-12">
-                <div class="description">
-                  <label for="extra_note" class="form-label">Extra note</label>
+                                {{-- start_time --}}
+                                <label for="start_time">Start Time</label>
+                                <select class="form-select w-100" name="start_time">
+                                    <option value="{{ $job->start_time }}">{{ $job->start_time }}</option>
+                                    <option>Morning</option>
+                                    <option>Afternoon</option>
+                                    <option>Evening</option>
+                                </select>
+                            </div>
 
-                  <textarea class="form-control" name="extra_note" id="extra_note" cols="30" rows="2" placeholder="{{ $order->extra_note }}" ></textarea>
+                            {{-- technician --}}
+                            <div class="mt-2 mb-2">
+                                <label for="tech_name">Techinicain</label>
+                                <select class="form-select" name="tech_name">
+                                    <option value="{{ $job->tech_name }}">{{ $job->tech_name }}</option>
+                                    @forelse ($technicians as $t)
+                                        <option value="{{ $t->name }}">{{ $t->name }}</option>
+                                    @empty
 
+                                    @endforelse
+                                </select>
+                            </div>
+                            @if ($job->status == 'assigned')
+                                {{-- status-assigned to booked --}}
+                                <div class="mt-2 mb-2">
+                                    <label for="status">Current Status : {{ $job->status }}</label><br>
+                                    <p class="text-danger">Would you like to return the status to "Booked"
+                                        ?
+                                        <input type="checkbox" class="form-check-input" name="booked">
+                                    </p>
+                                </div>
+                            @else
+                                {{-- status-completed to assigned --}}
+                                <div class="mt-2 mb-1">
+                                    <label for="status">Current Status : {{ ucfirst($job->status) }}</label>
+                                    <p class="text-danger">Would you like to return the status to
+                                        "Assigned" ?
+                                        <input type="checkbox" class="form-check-input" name="assigned">
+                                    </p>
+                                </div>
+                            @endif
+                        @endif
+                        <hr class="mb-2 mt-2">
 
-
-              <hr class="my-4">
-                    
-
-              <button type="save" class="w-100 btn btn-primary">Save</button>
+                    </div>
+                    <button type="save" class="w-100 btn btn-primary">Save</button>
                 </form>
             </div>
         </div>
@@ -155,3 +155,27 @@
     </div>
     </div>
 @endsection
+
+@push('css')
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+@endpush
+
+@push('js')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+    <script>
+        $('#datepicker').datepicker("setDate", new Date());
+        $("#datepicker").datepicker({
+            dateFormat: "dd-mm-yy",
+            minDate: '0'
+        });
+    </script>
+
+    <script>
+        $('#datepicker-start-date').datepicker("setDate", new Date());
+        $("#datepicker-start-date").datepicker({
+            dateFormat: "dd-mm-yy",
+            minDate: '0'
+        });
+    </script>
+@endpush

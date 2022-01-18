@@ -1,9 +1,15 @@
 #blue {
     background-color: #005aa4;
 }
+#red {
+    background-color: #A33431 ;
+}
 
-#desc,
-.shadow-textarea textarea.form-control::placeholder {
+#green {
+    background-color: #366B2C;
+}
+
+#desc, .shadow-textarea textarea.form-control::placeholder {
     font-weight: 300;
 }
 

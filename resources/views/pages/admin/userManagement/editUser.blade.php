@@ -2,11 +2,11 @@
 
 @section('content')
     <div class="container">
-        <h1>Role: {{ Auth::user()->getRole() }}</h1>
-        <h1>editUser.blade</h1>
+       
         <div class="row justify-content-center">
             <div class="text-center">
-                <h1>Client Profile</h1>
+                <p></p>
+                    <h1>Client Profile</h1>
                 <p>Please click on "Save" after making any changes</p>
             </div>
             <div class="col-md-8">

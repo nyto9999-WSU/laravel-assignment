@@ -10,11 +10,10 @@
             <div class="col-md-9 shadow-sm px-1 rounded border border-2 pb-0">
                 <table class="table table-hover  text-start mb-2 mt-1">
 
-                    {{-- order_id --}}
-                    <tr>
-                        <td>Job</td>
-                        <td>{{ $job->id }}</td>
-                    </tr>
+                    {{-- Aircon --}}
+                    <th id="blue" colspan="2" class="text-white">
+                        Aircon ID : {{ $job->aircon_id }}
+                    </th>
 
                     {{-- model_number --}}
                     <tr>
@@ -26,28 +25,26 @@
                         </td>
                     </tr>
 
+                    {{-- serial_number --}}
+                    <tr>
+                        <td>Serial Number</td>
+                        <td>
+                            <a href={{ route('aircon.show', ['id' => $job->aircon_id, $order]) }}>
+                                {{ $aircon->serial_number }}
+                            </a>
+                        </td>
+                    </tr>
+
                     {{-- domestic_commercial --}}
                     <tr>
                         <td>Domestic Commercial</td>
                         <td>{{ $aircon->domestic_commercial }}</td>
                     </tr>
 
-                    {{-- extra_note --}}
+                    {{-- equipment_type --}}
                     <tr>
-                        <td>Description</td>
-                        <td>{{ $order->extra_note }}</td>
-                    </tr>
-
-                    {{-- name --}}
-                    <tr>
-                        <td>Owner</td>
-                        <td>{{ $order->name }}</td>
-                    </tr>
-
-                    {{-- email --}}
-                    <tr>
-                        <td>Email Address</td>
-                        <td>{{ $order->email }}</td>
+                        <td>Equipment Type</td>
+                        <td>{{ $aircon->equipment_type }}</td>
                     </tr>
 
                     {{-- install_address --}}
@@ -56,29 +53,55 @@
                         <td>{{ $aircon->install_address }}</td>
                     </tr>
 
+                    {{-- issue --}}
+                    <tr>
+                        <td>Issue</td>
+                        <td>{{ $job->issue }}</td>
+                    </tr>
+                    {{-- job_id --}}
+                    <th id="blue" colspan="2" class="text-white">
+                        Job ID : {{ $job->id }}
+                    </th>
+
+                    {{-- prefer_date --}}
+                    <tr>
+                        <td>Prefer Date</td>
+                        <td class="text-danger fw-bold">{{ date('d-M-Y', strtotime($job->prefer_date)) }}</td>
+                    </tr>
+
+                    {{-- prefer_time --}}
+                    <tr>
+                        <td>Prefer Time</td>
+                        <td class="text-danger fw-bold">{{ $job->prefer_time }}</td>
+                    </tr>
+
+                    {{-- Description --}}
+                    <tr>
+                        <td>Description</td>
+                        <td>{{ $order->extra_note }}</td>
+                    </tr>
+
+                    {{-- owner --}}
+                    <th id="blue" colspan="2" class="text-white">
+                        Owner : {{ $order->name }}
+                    </th>
+
+
+                    {{-- email --}}
+                    <tr>
+                        <td>Email Address</td>
+                        <td>{{ $order->email }}</td>
+                    </tr>
+
+
+
                     {{-- mobile_number --}}
                     <tr>
                         <td>Mobile</td>
                         <td>{{ $order->mobile_number }}</td>
                     </tr>
 
-                    {{-- prefer_time --}}
-                    <tr>
-                        <td>Prefer Time</td>
-                        <td>{{ $job->prefer_time }}</td>
-                    </tr>
 
-                    {{-- prefer_date --}}
-                    <tr>
-                        <td>Prefer Date</td>
-                        <td>{{ date('d-m-Y', strtotime($job->prefer_date)) }}</td>
-                    </tr>
-
-                    {{-- status --}}
-                    <tr>
-                        <td>Issue</td>
-                        <td>{{ $aircon->issue }}</td>
-                    </tr>
 
                     {{-- status --}}
                     <tr>
@@ -127,7 +150,7 @@
                                 @forelse ($technicians as $t)
                                     <option value="{{ $t->name }}">{{ $t->name }}</option>
                                 @empty
-
+                                    <option disabled selected value>No available technicians</option>
                                 @endforelse
                             </select>
                         </div>
@@ -141,14 +164,14 @@
 
                         {{-- notes record --}}
                         <div class="mt-2 mb-2">
-                            <ul class="list-group border border-dark" id="js-notes" style="height: 180px; overflow: auto">
+                            <ul class="list-group bg-white" id="js-notes" style="height: 180px; overflow: auto">
 
                                 @forelse ($job->notes as $note)
                                     <li class="wraptext-li">
                                         {{ $note->description }}
                                     </li>
                                 @empty
-                                    N/A
+
                                 @endforelse
                             </ul>
                         </div>
@@ -158,7 +181,7 @@
                             <textarea id="textarea" name="description" rows="3" class="form-control mb-1"></textarea>
 
                             {{-- js note submit --}}
-                            <button id="js-note-submit" class="w-100 btn btn-warning border border-dark text-white mb-1">Add
+                            <button id="js-note-submit" class="w-100 btn btn-secondary text-white mb-1">Add
                                 Note</button>
                         </div>
 
@@ -181,7 +204,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
     <script>
-        //在後端改日期匹配mysql格式FIXME:
         $('#datepicker').datepicker("setDate", new Date());
         $("#datepicker").datepicker({
             dateFormat: "dd-mm-yy",

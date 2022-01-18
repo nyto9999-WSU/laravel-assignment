@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="https://unpkg.com/@fullcalendar/timeline@4.3.0/main.min.css">
     <link rel="stylesheet" href="https://unpkg.com/@fullcalendar/resource-timeline@4.3.0/main.min.css">
     <link href="{{ asset('css/calendar.css') }}" rel="stylesheet">
+
 @endpush
 
 @push('js')
@@ -28,7 +29,8 @@
         var calendarEl = document.getElementById('calendar');
 
         var calendar = new FullCalendar.Calendar(calendarEl, {
-            plugins: ['interaction', 'dayGrid', 'timeGrid'],
+
+            plugins: ['dayGrid', 'timeGrid'],
             timeZone: 'UTC',
             allDaySlot: false,
             slotDuration: '03:00',
@@ -42,9 +44,10 @@
                 center: 'title',
                 right: 'dayGridMonth,timeGridWeek,timeGridDay'
             },
+            aspectRatio: 2.5,
             handleWindowResize: true,
             Boolean,
-            default: false,
+            default: true,
             businessHours: {
                 daysOfWeek: [1, 2, 3, 4, 5],
                 startTime: '9:00',
@@ -61,10 +64,10 @@
                     {
                         echo "{
                         id: '$requested_id[$i]',
-                        title: 'Requested Job ID: $requested_id[$i]',
+                        title: 'Requested Job ID: $requested_id[$i] \\n Model: $r_model[$i] \\n Serial: $r_serial[$i] \\n Mobile: $r_mobile[$i] \\n Install Address: $r_install_address[$i] \\n Service Type: $r_dc[$i]',
                         start: '$prefer_start[$i]',
                         end: '$prefer_end[$i]',
-                        backgroundColor: '#ED4928',
+                        backgroundColor: '#B83520',
                         },";
 
                     }
@@ -78,15 +81,16 @@
                     {
                         echo "{
                         id: '$assigned_id[$i]',
-                        title: 'Assigned Job ID: $assigned_id[$i]',
+                        title: 'Assigned Job ID: $assigned_id[$i] \\n Model: $a_model[$i] \\n Serial: $a_serial[$i] \\n Mobile: $a_mobile[$i] \\n Install Address: $a_install_address[$i] \\n Technician: $tech_name[$i] \\n Service Type: $a_dc[$i]',
                         start: '$job_start[$i]',
                         end: '$job_end[$i]',
-                        backgroundColor: '#46EB47',
+                        backgroundColor: '#005aa4',
                         },";
 
                     }
                 }
                 @endphp
+
 
             ],
         });

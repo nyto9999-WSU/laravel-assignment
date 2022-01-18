@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="container-fluid mt-3">
+    <div class="container-fluid">
         <!-- <h1>Role: {{ Auth::user()->getRole() }}</h1> -->
         <!-- <h1>currentOrder.blade(admin)</h1> -->
 
@@ -17,7 +17,7 @@
 
             </div>
 
-            <div class="col-3">
+            <div class="col-3 mt-3">
                 <input type="text" class="form-control" id="search" placeholder="Search past request">
                 <hr>
             </div>
@@ -30,16 +30,16 @@
 
                     <thead class="text-white">
                         <tr id="blue">
-                            <th>Assign</th>
+                            <th>Complete</th>
                             <th>Job</th>
-                            <th>Model</th>
-                            <th>Customer</th>
+                            <th>Model/Serial</th>
                             <th>Unit Address</th>
-                            <th>Phone</th>
                             <th>Requested Date</th>
                             <th>Assigned Date</th>
                             <th>Type</th>
-                            <th>Extra Note</th>
+                            <th>Customer</th>
+                            <th>Phone</th>
+                            <th>Technician</th>
                             <th>Print</th>
                         </tr>
                     </thead>
@@ -63,31 +63,38 @@
 
                                         {{-- model_number --}}
                                         <td>
-                                            <a href={{ route('aircon.show', ['id' => $job->aircon_id, $order]) }}>
-                                                {{ $job->model_number }}
-                                            </a>
+                                            <li>
+                                                <a href={{ route('aircon.show', ['id' => $job->aircon_id, $order]) }}>
+                                                    Model: {{ $job->model_number }}
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href={{ route('aircon.show', ['id' => $job->aircon_id, $order]) }}>
+                                                    Serial: {{ $job->serial_number }}
+                                                </a>
+                                            </li>
                                         </td>
-
-                                        {{-- name --}}
-                                        <td>{{ $order->name }}</td>
 
                                         {{-- install_address --}}
                                         <td>{{ $job->install_address }}</td>
 
-                                        {{-- mobile_number --}}
-                                        <td>{{ $order->mobile_number }}</td>
+                                        {{-- requested_date --}}
+                                        <td>{{ date('d - M - Y h:iA', strtotime($order->created_at)) }}</td>
 
-                                        {{-- created_at --}}
-                                        <td>{{ date('d-m-Y', strtotime($order->created_at)) }}</td>
-
-                                        {{-- assigned_at --}}
-                                        <td>{{ date('d-m-Y', strtotime($job->assigned_at)) }}</td>
+                                        {{-- assigned_date --}}
+                                        <td>{{ date('d - M - Y h:iA', strtotime($job->assigned_at)) }}</td>
 
                                         {{-- domestic_commercial --}}
                                         <td>{{ $job->domestic_commercial }}</td>
 
+                                        {{-- name --}}
+                                        <td>{{ $order->name }}</td>
+
+                                        {{-- mobile_number --}}
+                                        <td>{{ $order->mobile_number }}</td>
+
                                         {{-- extra_note --}}
-                                        <td>{{ $order->extra_note }}</td>
+                                        <td>{{ $job->tech_name }}</td>
 
                                         {{-- TODO: Print --}}
                                         <td>
@@ -104,7 +111,11 @@
                             @endforelse
 
                         @empty
-                            <h1>no data</h1>
+                            <tr>
+                                <td colspan="11" class=" text-center fw-bold">
+                                    No Result
+                                </td>
+                            </tr>
                         @endforelse
                     </tbody>
 

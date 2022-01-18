@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <h2 class="text-center mt-5 py-3">Show user blade</h2>
+    <h2 class="text-center mt-5 py-3">User Profile</h2>
     <div class="row justify-content-center">
         <div class="col-md-10 border shadow-sm rounded border-2 p-1">
             <div class="w-100" id="blue">
@@ -18,7 +18,7 @@
                         <td>{{ $user->getRole() }}</td>
                     </tr>
                     <tr>
-                        <td>Name</td>
+                        <th>Name</th>
                         <td>{{ $user->name }}</td>
                     </tr>
                     <tr>
@@ -32,7 +32,7 @@
                 </tbody>
             </table>
             <div class="d-grid mt-4">
-                <a href="{{ route('user.edit', $user) }}" class="btn btn-primary">Edit btn</a>
+                <a href="{{ route('user.edit', $user) }}" class="btn btn-primary">Edit Profile</a>
             </div>
         </div>
     </div>

@@ -2,8 +2,7 @@
 
 @section('content')
     <div class="container">
-        <h1>Role: {{ Auth::user()->getRole() }}</h1>
-        <h1>currentOrder.blade</h1>
+
         <div class="row g-2">
 
             <h2 class="text-center">Service Request History</h1>
@@ -12,7 +11,7 @@
                     <thead class="text-black text-wrap">
                         <tr>
                             <th>Job ID</th>
-                            <th style="">Model</th>
+                            <th style="">Model/Serial</th>
                             <th style="">Requested Date</th>
                             <th style="">Assigned Date</th>
                             <th style="">Completed Date</th>
@@ -22,87 +21,81 @@
                     </thead>
                     <tbody id="current_orders">
                         @forelse ($orders as $order)
-                            <tr>
-                                <td>
-                                    <a href="{{ route('order.show', $order) }}">{{ $order->id }}</a>
-                                </td>
-                                <td>
-                                    @forelse ($order->aircons as $aircon)
+                            @forelse ($order->jobs as $job)
+                                <tr>
+
+                                    {{-- job-id --}}
+                                    <td>
+                                        <a href="{{ route('job.show', $job) }}">{{ $job->id }}</a>
+                                    </td>
+
+                                    {{-- model_number --}}
+                                    <td>
                                         <li>
-                                            <a href={{ route('aircon.show', [$aircon, $order]) }}>
-                                                {{ $aircon->model_number }}
+                                            <a href={{ route('aircon.show', ['id' => $job->aircon_id, $order]) }}>
+                                                Model: {{ $job->model_number }}
                                             </a>
                                         </li>
-                                    @empty
-                                        N/A
-                                    @endforelse
-                                    {{-- TODO:show all aircon details --}}
-                                    <li>
-                                        <a href={{ route('aircon.showAll', [$order]) }}>
-                                            all
-                                        </a>
-                                    </li>
-                                </td>
-                                <td>
-                                    <span class="position-relative">
-                                        all models
-                                        <span
-                                            class="ms-3 position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                            {{ $order->aircons->count() }}
-                                        </span>
-                                    </span>
-                                </td>
+                                        <li>
+                                            <a href={{ route('aircon.show', ['id' => $job->aircon_id, $order]) }}>
+                                                Serial: {{ $job->serial_number }}
+                                            </a>
+                                        </li>
+                                    </td>
 
+                                    {{-- Requested date --}}
+                                    <td class="text-danger fw-bold">
+                                        {{ date('d-M-Y', strtotime($order->created_at)) }}
+                                    </td>
 
-                                {{-- Requested date --}}
-                                <td>{{ date('d-m-Y', strtotime($order->prefer_date)) }}</td>
-                                {{-- job_start_date --}}
-                                <td>
-                                    @if (!empty($order->job_start_date))
-                                        {{ $order->job_start_date }}
+                                    {{-- job_start_date --}}
+                                    @if (!empty($job->start_date))
+                                        <td class="text-primary fw-bold">
+                                            {{ date('d-M-Y', strtotime($job->start_date)) }}
+                                        </td>
                                     @else
-                                        N/A
+                                        <td>
+                                            N/A
+                                        </td>
                                     @endif
-                                </td>
 
-                                {{-- job_end_date --}}
-                                <td>
+                                    {{-- job_end_date --}}
                                     @if (!empty($job->end_date))
-                                        {{ $job->end_date }}
+                                        <td class="text-success fw-bold">
+                                            {{ date('d-M-Y', strtotime($job->end_date)) }}
+                                        </td>
                                     @else
-                                        N/A
+                                        <td>
+                                            N/A
+                                        </td>
                                     @endif
-                                </td>
 
-                                {{-- Technician FIXME: #30: --}}
-                                <td>
-                                    @if (!empty($order->job->user_id))
-                                        {{ $order->job->user_id }}
-                                    @else
-                                        N/A
-                                    @endif
-                                </td>
+                                    <td>
+                                        @if (!empty($job->tech_name))
+                                            {{ $job->tech_name }}
+                                        @else
+                                            N/A
+                                        @endif
+                                    </td>
 
-                                {{-- Status --}}
-                                <td>{{ $order->status }}</td>
+                                    {{-- Status --}}
+                                    <td class="text-capitalize" id="status">{{ $job->status }}</td>
 
-                                {{-- delete button --}}
+                                </tr> 
+                            @empty
 
-                                <td>
-                                    <form action="{{ route('order.destroy', $order) }}" method="post">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger">Delete</button>
-                                    </form>
+                            @endforelse
+
+                        @empty
+                            <tr>
+                                <td colspan="10" class=" text-center fw-bold">
+                                    No Result
                                 </td>
                             </tr>
-                        @empty
-                            <h1>No Data</h1>
                         @endforelse
                     </tbody>
                 </table>
         </div>
-    </div>
     </div>
     </div>
     </div>
@@ -117,7 +110,7 @@
                 url: '/pages/order/search-request-history',
                 data: {
                     's': $value,
-                    status: 'Booked'
+                    status: 'booked'
                 },
                 success: function(data) {
                     // console.log(data);
@@ -132,6 +125,23 @@
                 'csrftoken': '{{ csrf_token() }}'
             }
         });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        /* FIXME: for loop */
+        switch ($('#status').html()) {
+            case 'booked':
+                $('#status').css('color', '#A33431');
+                break;
+
+            case 'completed':
+                $('#status').css('color', '#366B2C');
+                break;
+
+            default:
+                $('#status').css('color', '#005aa4');
+                break
+        }
     </script>
 
 @endsection

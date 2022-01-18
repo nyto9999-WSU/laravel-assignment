@@ -25,12 +25,14 @@ class CreateJobsTable extends Migration
             $table->string('prefer_time')->nullable();
             $table->date('start_date')->nullable();
             $table->string('start_time')->nullable();
-            $table->date('end_date')->nullable();
+            $table->dateTime('end_date')->nullable();
             $table->string('status')->default('booked');
             $table->dateTime('assigned_at')->nullable();
+
             /* aircon attrs */
             $table->string('aircon_id')->nullable();
             $table->string('model_number')->nullable();
+            $table->string('serial_number')->nullable();
             $table->string('equipment_type')->nullable();
             $table->string('other_type')->nullable();
             $table->string('domestic_commercial')->nullable();

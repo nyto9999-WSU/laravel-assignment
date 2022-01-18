@@ -12,4 +12,11 @@
 {{-- custom css --}}
 <link href="{{ asset('css/custom-css.css') }}" rel="stylesheet">
 
+{{-- prevent scrollbar shaking --}}
+<style>
+    html {
+        overflow: scroll;
+    }
+</style>
+
 {!! ReCaptcha::htmlScriptTagJsApi() !!}

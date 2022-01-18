@@ -7,16 +7,18 @@
 </head>
 
 <body>
-    <header>
+    <header class="row">
         @include('includes.header')
     </header>
-    <div class="">
-        @yield('content')
-    </div>
 
-    <footer>
-        @include('includes.footer')
-    </footer>
+
+        <div class="">
+            @yield('content')
+        </div>
+
+        <footer class="row">
+            @include('includes.footer')
+        </footer>
 
 </body>
 

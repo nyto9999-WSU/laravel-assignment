@@ -5,7 +5,7 @@
     <meta charset="utf-8">
 
 
-    <title>Pioneer Air Conditioner</title>
+    <title>Pioneer International</title>
 
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
@@ -25,11 +25,11 @@
 
             <div class="w-100 text-center">
                 <img src="{{ asset('image/logo.png') }}" class="img-fluid" alt="Responsive image">
-                <h1 class="text-center">Welcome to Pioneer Aircon</h1>
+                <h1 class="text-center">Welcome to Pioneer International</h1>
                 <br>
 
-                <a class="btn btn-primary btn-squared-default btn-lg m-2 border border-dark border border-2"
-                    href="{{ route('login') }}" role="button">
+                <a class="btn btn-secondary btn-squared-default btn-lg m-2"
+                    href="{{ route('login') }}" role="button" >
                     <svg class="svg-inline--fa fa-user-circle fa-w-16 fa-6x mb-3" viewBox="0 0 496 512">
                         {{-- viewBox size x,y,w,h --}}
                         <path fill="currentColor"
@@ -37,19 +37,18 @@
                         </path>
                     </svg>Login</a>
 
-                <a class="btn btn-danger btn-squared-default btn-lg m-2 border border-dark border border-2"
+                <a class="btn btn-secondary btn-squared-default btn-lg m-2"
                     href="{{ route('register') }}" role="button">
                     <svg class="svg-inline--fa fa-user-circle fa-w-16 fa-6x mb-3" viewBox="0 0 496 512">
                         <path fill="currentColor"
                             d="M480 160H32c-17.673 0-32-14.327-32-32V64c0-17.673 14.327-32 32-32h448c17.673 0 32 14.327 32 32v64c0 17.673-14.327 32-32 32zm-48-88c-13.255 0-24 10.745-24 24s10.745 24 24 24 24-10.745 24-24-10.745-24-24-24zm-64 0c-13.255 0-24 10.745-24 24s10.745 24 24 24 24-10.745 24-24-10.745-24-24-24zm112 248H32c-17.673 0-32-14.327-32-32v-64c0-17.673 14.327-32 32-32h448c17.673 0 32 14.327 32 32v64c0 17.673-14.327 32-32 32zm-48-88c-13.255 0-24 10.745-24 24s10.745 24 24 24 24-10.745 24-24-10.745-24-24-24zm-64 0c-13.255 0-24 10.745-24 24s10.745 24 24 24 24-10.745 24-24-10.745-24-24-24zm112 248H32c-17.673 0-32-14.327-32-32v-64c0-17.673 14.327-32 32-32h448c17.673 0 32 14.327 32 32v64c0 17.673-14.327 32-32 32zm-48-88c-13.255 0-24 10.745-24 24s10.745 24 24 24 24-10.745 24-24-10.745-24-24-24zm-64 0c-13.255 0-24 10.745-24 24s10.745 24 24 24 24-10.745 24-24-10.745-24-24-24z">
                         </path>
                     </svg>Register</a>
-
             </div>
 
             <!--Footer-->
             <footer class="my-5 pt-5 text-muted text-center text-small">
-                <p class="mb-1">&copy; 2017–2022 Pioneer Air Conditioner</p>
+                <p class="mb-1">&copy; 2017–2022 Pioneer International</p>
                 <ul class="list-inline">
                     <li class="list-inline-item"><a href="#">Privacy</a></li>
                     <li class="list-inline-item"><a href="#">Terms</a></li>
