@@ -49,11 +49,11 @@ class HomeController extends Controller
         $weeklyEffortChart = $this->getTechnicianWeeklyEffort();
 
         /*  monthly order chart */
-        $monthlyOrders = $this->getMonthlyOrders($currentYear);
+        $monthlyJobChart = $this->getMonthlyOrders($currentYear);
 
         /* Todasys job */
-        $orderAssignQuantity = $this->getOrderAssigneQuantity();
-        return view('home', compact('roles', 'monthlyOrders', 'equipmentChart', 'orderAssignQuantity', 'weeklyEffortChart'));
+        $todayJobChart = $this->getOrderAssigneQuantity();
+        return view('home', compact('roles', 'monthlyJobChart', 'equipmentChart', 'todayJobChart', 'weeklyEffortChart'));
     }
 
 
@@ -117,7 +117,7 @@ class HomeController extends Controller
 
         $monthlyOrders = array();
         for ($m = 1; $m <= 12; $m++) {
-            $count = Order::whereMonth('created_at', '=', $m)
+            $count = Job::whereMonth('created_at', '=', $m)
                 ->whereYear('created_at', '=', $currentYear)
                 ->count();
             $monthlyOrders[] = $count;

@@ -44,7 +44,7 @@
                                 <div class="card-header">
                                     Today Jobs
                                 </div>
-                                @if ($orderAssignQuantity != null)
+                                @if ($todayJobChart != null)
                                     <div  id="today_jobs"></div>
                                 @else
                                     <div class="bg-white text-center" style="height: 199px">
@@ -134,10 +134,10 @@
                 /* orderAssignQuantity */
                     ['Job', 'Count'],
                     @php
-                        if($orderAssignQuantity != null)
+                        if($todayJobChart != null)
                         {
-                            echo "['Assigned', ".$orderAssignQuantity[1]."],";
-                            echo "['UnAssigned', ".$orderAssignQuantity[0]."],";
+                            echo "['Assigned', ".$todayJobChart[1]."],";
+                            echo "['UnAssigned', ".$todayJobChart[0]."],";
                         }
                     @endphp
             ]);
@@ -167,7 +167,7 @@
                     $months = array('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec');
                     for($i = 0; $i < 12 ; $i++)
                     {
-                        echo "['$months[$i]', ".$monthlyOrders[$i]."],";
+                        echo "['$months[$i]', ".$monthlyJobChart[$i]."],";
                     }
                 @endphp
             ]);
