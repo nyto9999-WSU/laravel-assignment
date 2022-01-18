@@ -5,19 +5,11 @@
 
         {{-- Title --}}
         <div class="row m-0 p-0">
-            {{-- @if ($job->status == 'booked')
-                <h3 class="col-md-6 m-0 p-0">Requested Job</h3>
-            @elseif($job->status == 'assigned')
-                <h3 class="col-md-6 m-0 p-0">Assigned Job</h3>
-            @elseif($job->status == 'completed')
-                <h3 class="col-md-6 m-0 p-0">Completed Job</h3>
-            @endif --}}
             <h2 id="title" class="col-md-6 m-0 p-0"></h2>
             <h2 class="col-md-6 text-end m-0 p-0">Status: {{ ucfirst($job->status) }}</h2>
         </div>
 
         <hr class="my-2">
-
 
         <div class="col-12 shadow-sm px-1 rounded border border-2">
             <table class="table table-hover text-start mb-2 mt-1">
@@ -34,7 +26,6 @@
                     <th id="blue" colspan="2" class="text-white">
                         Aircon ID : {{ $job->aircon_id }}
                     </th>
-
                 @endif
 
                 <tr>
@@ -145,13 +136,13 @@
                     @endif
                 </tr>
 
+                {{-- FIXME: --}}
                 {{-- created_at --}}
-                <tr>
+                {{-- <tr>
                     <td>Requested at</td>
                     <td>{{ date('d - M - Y h:iA', strtotime($order->created_at)) }}</td>
                 </tr>
 
-                {{-- assigned_at --}}
                 <tr>
                     <td>Assigned at</td>
                     <td>
@@ -161,7 +152,7 @@
                             N/A
                         @endif
                     </td>
-                </tr>
+                </tr> --}}
                 {{-- status --}}
                 <tr>
                     <td>Status</td>

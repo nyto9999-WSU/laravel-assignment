@@ -8,6 +8,7 @@ use App\Models\Job;
 use Illuminate\Http\Request;
 use DB;
 use Illuminate\Support\Carbon;
+
 class JobController extends Controller
 {
 
@@ -17,9 +18,7 @@ class JobController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-
-    }
+    { }
 
     /**
      * Show the form for creating a new resource.
@@ -73,9 +72,7 @@ class JobController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
-        //
-    }
+    { }
 
     /**
      * Remove the specified resource from storage.
@@ -90,25 +87,22 @@ class JobController extends Controller
 
     protected function validateJob()
     {
+        if(isset(request()->start_date))
+        {
+            $start_date = Carbon::createFromFormat('d-m-Y', request()->start_date)->format('Y-m-d');
+            request()->merge(['start_date' => $start_date]);
+        }
 
-        $validation = request()->validate([
+        request()->merge(['status' => 'assigned']);
+        request()->merge(['assigned_at' => now()]);
+
+
+        return request()->validate([
             'start_date' => ['nullable'],
             'start_time' => ['nullable'],
             'tech_name' => ['nullable'],
+            'status' => ['nullable'],
+            'assigned_at' => ['nullable'],
         ]);
-
-        $mySQL_date = Carbon::createFromFormat('d-m-Y', $validation['start_date'])->format('Y-m-d');
-
-        return $data = [
-            'tech_name' => $validation['tech_name'],
-            "status" =>  'assigned',
-            'start_date' => $mySQL_date,
-            'start_time' => $validation["start_time"],
-            'assigned_at' => now(),
-        ];
-
-
     }
-
-
 }

@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <form action="{{ route('order.update', $order) }}" method="post">
+                <form action="{{ route('order.update', [$order, $job]) }}" method="post">
                     @csrf
                     @method('PATCH')
                     <div class="row g-2">
@@ -21,6 +21,13 @@
                             <label for="serial_number">Serial</label>
                             <input type="text" name="serial_number" class="form-control"
                                 value="{{ $job->serial_number }}">
+                        </div>
+
+                        {{-- install_address --}}
+                        <div class="col-md-12">
+                            <label for="install_address">Install Address</label>
+                            <input type="text" name="install_address" class="form-control"
+                                value="{{ $job->install_address }}">
                         </div>
 
                         {{-- equipment_type --}}
@@ -40,7 +47,7 @@
                         <div class="col-md-6">
                             <label for="domestic_commercial" class="form-label m-0">Domestic / Commercial</label>
                             <select class="form-select" name="domestic_commercial" id="domestic_commercial">
-                                <option value="">{{ $job->domestic_commercial }}</option>
+                                <option value="{{ $job->domestic_commercial }}">{{ $job->domestic_commercial }}</option>
                                 <option>Domestic</option>
                                 <option>Commercial</option>
                             </select>
@@ -121,28 +128,26 @@
                                 {{-- status-assigned to booked --}}
                                 <div class="mt-2 mb-2">
                                     <label for="status">Current Status : {{ $job->status }}</label><br>
-                                    <p class="text-danger" name="status">Would you like to return the status to "Booked"
+                                    <p class="text-danger">Would you like to return the status to "Booked"
                                         ?
-                                        <input type="checkbox" class="form-check-input" name="status">
+                                        <input type="checkbox" class="form-check-input" name="booked">
                                     </p>
                                 </div>
                             @else
                                 {{-- status-completed to assigned --}}
                                 <div class="mt-2 mb-1">
                                     <label for="status">Current Status : {{ ucfirst($job->status) }}</label>
-                                    <p class="text-danger" name="status">Would you like to return the status to
+                                    <p class="text-danger">Would you like to return the status to
                                         "Assigned" ?
-                                        <input type="checkbox" class="form-check-input" name="status">
+                                        <input type="checkbox" class="form-check-input" name="assigned">
                                     </p>
                                 </div>
                             @endif
-
-
                         @endif
                         <hr class="mb-2 mt-2">
 
-                        <button type="save" class="w-100 btn btn-primary">Save</button>
                     </div>
+                    <button type="save" class="w-100 btn btn-primary">Save</button>
                 </form>
             </div>
         </div>

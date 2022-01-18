@@ -114,9 +114,9 @@
                     @endforelse
                 </table>
 
-                <div class="d-flex flex-row-reverse">
-                    {!! $users->links() !!}
-                </div>
+            </div>
+            <div class="d-flex flex-row-reverse">
+                {!! $users->links() !!}
             </div>
 
         </div>

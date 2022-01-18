@@ -132,15 +132,6 @@ class HomeController extends Controller
     protected function getOrderAssigneQuantity()
     {   $orderAssignedRate = array();
 
-
-        // $orderAssignedRate[] = Order::whereDate('created_at',  now()->format('y/m/d'))
-        //                             ->where('status', '=', 'Booked')
-        //                             ->count();
-
-        // $orderAssignedRate[] = Order::whereDate('assigned_at', now()->format('y/m/d'))
-        //                             ->where('status', '=', 'assigned')
-        //                             ->count();
-
         $orderAssignedRate[] = Job::where('status', '=', 'booked')
                                     ->count();
 

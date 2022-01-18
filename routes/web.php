@@ -36,7 +36,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 /* Order */
 Route::get('order/{order}/job/{job?}/actions', [OrderController::class, 'actions'])->name('order.actions');
 Route::get('order/{order}/job/{job}/edit', [OrderController::class, 'edit'])->name('order.edit');
-Route::resource('order', OrderController::class)->except(['edit']);
+Route::patch('order/{order}/job/{job}/update', [OrderController::class, 'update'])->name('order.update');
+Route::resource('order', OrderController::class)->except(['edit', 'update']);
 
 
 
