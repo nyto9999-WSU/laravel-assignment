@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="py-3 text-center">
+            <div class="text-center">
                 <h2>Priority Service and Maintenace Booking</h2>
                 <p class="lead">Please provide your correct contact number and preferred date. Once you click the
                     submit button, the system will ask for your air-condiction information</p>

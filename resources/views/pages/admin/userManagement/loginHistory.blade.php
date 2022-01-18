@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container-fluid mt-3">
+    <div class="container-fluid">
         {{-- Search bar --}}
 
         <div class="row g-2  mx-2">
@@ -15,7 +15,7 @@
 
             </div>
 
-            <div class="col-3 text-end">
+            <div class="col-3 text-end mt-3">
                 <form type="get" action="{{ route('pages.loginSearch') }}">
                     <div class="input-group">
                         <input type="search" class="form-control mr-2" name="name">
@@ -38,7 +38,7 @@
                     <tr>
                         <td>{{ $user->id }}</td>
                         <td>{{ $user->name }}</td>
-                        <td>{{ $user->getRole() }}</td>
+                        <td class="text-capitalize">{{ $user->getRole() }}</td>
 
                         @if (empty($user->login_at))
                         <td>N/A</td>
@@ -51,7 +51,11 @@
                     </tr>
 
                     @empty
-
+                    <tr>
+                        <td colspan="10" class=" text-center fw-bold">
+                            No Result
+                        </td>
+                    </tr>
                     @endforelse
                 </table>
                 <div class="d-flex flex-row-reverse">

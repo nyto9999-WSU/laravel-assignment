@@ -98,6 +98,7 @@ class JobController extends Controller
         ]);
 
         $mySQL_date = Carbon::createFromFormat('d-m-Y', $validation['start_date'])->format('Y-m-d');
+
         return $data = [
             'tech_name' => $validation['tech_name'],
             "status" =>  'assigned',

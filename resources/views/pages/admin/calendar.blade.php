@@ -30,7 +30,7 @@
 
         var calendar = new FullCalendar.Calendar(calendarEl, {
 
-            plugins: ['interaction', 'dayGrid', 'timeGrid'],
+            plugins: ['dayGrid', 'timeGrid'],
             timeZone: 'UTC',
             allDaySlot: false,
             slotDuration: '03:00',
@@ -44,9 +44,10 @@
                 center: 'title',
                 right: 'dayGridMonth,timeGridWeek,timeGridDay'
             },
+            aspectRatio: 2.5,
             handleWindowResize: true,
             Boolean,
-            default: false,
+            default: true,
             businessHours: {
                 daysOfWeek: [1, 2, 3, 4, 5],
                 startTime: '9:00',
@@ -92,9 +93,6 @@
 
 
             ],
-
-
-
         });
 
         calendar.render();

@@ -2,26 +2,38 @@
 
 @section('content')
     <div class="container">
-        <h3 class="mt-3">Status {{ $job->status }}</h3>
-        <hr class="my-2">
-        <div class="col-12 shadow-sm px-1 rounded border border-2">
 
+        {{-- Title --}}
+        <div class="row m-0 p-0">
+            {{-- @if ($job->status == 'booked')
+                <h3 class="col-md-6 m-0 p-0">Requested Job</h3>
+            @elseif($job->status == 'assigned')
+                <h3 class="col-md-6 m-0 p-0">Assigned Job</h3>
+            @elseif($job->status == 'completed')
+                <h3 class="col-md-6 m-0 p-0">Completed Job</h3>
+            @endif --}}
+            <h2 id="title" class="col-md-6 m-0 p-0"></h2>
+            <h2 class="col-md-6 text-end m-0 p-0">Status: {{ ucfirst($job->status) }}</h2>
+        </div>
+
+        <hr class="my-2">
+
+
+        <div class="col-12 shadow-sm px-1 rounded border border-2">
             <table class="table table-hover text-start mb-2 mt-1">
 
-
                 @if (Auth::user()->isAdmin())
-                <th id="blue" class="text-white">
-                    Aircon ID : {{ $job->aircon_id }}
-                </th>
-                <th id="blue" class="text-white text-end p-0">
-                    <a href="{{ route('order.edit', ['order' => $order, 'job' => $job]) }}"
-                        class=" btn btn-light text-dark m-1 py-1 fw-bold">Edit</a>
-                </th>
-
+                    <th id="blue" class="text-white">
+                        Aircon ID : {{ $job->aircon_id }}
+                    </th>
+                    <th id="blue" class="text-white text-end p-0">
+                        <a href="{{ route('order.edit', ['order' => $order, 'job' => $job]) }}"
+                            class=" btn btn-light text-dark m-1 py-1 fw-bold">Edit</a>
+                    </th>
                 @else
-                <th id="blue" colspan="2" class="text-white">
-                    Aircon ID : {{ $job->aircon_id }}
-                </th>
+                    <th id="blue" colspan="2" class="text-white">
+                        Aircon ID : {{ $job->aircon_id }}
+                    </th>
 
                 @endif
 
@@ -51,8 +63,8 @@
                 </tr>
 
                 {{-- job header --}}
-                <th id="blue" colspan="2" class="text-white">
-                    Job Details
+                <th colspan="2" class="text-white">
+                    Job ID: {{ $job->id }}
                 </th>
 
                 {{-- technician --}}
@@ -253,16 +265,19 @@
     <script>
         switch ($('#status').html()) {
             case 'booked':
+                $('#title').text('Requested Job');
                 $('th').css('background-color', '#A33431');
                 $('#status').css('color', '#A33431');
                 break;
 
             case 'completed':
+                $('#title').text('Completed Job');
                 $('th').css("background-color", "#366B2C");
                 $('#status').css('color', '#366B2C');
                 break;
 
             default:
+                $('#title').text('Assigned Job');
                 $('th').css('background-color', '#005aa4');
                 $('#status').css('color', '#005aa4');
                 break
