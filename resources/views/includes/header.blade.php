@@ -1,4 +1,4 @@
-    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm rounded">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm rounded mb-3">
         <div class="container-fluid">
             <a class="navbar-brand" href="{{ route('home') }}">Pioneer</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -25,13 +25,13 @@
                                 <a class="nav-link" href="{{ route('user.index') }}">Role&Permission</a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link" href="{{ route('pages.loginHistory') }}">Login History</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" href="{{ route('calendar.index') }}">View Job</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('order.create') }}">Service Request Form</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('pages.loginHistory') }}">Login History</a>
                             </li>
                         @else
                             <li class="nav-item">
@@ -70,7 +70,7 @@
                                     Profile
                                 </a>
                                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                                 document.getElementById('logout-form').submit();">
+                                                                     document.getElementById('logout-form').submit();">
                                     {{ __('Logout') }}
                                 </a>
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST"

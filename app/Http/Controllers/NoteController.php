@@ -97,7 +97,7 @@ class NoteController extends Controller
     {
 
         return request()->validate([
-            'description' => ['nullable'],
+            'description' => ['nullable'], //this only desc
         ]);
     }
 

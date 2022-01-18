@@ -5,7 +5,6 @@
         <div class="container-fluid">
                     <div class="row mt-3">
 
-
                         {{-- Registered User --}}
                         <div class="col-md-2 pe-2">
                             <div class="card">
@@ -32,7 +31,9 @@
                                 @if ($weeklyName != null)
                                     <div id="weekly_completed_job" class=""></div>
                                 @else
-                                    No data
+                                    <div class="bg-white text-center" style="height: 199px">
+                                        <h2 class="mt-5 text-secondary">No Data</h2>
+                                    </div>
                                 @endif
                             </div>
                         </div>
@@ -46,7 +47,9 @@
                                 @if ($orderAssignQuantity != null)
                                     <div  id="today_jobs"></div>
                                 @else
-                                    No data
+                                    <div class="bg-white text-center" style="height: 199px">
+                                        <h2 class="mt-5 text-secondary">No Data</h2>
+                                    </div>
                                 @endif
                             </div>
                         </div>

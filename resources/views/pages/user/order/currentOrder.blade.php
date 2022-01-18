@@ -2,8 +2,7 @@
 
 @section('content')
     <div class="container">
-        <h1>Role: {{ Auth::user()->getRole() }}</h1>
-        <h1>currentOrder.blade</h1>
+
         <div class="row g-2">
 
             <h2 class="text-center">Service Request History</h1>
@@ -45,7 +44,9 @@
                                     </td>
 
                                     {{-- Requested date --}}
-                                    <td class="text-danger fw-bold">{{ date('d-M-Y', strtotime($order->created_at)) }}</td>
+                                    <td class="text-danger fw-bold">
+                                        {{ date('d-M-Y', strtotime($order->created_at)) }}
+                                    </td>
 
                                     {{-- job_start_date --}}
                                     @if (!empty($job->start_date))
@@ -86,12 +87,15 @@
                             @endforelse
 
                         @empty
-                            <h1>No Data</h1>
+                            <tr>
+                                <td colspan="10" class=" text-center fw-bold">
+                                    No Result
+                                </td>
+                            </tr>
                         @endforelse
                     </tbody>
                 </table>
         </div>
-    </div>
     </div>
     </div>
     </div>
@@ -106,7 +110,7 @@
                 url: '/pages/order/search-request-history',
                 data: {
                     's': $value,
-                    status: 'Booked'
+                    status: 'booked'
                 },
                 success: function(data) {
                     // console.log(data);

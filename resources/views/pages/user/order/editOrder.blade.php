@@ -3,14 +3,13 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <h1>order.update</h1>
             <div class="col-md-8">
                 <form action="{{ route('order.update', $order) }}" method="post">
                     @csrf
                     @method('PATCH')
-                    <div class="row">
-                        <h3>Aircon Info</h3>
-                        <hr class="my-2">
+                    <div class="row g-2">
+                        <h3 class="mb-0">Aircon Info</h3>
+
                         {{-- model --}}
                         <div class="col-md-6">
                             <label for="model_number">Model</label>
@@ -24,8 +23,9 @@
                                 value="{{ $job->serial_number }}">
                         </div>
 
+                        {{-- equipment_type --}}
                         <div class="col-md-6">
-                            <label for="equipment_type">{{ $job->equipment_type }}</label>
+                            <label for="equipment_type">Equipment Type</label>
                             <select class="form-select" name="equipment_type">
                                 <option value="{{ $job->equipment_type }}">{{ $job->equipment_type }}</option>
                                 <option>Spilt System</option>
@@ -46,9 +46,9 @@
                             </select>
                         </div>
 
+                        {{-- prefer_date --}}
                         <div class="col-md-6">
 
-                            {{-- prefer_date --}}
                             <label for="start_date">Client {{ $order->name }} Prefer Date</label>
 
                             @if (!empty($job->prefer_date))
@@ -62,7 +62,7 @@
 
                         {{-- prefer_time --}}
                         <div class="col-md-6">
-                            <label for="prefer_time-time">Client {{ $order->name }} Prefer Time</label>
+                            <label for="prefer_time">Client {{ $order->name }} Prefer Time</label>
                             <select class="form-select w-100" name="prefer_time">
                                 <option value="{{ $job->prefer_time }}">{{ $job->prefer_time }}</option>
                                 <option>Morning</option>
@@ -71,22 +71,15 @@
                             </select>
                         </div>
 
-                    </div>
+                        {{-- issue --}}
+                        <div class="col-md-12">
+                            <label for="issue" class="form-label mb-0">Issue</label>
+                            <textarea class="form-control" name="issue" cols="30" rows="2">{{ $job->issue }}</textarea>
+                        </div>
 
-                    {{-- issue --}}
-                    <div class="col-lg-12">
-                        <label for="issue" class="form-label">Issue</label>
-                        <textarea class="form-control" name="issue" cols="30" rows="2">{{ $job->issue }}</textarea>
-                    </div>
-
-
-
-
-                    @if ($job->status != 'booked')
-                        {{-- title 2 --}}
-                        <h3>Job Info</h3>
-
-                        <div class="row">
+                        @if ($job->status != 'booked')
+                            {{-- title 2 --}}
+                            <h3 class="mb-0">Job Info</h3>
 
                             <div class="col-md-6">
                                 {{-- start_date --}}
@@ -111,43 +104,45 @@
                                     <option>Evening</option>
                                 </select>
                             </div>
-                        </div>
 
-                        {{-- technician --}}
-                        <div class="mt-2 mb-2">
-                            <label for="tech_name">Techinicain</label>
-                            <select class="form-select" name="tech_name">
-                                <option value="{{ $job->tech_name }}">{{ $job->tech_name }}</option>
-                                @forelse ($technicians as $t)
-                                    <option value="{{ $t->name }}">{{ $t->name }}</option>
-                                @empty
+                            {{-- technician --}}
+                            <div class="mt-2 mb-2">
+                                <label for="tech_name">Techinicain</label>
+                                <select class="form-select" name="tech_name">
+                                    <option value="{{ $job->tech_name }}">{{ $job->tech_name }}</option>
+                                    @forelse ($technicians as $t)
+                                        <option value="{{ $t->name }}">{{ $t->name }}</option>
+                                    @empty
 
-                                @endforelse
-                            </select>
-                        </div>
-                        @if ($job->status == 'assigned')
-                            {{-- status-assigned to booked --}}
-                            <div class="mt-2 mb-2">
-                                <label for="status">Current Status : {{ $job->status }}</label><br>
-                                <p class="text-danger" name="status">Would you like to return the status to "Booked" ?
-                                    <input type="checkbox" class="form-check-input" name="status">
-                                </p>
+                                    @endforelse
+                                </select>
                             </div>
-                        @else
-                            {{-- status-completed to assigned --}}
-                            <div class="mt-2 mb-2">
-                                <label for="status">Current Status : {{ $job->status }}</label><br>
-                                <p class="text-danger" name="status">Would you like to return the status to "Assigned" ?
-                                    <input type="checkbox" class="form-check-input" name="status">
-                                </p>
-                            </div>
+                            @if ($job->status == 'assigned')
+                                {{-- status-assigned to booked --}}
+                                <div class="mt-2 mb-2">
+                                    <label for="status">Current Status : {{ $job->status }}</label><br>
+                                    <p class="text-danger" name="status">Would you like to return the status to "Booked"
+                                        ?
+                                        <input type="checkbox" class="form-check-input" name="status">
+                                    </p>
+                                </div>
+                            @else
+                                {{-- status-completed to assigned --}}
+                                <div class="mt-2 mb-1">
+                                    <label for="status">Current Status : {{ ucfirst($job->status) }}</label>
+                                    <p class="text-danger" name="status">Would you like to return the status to
+                                        "Assigned" ?
+                                        <input type="checkbox" class="form-check-input" name="status">
+                                    </p>
+                                </div>
+                            @endif
+
+
                         @endif
+                        <hr class="mb-2 mt-2">
 
-
-                    @endif
-                    <hr class="my-2">
-
-                    <button type="save" class="w-100 btn btn-primary">Save</button>
+                        <button type="save" class="w-100 btn btn-primary">Save</button>
+                    </div>
                 </form>
             </div>
         </div>

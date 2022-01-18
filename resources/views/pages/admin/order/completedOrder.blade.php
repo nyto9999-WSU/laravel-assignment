@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="container-fluid mt-3">
+    <div class="container-fluid">
         <!-- <h1>Role: {{ Auth::user()->getRole() }}</h1> -->
         <!-- <h1>currentOrder.blade(admin)</h1> -->
 
@@ -17,7 +17,7 @@
 
             </div>
 
-            <div class="col-3">
+            <div class="col-3 mt-3">
                 <input type="text" class="form-control" id="search" placeholder="Search past request">
                 <hr>
             </div>
@@ -68,10 +68,12 @@
                                         <td>{{ $order->address }}</td>
 
                                         {{-- assigned_at --}}
-                                        <td class="">{{ date('d - M - Y h:iA', strtotime($job->assigned_at)) }}</td>
+                                        <td class="">
+                                            {{ date('d - M - Y h:iA', strtotime($job->assigned_at)) }}</td>
 
                                         {{-- end_date --}}
-                                        <td class="text-success fw-bold">{{ date('d - M - Y h:iA', strtotime($job->end_date)) }}</td>
+                                        <td class="text-success fw-bold">
+                                            {{ date('d - M - Y h:iA', strtotime($job->end_date)) }}</td>
 
                                         {{-- domestic_commercial --}}
                                         <td>{{ $job->domestic_commercial }}</td>
@@ -89,7 +91,11 @@
                             @endforelse
 
                         @empty
-                            <h1>no data</h1>
+                            <tr>
+                                <td colspan="10" class=" text-center fw-bold">
+                                    No Result
+                                </td>
+                            </tr>
                         @endforelse
                     </tbody>
 

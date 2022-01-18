@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="container-fluid mt-3">
+    <div class="container-fluid">
         <!-- <h1>Role: {{ Auth::user()->getRole() }}</h1> -->
         <!-- <h1>currentOrder.blade(admin)</h1> -->
 
@@ -17,7 +17,7 @@
 
             </div>
 
-            <div class="col-3">
+            <div class="col-3 mt-3">
                 <input type="text" class="form-control" id="search" placeholder="Search past request">
                 <hr>
             </div>
@@ -99,9 +99,6 @@
                                         {{-- created_at --}}
                                         <td>{{ date('d - M - Y h:iA', strtotime($order->created_at)) }}</td>
 
-
-
-
                                     </tr>
                                 @endif
 
@@ -109,7 +106,11 @@
 
                             @endforelse
                         @empty
-                            <h1>no data</h1>
+                            <tr>
+                                <td colspan="10" class=" text-center fw-bold">
+                                    No Result
+                                </td>
+                            </tr>
                         @endforelse
                     </tbody>
 
