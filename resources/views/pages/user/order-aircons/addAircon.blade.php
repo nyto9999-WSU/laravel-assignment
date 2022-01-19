@@ -10,13 +10,13 @@
         <p></p>
         <p>Notice: If you have mutiple air conditioners to fix, please click <i>"Add new air conditioner"</i>. If you have
             only one air conditioner, please click the "Submit" button which is located at the bottom of the page</p>
-        <div class="text-end">
-            <button class="btn btn-warning"><b>Add new air conditioner</b></button>
-        </div>
-
-
         <form action="{{ route('aircon.store', $order) }}" method="post">
             @csrf
+
+            {{-- add new aircon button --}}
+            <div class="text-end">
+                <button type="submit" class="btn btn-warning"><b>Add new air conditioner</b></button>
+            </div>
 
             <div class="row g-2  shadow-sm rounded border px-1 py-1  border-2">
                 <p>Please enter your air conditioner information and issues</p>
@@ -24,8 +24,7 @@
                 {{-- model_number --}}
                 <div class="col-md-12">
                     <label for="model_number" class="form-label">Model Number</label>
-                    <input type="text" class="form-control" name="model_number" id="model_number"
-                        placeholder="eg: XGD78IJD7">
+                    <input type="text" class="form-control" name="model_number" id="model_number">
                 </div>
 
                 {{-- serial_number --}}
@@ -55,7 +54,7 @@
 
                 {{-- prefer_date --}}
                 <div class="col-md-4">
-                    <label for="prefer_date">Prefer Date</label>
+                    <label for="prefer_date" class="form-label">Prefer Date</label>
                     <input type="text" class="form-control" id="datepicker" name="prefer_date">
                 </div>
 
@@ -97,53 +96,45 @@
 
                     <textarea class="form-control" name="issue" id="issue" cols="30" rows="2"
                         placeholder="eg: It only works for 30 mins, and it gets hot again."></textarea>
-
-                    <br> <small>Pioneer International Pty. Ltd. will contact you to confirm the service booking.</small>
                 </div>
+            </div>
 
-                <button type="submit" class="w-100 btn btn-primary">Submit</button>
+            <br>
+            <h4>Successfully submited requests</h4>
+            <hr class="my-4">
         </form>
 
-
-
-
-
-        <div>
-            <hr class="my-4">
-
-
-            <h4>Successfully submited requests</h4>
-            <br>
+        <table class="table table-hover text-start mt-1">
+            <th id="blue" class="text-white">Model Number</th>
+            <th id="blue" class="text-white">Serial Number</th>
+            <th id="blue" class="text-white">Equipment Type</th>
+            <th id="blue" class="text-white">Issue</th>
+            <th id="blue" class="text-white">Cancel</th>
             @forelse ($order->aircons as $aircon)
-                <table class="table">
-                    <th>Model Number</th>
-                    <th>Serial Number</th>
-                    <th>Equipment Type</th>
-                    <th>Issue</th>
-                    <th>Cancel</th>
-                    <tr>
-                        <td>{{ $aircon->model_number }}</td>
-                        <td>{{ $aircon->serial_number }}</td>
-                        <td>{{ $aircon->equipment_type }}</td>
-                        <td>{{ $aircon->issue }}</td>
-                        <td>
-                            <form action="{{ route('aircon.destroy', [$aircon, $order]) }}" method="post">
-                                @method('DELETE')
-                                @csrf
-                                <button type="submit">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                            </form>
-                        </td>
-                    </tr>
-                </table>
+                <tr>
+                    <td>{{ $aircon->model_number }}</td>
+                    <td>{{ $aircon->serial_number }}</td>
+                    <td>{{ $aircon->equipment_type }}</td>
+                    <td>{{ $aircon->issue }}</td>
+                    <td>
+                        <form action="{{ route('aircon.destroy', [$aircon, $order]) }}" method="post">
+                            @method('DELETE')
+                            @csrf
+                            <button type="" id="blue" class="btn btn-primary"><i class="bi bi-trash"></i></button>
+                        </form>
+                    </td>
+                </tr>
             @empty
-                <h1>no data</h1>
+                <tr class="text-center">
+                    <td colspan="5">Once you add aircon info, the successfull added aircon will be displayed here</td>
+                </tr>
             @endforelse
+        </table>
 
+        <hr>
+        <small>Pioneer International Pty. Ltd. will contact you to confirm the service booking.</small>
 
-
-        </div>
+        <button type="" id="blue" class="w-100 btn btn-primary">Email </button>
     </div>
 
     <!--Footer-->

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Aircon;
 use App\Models\Job;
 use App\Models\Order;
-use View;
+use Session;
 use Illuminate\Support\Carbon;
 use function Symfony\Component\String\b;
 
@@ -40,6 +40,7 @@ class AirConController extends Controller
     public function store(Request $request, Order $order)
     {
         $order = Order::find($order->id);
+
         $airconAtrr = $this->validateAirCon();
         $jobAttr = $this->validateJob();
 
@@ -48,12 +49,13 @@ class AirConController extends Controller
 
         /* create job */
         $latestAircon = $order->aircons()->latest()->first();
+
         $job = $order->jobs()->create($jobAttr);
         $job->update([
             "aircon_id" => $latestAircon->id
         ]);
 
-
+        /* FIXME: */
         return view('pages.user.order-aircons.addAircon', compact('order'));
     }
 
@@ -126,7 +128,7 @@ class AirConController extends Controller
         }
 
         return request()->validate([
-            'model_number' => ['nullable'],
+            'model_number' => ['required'],
             'serial_number' => ['nullable'],
             'equipment_type' => ['nullable'],
             'other_type' => ['nullable'],
@@ -134,7 +136,6 @@ class AirConController extends Controller
             'install_address' => ['nullable'],
             'issue' => ['nullable'],
         ]);
-
 
     }
 
