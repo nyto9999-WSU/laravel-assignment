@@ -53,7 +53,7 @@ Route::get('/airconall/order{order}/', [AirConController::class, 'showAll'])->na
 Route::post('/aircon/order/{order}', [AirConController::class, 'store'])->name('aircon.store');
 Route::delete('/aircon/delete/{aircon}/order{order}', [AirConController::class, 'destroy'])->name('aircon.destroy');
 Route::resource('aircon', AirConController::class)->except(['store', 'show', 'destroy']);
-
+Route::get('/aircon/order{order}/email', [AirConController::class, 'sendMail'])->name('aircon.mail');
 /* Job */
 Route::post('/job/{job}/order/{order}', [JobController::class, 'store'])->name('job.store');
 Route::resource('job', JobController::class)->except(['store']);
