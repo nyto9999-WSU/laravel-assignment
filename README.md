@@ -1,4 +1,9 @@
 
+PDF issue
+```composer require barryvdh/laravel-dompdf```
+
+
+
 If you have issue with recaptcha
 try 
 ```
