@@ -134,7 +134,7 @@
         <hr>
         <small>Pioneer International Pty. Ltd. will contact you to confirm the service booking.</small>
 
-        <button type="" id="blue" class="w-100 btn btn-primary">Email </button>
+        <a href="{{ route('aircon.mail', $order) }}" id="blue" class="w-100 btn btn-primary">Email</a>
     </div>
 
     <!--Footer-->

@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\OrderMail;
 use Illuminate\Http\Request;
 use App\Models\Aircon;
 use App\Models\Job;
 use App\Models\Order;
-use View;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\App;
 use PDF;
 use Illuminate\Support\Facades\Storage;
 
@@ -59,17 +61,16 @@ class AirConController extends Controller
         ]);
 
 
+        return view('pages.user.order-aircons.addAircon', compact('order'));
+    }
 
-        $pdf = PDF::loadView('pdf.orderPDF', ["order" => $order, "aircon"=> $latestAircon]);
-        $filename = "order_".time().".pdf";
+    public function sendMail(Request $request, Order $order)
+    {
+        $pdf = PDF::loadView('pdf.orderPDF', ["order" => $order]);
+        $filename = "order_" . time() . ".pdf";
         Storage::disk('public_pdf')->put($filename, $pdf->output());
 
-        $data = ["filename" => $filename];
-        \Mail::to($order->email)->send(new \App\Mail\OrderMail($data));
-        echo ("Email is sent");
-
-
-        return view('pages.user.order-aircons.addAircon', compact('order'));
+        Mail::to('nyto9999@gmail.com')->send(new OrderMail($order, $filename));
     }
 
     /**
@@ -149,7 +150,6 @@ class AirConController extends Controller
             'install_address' => ['nullable'],
             'issue' => ['nullable'],
         ]);
-
     }
 
     protected function validateJob()
@@ -158,7 +158,7 @@ class AirConController extends Controller
         if (isset(request()->other_type)) {
             request()->merge(['equipment_type' => request()->other_type]);
         }
-        if(isset(request()->prefer_date)) {
+        if (isset(request()->prefer_date)) {
             $prefer_date = Carbon::createFromFormat('d-m-Y', request()->prefer_date)->format('Y-m-d');
             request()->merge(['prefer_date' => $prefer_date]);
         }

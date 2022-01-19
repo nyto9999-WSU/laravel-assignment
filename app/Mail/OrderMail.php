@@ -11,15 +11,17 @@ class OrderMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $data;
+    public $order;
+    public $filename;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($data)
+    public function __construct($order, $filename)
     {
-        $this->data = $data;
+        $this->order = $order;
+        $this->filename = $filename;
     }
 
     /**
@@ -29,6 +31,12 @@ class OrderMail extends Mailable
      */
     public function build()
     {
-        return $this->subject('Aircon Order')->view('mail.orderMail');
+        $path = 'pdf/'.$this->filename;
+
+        return $this->subject('Aircon Order')->view('mail.orderMail')
+            ->attach(public_path($path), [
+                'as' => $this->filename,
+                'mime' => 'application/pdf',
+            ]);
     }
 }
