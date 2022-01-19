@@ -9,6 +9,7 @@ use App\Models\Order;
 use View;
 use PDF;
 use Illuminate\Support\Facades\Storage;
+
 use Illuminate\Support\Carbon;
 use function Symfony\Component\String\b;
 
@@ -42,6 +43,7 @@ class AirConController extends Controller
     public function store(Request $request, Order $order)
     {
         $order = Order::find($order->id);
+
         $airconAtrr = $this->validateAirCon();
         $jobAttr = $this->validateJob();
 
@@ -50,10 +52,13 @@ class AirConController extends Controller
 
         /* create job */
         $latestAircon = $order->aircons()->latest()->first();
+
         $job = $order->jobs()->create($jobAttr);
         $job->update([
             "aircon_id" => $latestAircon->id
         ]);
+
+
 
         $pdf = PDF::loadView('pdf.orderPDF', ["order" => $order, "aircon"=> $latestAircon]);
         $filename = "order_".time().".pdf";
@@ -62,6 +67,7 @@ class AirConController extends Controller
         $data = ["filename" => $filename];
         \Mail::to($order->email)->send(new \App\Mail\OrderMail($data));
         echo ("Email is sent");
+
 
         return view('pages.user.order-aircons.addAircon', compact('order'));
     }
@@ -135,7 +141,7 @@ class AirConController extends Controller
         }
 
         return request()->validate([
-            'model_number' => ['nullable'],
+            'model_number' => ['required'],
             'serial_number' => ['nullable'],
             'equipment_type' => ['nullable'],
             'other_type' => ['nullable'],
@@ -143,7 +149,6 @@ class AirConController extends Controller
             'install_address' => ['nullable'],
             'issue' => ['nullable'],
         ]);
-
 
     }
 
