@@ -39,49 +39,22 @@ class HomeController extends Controller
 
         $currentYear = now()->format('Y');
 
-        $name = array();
-
-        $job = DB::table('jobs')
-                ->whereBetween('jobs.assigned_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
-                ->where('status', '=', 'assigned')
-                ->get()
-                ->toArray();
-
-        foreach ($job as $j) {
-            array_push($name,$j->tech_name);
-        }
-
-        $weeklyEffort = array_count_values($name);
-        arsort($weeklyEffort);
-
-        $weeklyName = array();
-        $weeklyCount = array();
-        foreach($weeklyEffort as $key => $value)
-        {
-            $weeklyName[] = $key;
-            $weeklyCount[] = $value;
-        }
-
+        /* registered user chart */
         $roles = Role::withCount('users')->get();
 
         /* equipment type chart */
         $equipmentChart = $this->getEquipmentQuantity($currentYear);
 
+        /* technicians weekly effort  */
+        $weeklyEffortChart = $this->getTechnicianWeeklyEffort();
+
         /*  monthly order chart */
-        $monthlyOrders = $this->getMonthlyOrders($currentYear);
-
-        /*  get user to call login history table's functions */
-        $users = User::all()->reverse();
-
-        /*  login history log 2 */
-        // $logs = $this->getLoginHistoryLog();
+        $monthlyJobChart = $this->getMonthlyOrders($currentYear);
 
         /* Todasys job */
-        $orderAssignQuantity = $this->getOrderAssigneQuantity();
-        return view('home', compact('roles', 'monthlyOrders', 'users', 'equipmentChart', 'orderAssignQuantity', 'weeklyName', 'weeklyCount'));
+        $todayJobChart = $this->getOrderAssigneQuantity();
+        return view('home', compact('roles', 'monthlyJobChart', 'equipmentChart', 'todayJobChart', 'weeklyEffortChart'));
     }
-
-
 
 
 
@@ -111,8 +84,32 @@ class HomeController extends Controller
         return $equipmentChart;
     }
 
-    public function getTechnicianWeeklyEffor()
+    public function getTechnicianWeeklyEffort()
     {
+        $name = array();
+
+        $job = DB::table('jobs')
+                ->whereBetween('jobs.assigned_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
+                ->where('status', '=', 'assigned')
+                ->get()
+                ->toArray();
+
+        foreach ($job as $j) {
+            array_push($name,$j->tech_name);
+        }
+
+        $weeklyEffort = array_count_values($name);
+        arsort($weeklyEffort);
+
+        $weeklyEffortChart = array();
+
+        foreach($weeklyEffort as $key => $value)
+        {
+            $weeklyEffortChart[] = $key;
+            $weeklyEffortChart[] = $value;
+        }
+
+        return $weeklyEffortChart;
     }
 
     protected function getMonthlyOrders($currentYear)
@@ -120,7 +117,7 @@ class HomeController extends Controller
 
         $monthlyOrders = array();
         for ($m = 1; $m <= 12; $m++) {
-            $count = Order::whereMonth('created_at', '=', $m)
+            $count = Job::whereMonth('created_at', '=', $m)
                 ->whereYear('created_at', '=', $currentYear)
                 ->count();
             $monthlyOrders[] = $count;

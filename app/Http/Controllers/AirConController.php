@@ -155,9 +155,8 @@ class AirConController extends Controller
         }
         if(isset(request()->prefer_date)) {
             $prefer_date = Carbon::createFromFormat('d-m-Y', request()->prefer_date)->format('Y-m-d');
-            request()->merge(['prefer_date' => request()->prefer_date]);
+            request()->merge(['prefer_date' => $prefer_date]);
         }
-
         return request()->validate([
             'prefer_date' => ['nullable'],
             'prefer_time' => ['nullable'],

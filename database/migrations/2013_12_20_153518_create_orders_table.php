@@ -26,7 +26,6 @@ class CreateOrdersTable extends Migration
             $table->string('postcode')->nullable();
 
             $table->string('extra_note')->nullable();
-            $table->dateTime('assigned_at')->nullable(); 
             $table->timestamps();
 
             $table->foreignId('user_id')

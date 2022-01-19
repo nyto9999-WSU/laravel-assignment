@@ -153,7 +153,6 @@ class UserController extends Controller
 
     protected function validateUserCreate()
     {
-
         request()->merge(['password' => Hash::make('aaaa1111')]);
         request()->merge(['remember_token' => Str::random(10)]);
 
