@@ -81,7 +81,7 @@
                                     {{-- Status --}}
                                     <td class="text-capitalize" id="status">{{ $job->status }}</td>
 
-                                </tr>
+                                </tr> 
                             @empty
 
                             @endforelse
