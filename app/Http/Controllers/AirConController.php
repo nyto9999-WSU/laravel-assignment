@@ -7,6 +7,8 @@ use App\Models\Aircon;
 use App\Models\Job;
 use App\Models\Order;
 use View;
+use PDF;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Carbon;
 use function Symfony\Component\String\b;
 
@@ -53,6 +55,13 @@ class AirConController extends Controller
             "aircon_id" => $latestAircon->id
         ]);
 
+        $pdf = PDF::loadView('pdf.orderPDF', ["order" => $order, "aircon"=> $latestAircon]);
+        $filename = "order_".time().".pdf";
+        Storage::disk('public_pdf')->put($filename, $pdf->output());
+
+        $data = ["filename" => $filename];
+        \Mail::to($order->email)->send(new \App\Mail\OrderMail($data));
+        echo ("Email is sent");
 
         return view('pages.user.order-aircons.addAircon', compact('order'));
     }

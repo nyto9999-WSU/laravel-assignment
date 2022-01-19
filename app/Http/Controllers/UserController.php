@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Faker\Factory as Faker;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
@@ -70,24 +71,31 @@ class UserController extends Controller
     public function updateProfile(Request $request, User $user)
     {
         //
-        $attributes = $this->validateUserProfile($user);
+        $attributes = $this->validateUserProfile($request->all());
 
-        $user->update($attributes);
+        $user->update($request->all());
+        $auth = Auth::user();
 
-        switch ($user->role_id) {
-            case 1:
-                return (new PagesController)->users();
-                break;
-            case 2:
-                return (new PagesController)->admins();
-                break;
-            case 3:
-                return (new PagesController)->technicians();
-                break;
-
-            default:
-                return $this->index();
-                break;
+        if ($auth->role_id == 2) {
+            // if admin
+            switch ($user->role_id) {
+                case 1:
+                    return (new PagesController)->users();
+                    break;
+                case 2:
+                    return (new PagesController)->admins();
+                    break;
+                case 3:
+                    return (new PagesController)->technicians();
+                    break;
+    
+                default:
+                    return $this->index();
+                    break;
+            }
+        } else if ($auth->role_id == 1) {
+            // if user
+            return redirect()->route("user.show", $auth);
         }
     }
     public function updateRole(Request $request, User $user)
