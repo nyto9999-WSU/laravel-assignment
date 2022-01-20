@@ -14,9 +14,7 @@
 
 {{-- prevent scrollbar shaking --}}
 <style>
-    html {
-        overflow: scroll;
-    }
+
 </style>
 
 {!! ReCaptcha::htmlScriptTagJsApi() !!}
