@@ -4,9 +4,14 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8" id="my_table">
-                <img src="{{asset('image/logo.png')}}" alt="" width="200">
-                <h1>Job Worksheet</h1>
+                <img src='http://pioneerair.com.au/img/pioneer/pioneer-logo.png' alt="" width="250">
+                <h3>Job Worksheet</h3>
                 <table class="table" border="1" style="border-collapse:collapse;" width="90%" cellpadding="3" cellspacing="3">
+
+                  <tr bgcolor="lightblue">
+                      <th>Title</th>
+                      <th>Description</th>
+                  </tr>
 
                     {{-- order_id --}}
                     <tr>
@@ -16,54 +21,42 @@
 
 
                     {{-- model_number --}}
-                    <tr>
+                    <tr style="background:aliceblue;">
                         <td>Model Number</td>
                         <td>
-                            @forelse ($order->aircons as $aircon)
-                                <li>
-                                    <a
-                                        href="{{ route('aircon.show', [$aircon, $order]) }}">{{ $aircon->model_number }}</a>
-                                </li>
-                            @empty
+                          <ol class="p-0 m-0 ms-3">
+                              @forelse ($order->aircons as $aircon)
+                                  <li>
+                                      <a href="{{ route('aircon.show', [$aircon, $order]) }}">
+                                          Model: {{ $aircon->model_number }} / Serial:
+                                          {{ $aircon->serial_number }}</a></a>
+                                  </li>
+                              @empty
 
-                            @endforelse
+                              @endforelse
+                          </ol>
                         </td>
                     </tr>
 
-                    {{-- serial_number --}}
-                    <tr>
-                        <td>Serial Number</td>
-                        <td>
-                            @forelse ($order->aircons as $aircon)
-                                <li>
-                                    <a
-                                        href="{{ route('aircon.show', [$aircon, $order]) }}">{{ $aircon->serial_number }}</a>
-                                </li>
-                            @empty
-
-                            @endforelse
-                        </td>
-                    </tr>
-
-                    {{-- domestic_commercial --}}
-                    <tr>
-                        <td>Domestic Commercial</td>
-                        <td>{{ $order->domestic_commercial }}</td>
-                    </tr>
-
-                    <tr>
+                    <tr >
                         <td>Technician</td>
                         <td>
-                            @if (!empty($order->job->user_id))
-                                {{ $order->job->user_id }}
-                            @else
-                                N/A
-                            @endif
+
+                          @forelse ($order->jobs as $job)
+                          @if (!empty($job->tech_name))
+                              {{ $job->tech_name }}
+                              <br/>
+                          @else
+                              N/A
+                          @endif
+                          @empty
+
+                          @endforelse
                         </td>
                     </tr>
 
                     {{-- extra_note --}}
-                    <tr>
+                    <tr style="background:aliceblue;">
                         <td>Description</td>
                         <td>{{ $order->extra_note }}</td>
                     </tr>
@@ -71,11 +64,22 @@
                     {{-- status --}}
                     <tr>
                         <td>Status</td>
-                        <td>{{ $order->status }}</td>
+                        <td style="text-transform:capitalize;">
+                          @forelse ($order->jobs as $job)
+                          @if (!empty($job->status))
+                              {{ $job->status }}
+                              <br/>
+                          @else
+                              N/A
+                          @endif
+                          @empty
+
+                          @endforelse
+                        </td>
                     </tr>
 
                     {{-- name --}}
-                    <tr>
+                    <tr style="background:aliceblue;">
                         <td>Owner</td>
                         <td>{{ $order->name }}</td>
                     </tr>
@@ -87,9 +91,20 @@
                     </tr>
 
                     {{-- install_address --}}
-                    <tr>
+                    <tr style="background:aliceblue;">
                         <td>Installation Address</td>
-                        <td>{{ $order->install_address }}</td>
+                        <td>
+                          @forelse ($order->jobs as $job)
+                          @if (!empty($job->install_address))
+                              {{ $job->install_address }}
+                              <br/>
+                          @else
+                              N/A
+                          @endif
+                          @empty
+
+                          @endforelse
+                        </td>
                     </tr>
 
                     {{-- state --}}
@@ -99,7 +114,7 @@
                     </tr>
 
                     {{-- suburb --}}
-                    <tr>
+                    <tr style="background:aliceblue;">
                         <td>Suburb</td>
                         <td>{{ $order->suburb }}</td>
                     </tr>
@@ -111,43 +126,73 @@
                     </tr>
 
                     {{-- prefer_date --}}
-                    <tr>
+                    <tr style="background:aliceblue;">
                         <td>Prefer Date</td>
-                        <td>{{ $order->prefer_date }}</td>
+                        <td>
+                          @forelse ($order->jobs as $job)
+                          @if (!empty($job->prefer_date))
+                              {{ date('d-F-Y', strtotime($job->prefer_date)) }}
+                              <br/>
+                          @else
+                              N/A
+                          @endif
+                          @empty
+
+                          @endforelse
+                        </td>
                     </tr>
 
                     {{-- prefer_time --}}
                     <tr>
                         <td>prefer_time</td>
-                        <td>{{ $order->prefer_time }}</td>
+                        <td>
+                          @forelse ($order->jobs as $job)
+                          @if (!empty($job->prefer_time))
+                              {{ $job->prefer_time }}
+                              <br/>
+                          @else
+                              N/A
+                          @endif
+                          @empty
+
+                          @endforelse
+                        </td>
                     </tr>
 
                     {{-- job_start_date --}}
-                    <tr>
+                    <tr style="background:aliceblue;">
                         <td>Start Date</td>
                         <td>
-                            @if (!empty($order->job_start_date))
-                                {{ $order->job_start_date }}
-                            @else
-                                N/A
-                            @endif
+                          @forelse ($order->jobs as $job)
+                          @if (!empty($job->start_date))
+                              {{ date('d-F-Y', strtotime($job->start_date)) }}
+                              <br/>
+                          @else
+                              N/A
+                          @endif
+                          @empty
+                          @endforelse
                         </td>
                     </tr>
 
                     {{-- job_end_date --}}
                     <tr>
                         <td>End Date</td>
-                        <td>
-                            @if (!empty($order->job_end_date))
-                                {{ $order->job_end_date }}
-                            @else
-                                N/A
-                            @endif
+                        <td style="color:red;">
+                          @forelse ($order->jobs as $job)
+                          @if (!empty($job->end_date))
+                              {{ date('d-F-Y', strtotime($job->end_date)) }}
+                              <br/>
+                          @else
+                              N/A
+                          @endif
+                          @empty
+                          @endforelse
                         </td>
                     </tr>
 
                     {{-- created_at --}}
-                    <tr>
+                    <tr style="background:aliceblue;">
                         <td>Requested Date</td>
                         <td>{{ $order->created_at }}</td>
                     </tr>
@@ -166,14 +211,18 @@
                     </tr>
 
                 {{-- Note --}}
-                <tr>
+                <tr style="background:aliceblue;">
                     <td>Note</td>
                     <td>
-                        @if (!empty($order->extra_note))
-                            {{ $order->extra_note }}
-                        @else
-                            N/A
-                        @endif
+                      @forelse ($order->jobs as $job)
+                      @if (!empty($job->issue))
+                          {{ $job->issue }}
+                          <br/>
+                      @else
+                          N/A
+                      @endif
+                      @empty
+                      @endforelse
                     </td>
 
                 </tr>
