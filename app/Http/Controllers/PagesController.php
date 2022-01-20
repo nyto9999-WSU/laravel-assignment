@@ -57,10 +57,13 @@ class PagesController extends Controller
             $order_ids = AirconOrder::wherein('aircon_id', $aircons)->pluck('order_id');
             $orders = Order::with('aircons', 'user');
 
-            $job_order = Job::where('id', $value)->pluck('order_id')->first();
+            $job_order = Job::where('id', $value)->orWhere('tech_name', 'like', "%$value%")->pluck('order_id');
             if(!empty($job_order))
             {
+              for($x=0;$x<count($job_order); $x++)
+              {
                 $order_ids->push($job_order);
+              }
             }
             $orders =  $orders->where(function ($query2) use ($value, $order_ids) {
                 $query2->where('name', 'like', "%$value%")
