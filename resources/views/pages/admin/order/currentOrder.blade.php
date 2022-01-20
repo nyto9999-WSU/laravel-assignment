@@ -4,7 +4,7 @@
 
     <div class="container-fluid">
 
-        <div class="row g-2  mx-2">
+        <div class="row g-2 mx-2">
 
             <div class="col-3">
                 <h2>Requested Jobs</h2>
