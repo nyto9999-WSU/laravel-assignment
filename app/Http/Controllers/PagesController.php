@@ -52,17 +52,15 @@ class PagesController extends Controller
 
           if($attr->status == 'assigned')
           {
-
             $value = $attr->s;
             $aircons = Aircon::where('model_number', 'like', "%$value%")->pluck('id');
             $order_ids = AirconOrder::wherein('aircon_id', $aircons)->pluck('order_id');
             $orders = Order::with('aircons', 'user');
 
             $job_order = Job::where('id', $value)->pluck('order_id')->first();
-
-            if(empty($job_order))
+            if(!empty($job_order))
             {
-              $order_ids->push($job_order);
+                $order_ids->push($job_order);
             }
             $orders =  $orders->where(function ($query2) use ($value, $order_ids) {
                 $query2->where('name', 'like', "%$value%")
