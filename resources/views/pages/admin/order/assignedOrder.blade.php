@@ -51,6 +51,7 @@
                                         {{-- complete button --}}
                                         <td>
                                             <a href="{{ route('order.actions', [$order, 'job' => $job]) }}" id="blue"
+                                              onclick="return confirm('Are you sure ? You want to mark this as completed?')"
                                                 class="btn text-white">
                                                 <i class="bi bi-check2"></i>
                                             </a>
@@ -117,7 +118,7 @@
                                 </td>
                             </tr>
                         @endforelse
-                    </tbody> 
+                    </tbody>
 
                 </table>
 
