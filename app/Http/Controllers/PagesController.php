@@ -68,7 +68,7 @@ class PagesController extends Controller
                 $query2->where('name', 'like', "%$value%")
                     ->orWhereIn('id', $order_ids)
                     ->orWhere('mobile_number', 'like', "%$value%");
-            })->orderBy('assigned_at', 'desc')->get();
+            })->orderBy('created_at', 'desc')->get();
 
             return response()->json([
                 'statusCode' => 200,
@@ -95,7 +95,7 @@ class PagesController extends Controller
                 $query2->where('name', 'like', "%$value%")
                     ->orWhereIn('id', $order_ids)
                     ->orWhere('mobile_number', 'like', "%$value%");
-            })->orderBy('updated_at', 'desc')->get();
+            })->orderBy('created_at', 'desc')->get();
 
             return response()->json([
                 'statusCode' => 200,
