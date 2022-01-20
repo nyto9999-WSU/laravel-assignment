@@ -4,8 +4,8 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8" id="my_table">
-                <h1>Pioneer</h1>
-                <h1>Assigned Job</h1>
+                <img src="{{asset('image/logo.png')}}" alt="" width="200">
+                <h1>Job Worksheet</h1>
                 <table class="table" border="1" style="border-collapse:collapse;" width="90%" cellpadding="3" cellspacing="3">
 
                     {{-- order_id --}}
@@ -162,7 +162,21 @@
                                 N/A
                             @endif
                         </td>
+
                     </tr>
+
+                {{-- Note --}}
+                <tr>
+                    <td>Note</td>
+                    <td>
+                        @if (!empty($order->extra_note))
+                            {{ $order->extra_note }}
+                        @else
+                            N/A
+                        @endif
+                    </td>
+
+                </tr>
                 </table>
 
                 {{-- edit button --}}
