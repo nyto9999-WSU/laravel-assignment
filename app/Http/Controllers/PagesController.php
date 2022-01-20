@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Aircon;
+use App\Models\AirconOrder;
 use App\Models\Order;
 use App\Models\User;
 use App\Models\Job;
@@ -21,18 +22,27 @@ class PagesController extends Controller
     // function for search admin jobs
     public function searchRequestedJobs(Request $attr)
     {
-
         if (auth()->user()->isAdmin()) {
 
-          if($attr->status == 'Booked')
+          if($attr->status == 'booked')
           {
-            $orders = Order::with('aircons', 'user');
+
             $value = $attr->s;
-            $orders =  $orders->where(function ($query2) use ($value) {
+            $aircons = Aircon::where('model_number', 'like', "%$value%")->pluck('id');
+            $order_ids = AirconOrder::wherein('aircon_id', $aircons)->pluck('order_id');
+            $orders = Order::with('aircons', 'user');
+
+            $job_order = Job::where('id', $value)->pluck('order_id')->first();
+
+            if(empty($job_order))
+            {
+              $order_ids->push($job_order);
+            }
+            $orders =  $orders->where(function ($query2) use ($value, $order_ids) {
                 $query2->where('name', 'like', "%$value%")
-                    ->orWhere('mobile_number', 'like', "%$value%")
-                    ->orWhere('id', $value);
-            })->orderBy('created_at', 'desc')->limit(7)->get(); //pagination
+                    ->orWhereIn('id', $order_ids)
+                    ->orWhere('mobile_number', 'like', "%$value%");
+            })->orderBy('created_at', 'desc')->get();
 
             return response()->json([
                 'statusCode' => 200,
@@ -42,13 +52,23 @@ class PagesController extends Controller
 
           if($attr->status == 'assigned')
           {
-            $orders = Order::with('aircons', 'user');
+
             $value = $attr->s;
-            $orders =  $orders->where(function ($query2) use ($value) {
+            $aircons = Aircon::where('model_number', 'like', "%$value%")->pluck('id');
+            $order_ids = AirconOrder::wherein('aircon_id', $aircons)->pluck('order_id');
+            $orders = Order::with('aircons', 'user');
+
+            $job_order = Job::where('id', $value)->pluck('order_id')->first();
+
+            if(empty($job_order))
+            {
+              $order_ids->push($job_order);
+            }
+            $orders =  $orders->where(function ($query2) use ($value, $order_ids) {
                 $query2->where('name', 'like', "%$value%")
-                    ->orWhere('mobile_number', 'like', "%$value%")
-                    ->orWhere('id', $value);
-            })->orderBy('assigned_at', 'desc')->limit(7)->get(); //pagination
+                    ->orWhereIn('id', $order_ids)
+                    ->orWhere('mobile_number', 'like', "%$value%");
+            })->orderBy('assigned_at', 'desc')->get();
 
             return response()->json([
                 'statusCode' => 200,
@@ -58,13 +78,24 @@ class PagesController extends Controller
 
           if($attr->status == 'completed')
           {
-            $orders = Order::with('aircons', 'user');
             $value = $attr->s;
-            $orders =  $orders->where(function ($query2) use ($value) {
+            $aircons = Aircon::where('model_number', 'like', "%$value%")->pluck('id');
+            $order_ids = AirconOrder::wherein('aircon_id', $aircons)->pluck('order_id');
+            $orders = Order::with('aircons', 'user');
+
+            $job_order = Job::where('id', $value)->orWhere('tech_name', 'like', "%$value%")->pluck('order_id');
+            if(!empty($job_order))
+            {
+              for($x=0;$x<count($job_order); $x++)
+              {
+                $order_ids->push($job_order);
+              }
+            }
+            $orders =  $orders->where(function ($query2) use ($value, $order_ids) {
                 $query2->where('name', 'like', "%$value%")
-                    ->orWhere('mobile_number', 'like', "%$value%")
-                    ->orWhere('id', $value);
-            })->orderBy('updated_at', 'desc')->limit(7)->get(); //pagination
+                    ->orWhereIn('id', $order_ids)
+                    ->orWhere('mobile_number', 'like', "%$value%");
+            })->orderBy('updated_at', 'desc')->get();
 
             return response()->json([
                 'statusCode' => 200,
@@ -73,6 +104,7 @@ class PagesController extends Controller
           }
         }
     }
+
 
     // function for search user requested history
     public function searchRequesteHistory(Request $attr)
