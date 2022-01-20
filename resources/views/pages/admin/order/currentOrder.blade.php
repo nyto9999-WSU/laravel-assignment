@@ -3,13 +3,11 @@
 @section('content')
 
     <div class="container-fluid">
-        <!-- <h1>Role: {{ Auth::user()->getRole() }}</h1> -->
-        <!-- <h1>currentOrder.blade(admin)</h1> -->
 
         <div class="row g-2  mx-2">
 
             <div class="col-3">
-                <h2>Requested Jobs</h1>
+                <h2>Requested Jobs</h2>
                     <small>All new service requests are shown in this page</small>
             </div>
 
