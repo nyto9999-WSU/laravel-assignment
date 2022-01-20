@@ -37,9 +37,10 @@
                             <th>Service Type</th>
                             <th>Customer</th>
                             <th>Phone</th>
+                            <th>Technician</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="current_orders">
                         @forelse ($orders as $order)
                             @forelse ($order->jobs as $job)
                                 @if ($job->status == 'completed')
@@ -83,6 +84,9 @@
 
                                         {{-- mobile_number --}}
                                         <td>{{ $order->mobile_number }}</td>
+
+                                        {{-- technician name --}}
+                                        <td>{{ $job->tech_name }}</td>
                                     </tr>
                                 @endif
 

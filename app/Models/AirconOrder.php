@@ -9,5 +9,5 @@ class AirconOrder extends Model
 {
     use HasFactory;
     protected $guarded = [];
-
+    protected $table = 'aircon_order';
 }
