@@ -27,7 +27,50 @@
                     <div class="col-md-4">
                         <div class="row">
                             <a href="{{ route('pages.users') }}" class="col-md-6">Users</a>
-                            <a href="{{ route('user.create') }}" class="col-md-6">Add User</a>
+                            <a href="" class="col-md-6" data-bs-toggle="modal"
+                                data-bs-target=".bd-example-modal-xl">Add User</a>
+
+                            {{-- modal calendar --}}
+                            <div class="modal fade bd-example-modal-xl " id="exampleModal" tabindex="-1"
+                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+                                <div class="modal-dialog modal-dialog-scrollable">
+
+                                    <div class="modal-content">
+                                        <div class="modal-header p-2">
+                                            <h5 class="modal-title">Create User</h5>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="{{ route('user.store') }}" method="POST">
+                                                @csrf
+                                                <div class="mb-3">
+                                                    <label for="name" class="col-form-label">User Name:</label>
+                                                    <input type="text" class="form-control" name="name">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="email" class="col-form-label">Email:</label>
+                                                    <input type="text" class="form-control" name="email">
+                                                </div>
+                                                <div class="mb-3">
+
+                                                    <label for="role_id" class="col-form-label">User Name:</label>
+                                                    <select class="form-control" name="role_id">
+                                                        <option disabled selected value>Role</option>
+                                                        <option value="1">User</option>
+                                                        <option value="3">Technician</option>
+                                                        <option value="2">Admin</option>
+                                                    </select>
+                                                </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-primary">Add User</button>
+                                        </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -45,81 +88,83 @@
                 </form>
                 <hr>
             </div>
+        </div>
 
 
 
 
+        {{-- Users table --}}
+        <div class="col-12 shadow-sm rounded border border-2">
 
-            {{-- Users table --}}
-            <div class="col-12 shadow-sm rounded border border-2">
+            <table class="table table-hover text-start text-center mt-1">
 
-                <table class="table table-hover text-start text-center mt-1">
+                <thead id="blue" class="text-white">
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Role</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                @forelse ($users as $user)
+                    <tr>
+                        {{-- user id --}}
+                        <th>{{ $user->id }}</th>
 
-                    <thead id="blue" class="text-white">
-                        <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Role</th>
-                            <th>Edit</th>
-                            <th>Delete</th>
-                        </tr>
-                    </thead>
-                    @forelse ($users as $user)
-                        <tr>
-                            {{-- user id --}}
-                            <th>{{ $user->id }}</th>
+                        {{-- user name --}}
+                        <td>
+                            <a href="{{ route('user.show', $user) }}">{{ $user->name }}</a>
+                        </td>
 
-                            {{-- user name --}}
-                            <td>
-                                <a href="{{ route('user.show', $user) }}">{{ $user->name }}</a>
-                            </td>
+                        {{-- role dropdown --}}
+                        <td>
+                            <form action="{{ route('user.updateRole', $user) }}" method="POST">
+                                @method('PATCH')
+                                @csrf
 
-                            {{-- role dropdown --}}
-                            <td>
-                                <form action="{{ route('user.updateRole', $user) }}" method="POST">
-                                    @method('PATCH')
-                                    @csrf
+                                <select class="form-control-sm" name="action" onchange="this.form.submit()">
+                                    <option disabled selected value class="text-capitalize">
+                                        {{ ucfirst($user->getRole()) }}</option>
+                                    <option value="user">User</option>
+                                    <option value="technician">Technician</option>
+                                    <option value="admin">Admin</option>
+                                </select>
 
-                                    <select class="form-control-sm" name="action" onchange="this.form.submit()">
-                                        <option disabled selected value class="text-capitalize">{{ ucfirst($user->getRole()) }}</option>
-                                        <option value="user">User</option>
-                                        <option value="technician">Technician</option>
-                                        <option value="admin">Admin</option>
-                                    </select>
+                            </form>
+                        </td>
 
-                                </form>
-                            </td>
+                        {{-- edit button --}}
+                        <td><a href="{{ route('user.edit', $user) }}" id="blue" class="btn btn-primary"><i
+                                    class="bi bi-pencil-square"></i></a>
+                        </td>
 
-                            {{-- edit button --}}
-                            <td><a href="{{ route('user.edit', $user) }}" class="btn btn-primary"><i
-                                        class="bi bi-pencil-square"></i></a>
-                            </td>
+                        {{-- delete button --}}
+                        <td>
+                            <form action="{{ route('user.destroy', $user->id) }}" method="post">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" id="red" onclick="return confirm('Are you sure ? You want to delete this?')"
+                                    class="btn text-white"><i class="bi bi-trash"></i></button>
+                            </form>
+                        </td>
 
-                            {{-- delete button --}}
-                            <td>
-                                <form action="{{ route('user.destroy', $user->id) }}" method="post">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" onclick="return confirm('Are you sure ? You want to delete this?')" class="btn btn-primary"><i class="bi bi-trash"></i></button>
-                                </form>
-                            </td>
-
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="10" class=" text-center fw-bold">
-                                No Result
-                            </td>
-                        </tr>
-                    @endforelse
-                </table>
-
-            </div>
-            <div class="d-flex flex-row-reverse">
-                {!! $users->links() !!}
-            </div>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="10" class=" text-center fw-bold">
+                            No Result
+                        </td>
+                    </tr>
+                @endforelse
+            </table>
 
         </div>
+        <div class="d-flex flex-row-reverse">
+            {!! $users->links() !!}
+        </div>
+
+    </div>
     </div>
 
     </div>

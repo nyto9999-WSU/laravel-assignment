@@ -88,7 +88,7 @@ class UserController extends Controller
                 case 3:
                     return (new PagesController)->technicians();
                     break;
-    
+
                 default:
                     return $this->index();
                     break;

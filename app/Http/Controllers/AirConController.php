@@ -131,7 +131,11 @@ class AirConController extends Controller
 
     public function destroy(Aircon $aircon, Order $order)
     {
+
+        $job_aircon = Aircon::find($aircon->id);
+        $job = Job::where('id', '=', $job_aircon->id);
         $aircon->delete();
+        $job->delete();
         return view('pages.user.order-aircons.addAircon', compact('order'));
     }
 
