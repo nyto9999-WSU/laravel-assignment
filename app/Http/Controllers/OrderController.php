@@ -23,7 +23,7 @@ class OrderController extends Controller
     {
 
         if (auth()->user()->isAdmin()) {
-            $orders = Order::with('aircons', 'user')->get();
+            $orders = Order::with('aircons', 'user')->paginate(10);
 
             return view('pages.admin.order.currentOrder', compact('orders'));
         }
@@ -31,7 +31,7 @@ class OrderController extends Controller
         //role user
         $orders = Order::with('aircons', 'user')
             ->where('user_id', auth()->id())
-            ->get();
+            ->paginate(10);
         return view('pages.user.order.currentOrder', compact('orders'));
     }
 
