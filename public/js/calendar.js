@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     var calendar = new FullCalendar.Calendar(calendarEl, {
       plugins: [ 'interaction', 'dayGrid', 'timeGrid' ],
-      timeZone: 'UTC',
+      locale: 'AU',
       allDaySlot: false,
       slotDuration: '03:00',
       minTime: "09:00",

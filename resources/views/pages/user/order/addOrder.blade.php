@@ -102,7 +102,7 @@
                 </div>
 
                 {{-- Submit to order.store --}}
-                <button type="submit" class="w-100 btn btn-primary">Submit</button>
+                <button type="submit" id="blue" class="w-100 btn btn-primary">Submit</button>
             </form>
         </div>
     </div>
