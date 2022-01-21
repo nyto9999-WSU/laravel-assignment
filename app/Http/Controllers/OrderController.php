@@ -139,7 +139,8 @@ class OrderController extends Controller
                     $job_start[] = "${j_date}T${js}";
                     $job_end[] = "${j_date}T${je}";
                 }
-                return view('pages.admin.job.assignJobToTechnician', compact('order', 'job', 'technicians', 'aircon','requested_id','r_model', 'r_serial','prefer_start','prefer_end','r_install_address', 'r_mobile', 'r_dc',
+                return view('pages.admin.job.assignJobToTechnician', compact('order', 'job', 'technicians', 'aircon',
+                'requested_id','r_model', 'r_serial','prefer_start','prefer_end','r_install_address', 'r_mobile', 'r_dc',
                 'assigned_id','a_model','a_serial','job_start', 'job_end', 'a_install_address', 'tech_name','a_mobile', 'a_dc'));
 
             case 'assigned':

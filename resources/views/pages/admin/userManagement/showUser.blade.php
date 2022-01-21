@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <h2 class="text-center mt-5 py-3">User Profile</h2>
+    <h2 class="text-center">User Profile</h2>
     <div class="row justify-content-center">
         <div class="col-md-10 border shadow-sm rounded border-2 p-1">
             <div class="w-100" id="blue">
@@ -27,12 +27,13 @@
                     </tr>
                     <tr>
                         <th>Registered</th>
-                        <td>{{ date('d-m-Y h:m:s', strtotime($user->created_at)) }}</td>
+                        <td>{{ date('d-M-Y h:m:s', strtotime($user->created_at)) }}</td>
                     </tr>
+
                 </tbody>
             </table>
             <div class="d-grid mt-4">
-                <a href="{{ route('user.edit', $user) }}" class="btn btn-primary">Edit Profile</a>
+                <a href="{{ route('user.edit', $user) }}" id="blue" class="btn btn-primary">Edit Profile</a>
             </div>
         </div>
     </div>

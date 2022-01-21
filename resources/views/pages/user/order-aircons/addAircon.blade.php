@@ -18,7 +18,7 @@
                 <button type="submit" class="btn btn-warning"><b>Add new air conditioner</b></button>
             </div>
 
-            <div class="row g-2  shadow-sm rounded border px-1 py-1  border-2">
+            <div class="row g-2 shadow-sm rounded border px-1 py-1  border-2">
                 <p>Please enter your air conditioner information and issues</p>
 
                 {{-- model_number --}}
@@ -99,57 +99,44 @@
                 </div>
             </div>
 
-            <br>
-            <h4>Successfully submited requests</h4>
-            <hr class="my-4">
+
         </form>
 
-        <table class="table table-hover text-start mt-1">
-            <th id="blue" class="text-white">Model/Serial</th>
-            <th id="blue" class="text-white">Equipment Type</th>
-            <th id="blue" class="text-white">Install Address</th>
-            <th id="blue" class="text-white">Issue</th>
-            <th id="blue" class="text-white">Cancel</th>
-            @forelse ($order->aircons as $aircon)
-                <tr>
-                    <td>Model: {{ $aircon->model_number }} / Serial: {{ $aircon->serial_number }}</td>
-                    <td>{{ $aircon->equipment_type }}</td>
-                    <td>{{ $aircon->install_address }}</td>
-                    <td>{{ $aircon->issue }}</td>
-                    <td>
-                        <form action="{{ route('aircon.destroy', [$aircon, $order]) }}" method="post">
-                            @method('DELETE')
-                            @csrf
-                            <button type="" id="blue" class="btn btn-primary"><i class="bi bi-trash"></i></button>
-                        </form>
-                    </td>
-                </tr>
-            @empty
-                <tr class="text-center">
-                    <td colspan="5">Once you add aircon info, the successfull added aircon will be displayed here</td>
-                </tr>
-            @endforelse
-        </table>
-
-        <hr>
-        <small>Pioneer International Pty. Ltd. will contact you to confirm the service booking.</small>
-
         @if (!count($order->jobs))
+            <small>Please Add aircon before submitting.</small>
             <a href="#" id="blue" class="w-100 btn btn-primary disabled" role="button" aria-disabled="true">Submit</a>
         @else
-            <a href="{{ route('aircon.mail', $order) }}" id="blue" class="w-100 btn btn-primary">Submit</a>
+            <h4 class="mt-2">Successfully submited requests</h4>
+            <table class="table table-hover text-start mt-1">
+                <th id="blue" class="text-white">Model/Serial</th>
+                <th id="blue" class="text-white">Equipment Type</th>
+                <th id="blue" class="text-white">Install Address</th>
+                <th id="blue" class="text-white">Issue</th>
+                <th id="blue" class="text-white">Cancel</th>
+                @forelse ($order->aircons as $aircon)
+                    <tr>
+                        <td>Model: {{ $aircon->model_number }} / Serial: {{ $aircon->serial_number }}</td>
+                        <td>{{ $aircon->equipment_type }}</td>
+                        <td>{{ $aircon->install_address }}</td>
+                        <td>{{ $aircon->issue }}</td>
+                        <td>
+                            <form action="{{ route('aircon.destroy', [$aircon, $order]) }}" method="post">
+                                @method('DELETE')
+                                @csrf
+                                <button type="" id="blue" class="btn btn-primary"><i class="bi bi-trash"></i></button>
+                            </form>
+                        </td>
+                    </tr>
+                @empty
+                    <tr class="text-center">
+                        <td colspan="5">Once you add aircon info, the successfull added aircon will be displayed here</td>
+                    </tr>
+                @endforelse
+            </table>
+            <small>Pioneer International Pty. Ltd. will contact you to confirm the service booking.</small>
+            <a href="{{ route('aircon.mail', $order) }}" type="button" id="blue" class="w-100 btn btn-primary">Submit</a>
         @endif
     </div>
-
-    <!--Footer-->
-    <footer class="my-5 pt-5 text-muted text-center text-small">
-        <p class="mb-1">&copy; 2017–2021 Company Name</p>
-        <ul class="list-inline">
-            <li class="list-inline-item"><a href="#">Privacy</a></li>
-            <li class="list-inline-item"><a href="#">Terms</a></li>
-            <li class="list-inline-item"><a href="admin-home-page.html">Admin</a></li>
-        </ul>
-    </footer>
 
 @endsection
 
@@ -161,11 +148,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
     <script>
-        //在後端改日期匹配mysql格式FIXME:
         $('#datepicker').datepicker("setDate", new Date());
         $("#datepicker").datepicker({
             dateFormat: "dd-mm-yy",
             minDate: '0'
         });
     </script>
+
 @endpush

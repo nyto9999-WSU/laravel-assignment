@@ -44,6 +44,7 @@ class AirConController extends Controller
      */
     public function store(Request $request, Order $order)
     {
+
         $order = Order::find($order->id);
 
         $airconAtrr = $this->validateAirCon();
@@ -71,6 +72,8 @@ class AirConController extends Controller
         Storage::disk('public_pdf')->put($filename, $pdf->output());
 
         Mail::to('nyto9999@gmail.com')->send(new OrderMail($order, $filename));
+
+        return (new OrderController)->index();
     }
 
     /**
