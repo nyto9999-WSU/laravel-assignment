@@ -18,11 +18,16 @@
                 <hr>
 
                 {{-- modal calendar --}}
-                <div class="modal fade bd-example-modal-xl " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                    aria-hidden="true">
+                <div class="modal fade bd-example-modal-xl " id="exampleModal" tabindex="-1"
+                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+
                     <div class="modal-dialog modal-xl modal-dialog-scrollable">
+
                         <div class="modal-content">
-                                <div id='calendar' class="modal-body"></div>
+                            <div class="modal-header p-2">
+                                <h5 class="modal-title">Prefer Date: {{ date('d-M-Y', strtotime($job->prefer_date)) }} / Prefer Time: {{ $job->prefer_time }}</h5>
+                            </div>
+                            <div id='calendar' class="modal-body m-0 p-3"></div>
                         </div>
                     </div>
                 </div>
@@ -233,7 +238,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"
-    integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous">
+        integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous">
     </script>
     <script src="https://unpkg.com/tooltip.js/dist/umd/tooltip.min.js"></script>
     <script src='https://unpkg.com/@fullcalendar/core@4.3.1/main.min.js'></script>
@@ -284,73 +289,67 @@
 
     {{-- calendar --}}
     <script>
-    var calendarEl = document.getElementById('calendar');
+        var calendarEl = document.getElementById('calendar');
 
-    var calendar = new FullCalendar.Calendar(calendarEl, {
+        var calendar = new FullCalendar.Calendar(calendarEl, {
 
-        plugins: ['dayGrid', 'timeGrid'],
-        timeZone: 'UTC',
-        allDaySlot: false,
-        slotDuration: '03:00',
-        minTime: "09:00",
-        maxTime: "18:00",
-        contentHeight: "auto",
-        defaultView: 'timeGridWeek',
-        defaultDate: new Date(),
-        header: {
-            left: 'prev,next today',
-            center: 'title',
-            right: 'dayGridMonth,timeGridWeek,timeGridDay'
-        },
-        aspectRatio: 2.5,
-        handleWindowResize: true,
-        Boolean,
-        default: true,
-        businessHours: {
-            daysOfWeek: [1, 2, 3, 4, 5],
-            startTime: '9:00',
-            endTime: '18:00',
-        },
-        editable: false,
-        droppable: false,
-        events: [
+            plugins: ['dayGrid', 'timeGrid'],
+            timeZone: 'UTC',
+            allDaySlot: false,
+            slotDuration: '03:00',
+            minTime: "09:00",
+            maxTime: "18:00",
+            contentHeight: "auto",
+            defaultView: 'timeGridWeek',
+            defaultDate: new Date(),
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'dayGridMonth,timeGridWeek,timeGridDay'
+            },
+            aspectRatio: 2.5,
+            handleWindowResize: true,
+            Boolean,
+            default: true,
+            businessHours: {
+                daysOfWeek: [1, 2, 3, 4, 5],
+                startTime: '9:00',
+                endTime: '18:00',
+            },
+            editable: false,
+            droppable: false,
+            events: [
 
-            @php
-            if($requested_id != null)
-            {
-                for($i = 0; $i < count($requested_id) ; $i++)
-                {
-                    echo "{
-                    id: '$requested_id[$i]',
-                    title: 'Requested Job ID: $requested_id[$i] \\n Model: $r_model[$i] \\n Serial: $r_serial[$i] \\n Mobile: $r_mobile[$i] \\n Install Address: $r_install_address[$i] \\n Service Type: $r_dc[$i]',
-                    start: '$prefer_start[$i]',
-                    end: '$prefer_end[$i]',
-                    backgroundColor: '#B83520',
-                    },";
-
+                @php
+                if ($requested_id != null) {
+                    for ($i = 0; $i < count($requested_id); $i++) {
+                        echo "{
+                                    id: '$requested_id[$i]',
+                                    title: 'Requested Job ID: $requested_id[$i] \\n Model: $r_model[$i] \\n Serial: $r_serial[$i] \\n Mobile: $r_mobile[$i] \\n Install Address: $r_install_address[$i] \\n Service Type: $r_dc[$i]',
+                                    start: '$prefer_start[$i]',
+                                    end: '$prefer_end[$i]',
+                                    backgroundColor: '#B83520',
+                                    },";
+                    }
                 }
-            }
-            @endphp
+                @endphp
 
-            @php
-            if($assigned_id != null)
-            {
-                for($i = 0; $i < count($assigned_id) ; $i++)
-                {
-                    echo "{
-                    id: '$assigned_id[$i]',
-                    title: 'Assigned Job ID: $assigned_id[$i] \\n Model: $a_model[$i] \\n Serial: $a_serial[$i] \\n Mobile: $a_mobile[$i] \\n Install Address: $a_install_address[$i] \\n Technician: $tech_name[$i] \\n Service Type: $a_dc[$i]',
-                    start: '$job_start[$i]',
-                    end: '$job_end[$i]',
-                    backgroundColor: '#005aa4',
-                    },";
-
+                @php
+                if ($assigned_id != null) {
+                    for ($i = 0; $i < count($assigned_id); $i++) {
+                        echo "{
+                                    id: '$assigned_id[$i]',
+                                    title: 'Assigned Job ID: $assigned_id[$i] \\n Model: $a_model[$i] \\n Serial: $a_serial[$i] \\n Mobile: $a_mobile[$i] \\n Install Address: $a_install_address[$i] \\n Technician: $tech_name[$i] \\n Service Type: $a_dc[$i]',
+                                    start: '$job_start[$i]',
+                                    end: '$job_end[$i]',
+                                    backgroundColor: '#005aa4',
+                                    },";
+                    }
                 }
-            }
-            @endphp
-        ],
-    });
+                @endphp
+            ],
+        });
 
-    calendar.render();
+        calendar.render();
     </script>
 @endpush
