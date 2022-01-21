@@ -71,32 +71,11 @@ class UserController extends Controller
     public function updateProfile(Request $request, User $user)
     {
         //
-        $attributes = $this->validateUserProfile($request->all());
+        $attributes = $this->validateUserProfile();
 
-        $user->update($request->all());
-        $auth = Auth::user();
+        $user->update($attributes);
 
-        if ($auth->role_id == 2) {
-            // if admin
-            switch ($user->role_id) {
-                case 1:
-                    return (new PagesController)->users();
-                    break;
-                case 2:
-                    return (new PagesController)->admins();
-                    break;
-                case 3:
-                    return (new PagesController)->technicians();
-                    break;
-
-                default:
-                    return $this->index();
-                    break;
-            }
-        } else if ($auth->role_id == 1) {
-            // if user
-            return redirect()->route("user.show", $auth);
-        }
+        return back();
     }
     public function updateRole(Request $request, User $user)
     {
@@ -144,10 +123,14 @@ class UserController extends Controller
 
 
 
-    protected function validateUserProfile($user)
+    protected function validateUserProfile()
     {
         return request()->validate([
             'name' => ['nullable'],
+            'email' => ['nullable'],
+            'mobile_number' => ['nullable'],
+            'state' => ['nullable'],
+            'postcode' => ['nullable'],
         ]);
     }
 
@@ -160,6 +143,9 @@ class UserController extends Controller
             'name' => ['nullable'],
             'email' => ['nullable'],
             'role_id' => ['nullable'],
+            'mobile_number' => ['nullable'],
+            'state' => ['nullable'],
+            'postcode' => ['nullable'],
             'email_verified_at' => ['nullable'],
             'password' => ['nullable'],
             'remember_token' => ['nullable'],

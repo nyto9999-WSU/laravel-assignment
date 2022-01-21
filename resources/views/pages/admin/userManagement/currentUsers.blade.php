@@ -43,23 +43,49 @@
                                         <div class="modal-body">
                                             <form action="{{ route('user.store') }}" method="POST">
                                                 @csrf
-                                                <div class="mb-3">
-                                                    <label for="name" class="col-form-label">User Name:</label>
-                                                    <input type="text" class="form-control" name="name">
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label for="email" class="col-form-label">Email:</label>
-                                                    <input type="text" class="form-control" name="email">
-                                                </div>
-                                                <div class="mb-3">
-
-                                                    <label for="role_id" class="col-form-label">User Name:</label>
-                                                    <select class="form-control" name="role_id">
-                                                        <option disabled selected value>Role</option>
-                                                        <option value="1">User</option>
-                                                        <option value="3">Technician</option>
-                                                        <option value="2">Admin</option>
-                                                    </select>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <label for="name" class="col-form-label">User Name:</label>
+                                                        <input type="text" class="form-control" name="name">
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <label for="role_id" class="col-form-label">User Name:</label>
+                                                        <select class="form-control" name="role_id">
+                                                            <option disabled selected value>Role</option>
+                                                            <option value="1">User</option>
+                                                            <option value="3">Technician</option>
+                                                            <option value="2">Admin</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <label for="email">Phone:</label>
+                                                        <input type="text" class="form-control" name="mobile_number" placeholder="Optional">
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <label for="email">Email:</label>
+                                                        <input type="text" class="form-control" name="email">
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label for="state">State</label>
+                                                        <select class="form-select" name="state" id="state">
+                                                            <<option disabled selected value>Optional</option>
+                                                            <option>NSW</option>
+                                                            <option>Victoria</option>
+                                                            <option>Queensland</option>
+                                                            <option>South Australia</option>
+                                                            <option>Western Australia</option>
+                                                            <option>Tasmania</option>
+                                                            <option>Northern Territory</option>
+                                                            <option>Australian Capital Territory</option>
+                                                        </select>
+                                                        <div class="invalid-feedback">
+                                                            Please provide a valid state.
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label for="email">Postcode:</label>
+                                                        <input type="text" class="form-control" name="postcode" placeholder="Optional">
+                                                    </div>
                                                 </div>
                                         </div>
                                         <div class="modal-footer">
@@ -144,7 +170,8 @@
                             <form action="{{ route('user.destroy', $user->id) }}" method="post">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" id="red" onclick="return confirm('Are you sure ? You want to delete this?')"
+                                <button type="submit" id="red"
+                                    onclick="return confirm('Are you sure ? You want to delete this?')"
                                     class="btn text-white"><i class="bi bi-trash"></i></button>
                             </form>
                         </td>
