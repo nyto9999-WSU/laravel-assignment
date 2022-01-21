@@ -105,16 +105,16 @@
         </form>
 
         <table class="table table-hover text-start mt-1">
-            <th id="blue" class="text-white">Model Number</th>
-            <th id="blue" class="text-white">Serial Number</th>
+            <th id="blue" class="text-white">Model/Serial</th>
             <th id="blue" class="text-white">Equipment Type</th>
+            <th id="blue" class="text-white">Install Address</th>
             <th id="blue" class="text-white">Issue</th>
             <th id="blue" class="text-white">Cancel</th>
             @forelse ($order->aircons as $aircon)
                 <tr>
-                    <td>{{ $aircon->model_number }}</td>
-                    <td>{{ $aircon->serial_number }}</td>
+                    <td>Model: {{ $aircon->model_number }} / Serial: {{ $aircon->serial_number }}</td>
                     <td>{{ $aircon->equipment_type }}</td>
+                    <td>{{ $aircon->install_address }}</td>
                     <td>{{ $aircon->issue }}</td>
                     <td>
                         <form action="{{ route('aircon.destroy', [$aircon, $order]) }}" method="post">
@@ -134,7 +134,11 @@
         <hr>
         <small>Pioneer International Pty. Ltd. will contact you to confirm the service booking.</small>
 
-        <a href="{{ route('aircon.mail', $order) }}" id="blue" class="w-100 btn btn-primary">Email</a>
+        @if (!count($order->jobs))
+            <a href="#" id="blue" class="w-100 btn btn-primary disabled" role="button" aria-disabled="true">Submit</a>
+        @else
+            <a href="{{ route('aircon.mail', $order) }}" id="blue" class="w-100 btn btn-primary">Submit</a>
+        @endif
     </div>
 
     <!--Footer-->
