@@ -126,11 +126,11 @@ class UserController extends Controller
     protected function validateUserProfile()
     {
         return request()->validate([
-            'name' => ['nullable'],
-            'email' => ['nullable'],
-            'mobile_number' => ['nullable'],
-            'state' => ['nullable'],
-            'postcode' => ['nullable'],
+            'name' => 'nullable|string',
+            'email' => 'nullable|string',
+            'mobile_number' => 'nullable|numeric',
+            'state' => 'nullable|string',
+            'postcode' => 'nullable|string',
         ]);
     }
 
@@ -140,15 +140,15 @@ class UserController extends Controller
         request()->merge(['remember_token' => Str::random(10)]);
 
         return request()->validate([
-            'name' => ['nullable'],
-            'email' => ['nullable'],
-            'role_id' => ['nullable'],
-            'mobile_number' => ['nullable'],
-            'state' => ['nullable'],
-            'postcode' => ['nullable'],
-            'email_verified_at' => ['nullable'],
-            'password' => ['nullable'],
-            'remember_token' => ['nullable'],
+            'name' => 'required|string',
+            'email' => 'nullable',
+            'role_id' => 'required',
+            'mobile_number' => 'nullable',
+            'state' => 'nullable',
+            'postcode' => 'nullable',
+            'email_verified_at' => 'nullable',
+            'password' => 'nullable',
+            'remember_token' => 'nullable',
 
         ]);
 

@@ -37,7 +37,7 @@ class CreateJobsTable extends Migration
             $table->string('other_type')->nullable();
             $table->string('domestic_commercial')->nullable();
             $table->string('install_address')->nullable();
-            $table->string('issue')->nullable();
+            $table->text('issue')->nullable();
 
             $table->timestamps();
         });

@@ -2,9 +2,6 @@
 
 @section('content')
     <div class="container-fluid">
-        <!-- <h1>Role: {{ Auth::user()->getRole() }}</h1> -->
-        <!-- <h1>currentOrder.blade(admin)</h1> -->
-
         <div class="row g-2 mx-2">
 
             <div class="col-3">
@@ -46,10 +43,10 @@
                                                 <div class="row">
                                                     <div class="col-md-12">
                                                         <label for="name" class="col-form-label">User Name:</label>
-                                                        <input type="text" class="form-control" name="name">
+                                                        <input type="text" class="form-control" name="name" oninvalid="setCustomValidity('User name is required');" required>
                                                     </div>
                                                     <div class="col-md-12">
-                                                        <label for="role_id" class="col-form-label">User Name:</label>
+                                                        <label for="role_id" class="col-form-label">Role:</label>
                                                         <select class="form-control" name="role_id">
                                                             <option disabled selected value>Role</option>
                                                             <option value="1">User</option>
@@ -63,7 +60,7 @@
                                                     </div>
                                                     <div class="col-md-12">
                                                         <label for="email">Email:</label>
-                                                        <input type="text" class="form-control" name="email">
+                                                        <input type="text" class="form-control" name="email" placeholder="Optional">
                                                     </div>
                                                     <div class="col-md-6">
                                                         <label for="state">State</label>

@@ -96,7 +96,7 @@ class NoteController extends Controller
     {
         if($request->ajax())
         {
-            $attributes = $this->validateAirCon();
+            $attributes = $this->validateNote();
 
             $job = Job::find($request->id);
             $job->notes()->create($attributes);
@@ -107,10 +107,10 @@ class NoteController extends Controller
 
     }
 
-    protected function validateAirCon()
+    protected function validateNote()
     {
         return request()->validate([
-            'description' => ['nullable'], //this only desc
+            'description' => 'nullable|string',
         ]);
     }
 }
