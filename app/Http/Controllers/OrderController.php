@@ -166,7 +166,9 @@ class OrderController extends Controller
 
     public function store(Request $request)
     {
+
         $attributes = $this->validateOrder();
+
         auth()->user()->orders()->create($attributes);
         $order = Order::where('user_id', '=', auth()->user()->id)
             ->orderBy('created_at', 'desc')
@@ -241,15 +243,16 @@ class OrderController extends Controller
     protected function validateOrder()
     {
         return request()->validate([
-            'name' => ['nullable'],
-            'email' => ['nullable'],
-            'mobile_number' => ['nullable'],
-            'address' => ['nullable'],
-            'state' => ['nullable'],
-            'suburb' => ['nullable'],
-            'postcode' => ['nullable'],
-            'extra_note' => ['nullable'],
-        ]);
+            'name' => 'required|string',
+            'email' => 'required|string',
+            'mobile_number' => 'required|numeric',
+            'address' => 'required|string',
+            'state' => 'required|string',
+            'suburb' => 'required|string',
+            'postcode' => 'required|string',
+            'extra_note' => 'nullable|string',
+        ],
+    );
     }
 
     protected function validateUpdateJob()
@@ -276,19 +279,19 @@ class OrderController extends Controller
         }
 
         return request()->validate([
-            'model_number' => ['nullable'],
-            'serial_number' => ['nullable'],
-            'install_address' => ['nullable'],
-            'equipment_type' => ['nullable'],
-            'domestic_commercial' => ['nullable'],
-            'prefer_date' => ['nullable'],
-            'prefer_time' => ['nullable'],
-            'issue' => ['nullable'],
-            'start_date' => ['nullable'],
-            'start_time' => ['nullable'],
-            'end_date' => ['nullable'],
-            'tech_name' => ['nullable'],
-            'status' => ['nullable'],
+            'model_number' => 'nullable|string',
+            'serial_number' => 'nullable|string',
+            'install_address' => 'nullable|string',
+            'equipment_type' => 'nullable|string',
+            'domestic_commercial' => 'nullable|string',
+            'prefer_date' => 'nullable',
+            'prefer_time' => 'nullable|string',
+            'issue' => 'nullable|string',
+            'start_date' => 'nullable',
+            'start_time' => 'nullable|string',
+            'end_date' => 'nullable',
+            'tech_name' => 'nullable|string',
+            'status' => 'nullable|string',
         ]);
     }
 
@@ -296,12 +299,12 @@ class OrderController extends Controller
     protected function validateUpdateAircon()
     {
         return request()->validate([
-            'model_number' => ['nullable'],
-            'serial_number' => ['nullable'],
-            'install_address' => ['nullable'],
-            'equipment_type' => ['nullable'],
-            'domestic_commercial' => ['nullable'],
-            'issue' => ['nullable'],
+            'model_number' => 'nullable|string',
+            'serial_number' => 'nullable|string',
+            'install_address' => 'nullable|string',
+            'equipment_type' => 'nullable|string',
+            'domestic_commercial' => 'nullable|string',
+            'issue' => 'nullable|string',
         ]);
     }
 }

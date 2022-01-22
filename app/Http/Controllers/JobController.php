@@ -30,6 +30,7 @@ class JobController extends Controller
         //
     }
 
+    /* Assign button in Assign job to technician */
     public function store(Job $job, Order $order)
     {
         $jobAttributes = $this->validateJob();
@@ -98,11 +99,11 @@ class JobController extends Controller
 
 
         return request()->validate([
-            'start_date' => ['nullable'],
-            'start_time' => ['nullable'],
-            'tech_name' => ['nullable'],
-            'status' => ['nullable'],
-            'assigned_at' => ['nullable'],
+            'start_date' => 'required|',
+            'start_time' => 'required|string',
+            'tech_name' => 'required|string',
+            'status' => 'required|string',
+            'assigned_at' => 'required|date',
         ]);
     }
 }

@@ -149,13 +149,13 @@ class AirConController extends Controller
         }
 
         return request()->validate([
-            'model_number' => ['required'],
-            'serial_number' => ['nullable'],
-            'equipment_type' => ['nullable'],
-            'other_type' => ['nullable'],
-            'domestic_commercial' => ['nullable'],
-            'install_address' => ['nullable'],
-            'issue' => ['nullable'],
+            'model_number' => 'required',
+            'serial_number' => 'required',
+            'equipment_type' => 'nullable',
+            'other_type' => 'nullable',
+            'domestic_commercial' => 'required|string',
+            'install_address' => 'required|string',
+            'issue' => 'nullable',
         ]);
     }
 
@@ -170,15 +170,15 @@ class AirConController extends Controller
             request()->merge(['prefer_date' => $prefer_date]);
         }
         return request()->validate([
-            'prefer_date' => ['nullable'],
-            'prefer_time' => ['nullable'],
-            'domestic_commercial' => ['nullable'],
-            'model_number' => ['nullable'],
-            'serial_number' => ['nullable'],
-            'equipment_type' => ['nullable'],
-            'other_type' => ['nullable'],
-            'install_address' => ['nullable'],
-            'issue' => ['nullable'],
+            'prefer_date' => 'required',
+            'prefer_time' => 'required',
+            'domestic_commercial' => 'required|string',
+            'model_number' => 'required|string',
+            'serial_number' => 'required|string',
+            'equipment_type' => 'nullable',
+            'other_type' => 'nullable',
+            'install_address' => 'required|string',
+            'issue' => 'nullable|string',
         ]);
     }
 }
