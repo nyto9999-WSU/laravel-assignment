@@ -16,7 +16,7 @@
             </div>
             
             <div class="card">
-                <div class="card-header">{{ __('Reset Password') }}</div>
+                <div class="card-header">{{ __('Please enter your email address') }}</div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -45,9 +45,12 @@
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
-                                    {{ __('Send Password Reset Link') }}
+                                    {{ __('Get new password') }}
+                                </button>  <button type="cancel" class="btn btn-secondary">
+                                    {{ __('Back to login') }}
                                 </button>
                             </div>
+                            
                         </div>
                     </form>
                 </div>
