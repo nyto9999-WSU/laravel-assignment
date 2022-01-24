@@ -1,62 +1,114 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
-        <div class="row justify-content-center">
-            <h1>Role: {{ Auth::user()->getRole() }}</h1>
-            <h1>showAirconDetails.blade</h1>
-            <div class="col-md-8">
-                <table>
-                    {{-- aircon_id --}}
-                    <tr>
-                        <th>ID</th>
-                        <td>{{ $job->id }}</td>
-                    </tr>
+<div class="container-fluid">
 
-                    {{-- model_number --}}
-                    <tr>
-                        <th>Model Number</th>
-                        <td>{{ $job->model_number }}</td>
-                    </tr>
-                    {{-- serial_number --}}
-                    <tr>
-                        <th>Serial Number</th>
-                        <td>{{ $job->serial_number }}</td>
-                    </tr>
+    <div class="row g-2 mx-2">
 
-                    {{-- equipment_type --}}
-                    <tr>
-                        <th>Equipment Type</th>
-                        <td>{{ $job->equipment_type }}</td>
-                    </tr>
-
-                    {{-- domestic_commercial --}}
-                    <tr>
-                        <th>Domestic Commercial</th>
-                        <td>{{ $job->domestic_commercial }}</td>
-                    </tr>
-
-                    {{-- install_address --}}
-                    <tr>
-                        <th>Install Address</th>
-                        <td>{{ $job->install_address }}</td>
-                    </tr>
-
-                    {{-- issue --}}
-                    <tr>
-                        <th>Issue</th>
-                        <td>{{ $job->issue }}</td>
-                    </tr>
-                    {{-- status --}}
-                    <tr>
-                        <th>Status</th>
-                        <td>{{ $job->status }}</td>
-                    </tr>
-
-                </table>
-            </div>
+        <div class="col-3">
+            <h2>AirconDetails</h2>
+                <small>The aircon details are shown in this page</small>
         </div>
+
+        <div class="col-6">
+
+        </div>
+
+        <div class="col-3 mt-3">
+            <input type="text" class="form-control" id="search" placeholder="Search past request">
+            <hr>
+        </div>
+
+
+        <div class="col-12 shadow-sm rounded border border-2">
+
+            <table class="table table-hover text-start mt-1">
+
+                <thead class="text-white">
+                    <tr id="red">
+                        <th>ID</th>
+                        <th>Model Number</th>
+                        <th>Serial Number</th>
+                        <th>Equipment Type</th>
+                        <th>Domestic / Commercial</th>
+                        <th>Install Address</th>
+                        <th>Issue</th>
+                        <th>Status</th>
+                        
+
+                    </tr>
+                </thead>
+                <tbody id="AirconDetails">            
+                                <tr>
+                                    
+
+                                    {{-- job_id --}}
+                                    <td>{{ $job->id }}</td>
+
+                                    {{-- model_number/serial_number --}}
+                                    <td>{{ $job->model_number }}</td>
+                                    <td>{{ $job->serial_number }}</td>
+
+                                    {{-- equipment_type --}}
+                                    <td>{{ $job->equipment_type }}</td>
+
+                                    
+                                    {{-- domestic_commercial --}}
+                                    <td>{{ $job->domestic_commercial }}</td>
+
+                                    {{-- install_address --}}
+                                    <td>{{ $job->install_address }}</td>
+
+
+
+                                    {{-- issue --}}
+                                    <td>{{ $job->issue }}</td>
+
+                                    {{-- status --}}
+                                    <td>{{ $job->status }}</td>
+
+                                </tr>
+                    
+                </tbody>
+
+            </table>
+
+        </div>
+        
+
+
+
+
+
+
+            
+    
     </div>
     </div>
-    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script>
+        $('#search').on('keyup', function() {
+            $value = $(this).val();
+            $.ajax({
+                type: 'get',
+                url: '/pages/order/search-requested-jobs',
+                data: {
+                    's': $value,
+                    status: 'booked'
+                },
+                success: function(data) {
+                    // console.log(data);
+                    $('#current_orders').html(data.html);
+                }
+            });
+        })
+    </script>
+    <script type="text/javascript">
+        $.ajaxSetup({
+            headers: {
+                'csrftoken': '{{ csrf_token() }}'
+            }
+        });
+    </script>
 @endsection
