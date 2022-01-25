@@ -215,7 +215,7 @@ class OrderController extends Controller
         $job->update($attributes);
         $aircon->update($attributes2);
 
-        return back();
+        return back()->with('message', 'Updated successfull');
     }
 
     /**

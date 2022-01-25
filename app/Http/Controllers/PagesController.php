@@ -126,7 +126,7 @@ class PagesController extends Controller
         if (auth()->user()->isAdmin()) {
             $orders = Order::with('aircons', 'user')
                 ->orderBy('created_at', 'desc')
-                ->paginate(7);
+                ->paginate(10);
             return view('pages.admin.order.currentOrder', compact('orders'));
         }
     }
@@ -136,7 +136,7 @@ class PagesController extends Controller
         if (auth()->user()->isAdmin()) {
             $orders = Order::with('aircons', 'user')
                 ->orderBy('created_at', 'desc')
-                ->paginate(7);
+                ->paginate(10);
             return view('pages.admin.order.assignedOrder', compact('orders'));
         }
     }
@@ -146,7 +146,7 @@ class PagesController extends Controller
         if (auth()->user()->isAdmin()) {
             $orders = Order::with('aircons', 'user')
                 ->orderBy('created_at', 'desc')
-                ->paginate(7);
+                ->paginate(10);
 
             return view('pages.admin.order.completedOrder', compact('orders'));
         }
@@ -155,20 +155,20 @@ class PagesController extends Controller
     public function admins()
     {
         $users = User::where('role_id', '=', 2)
-            ->paginate(9);
+            ->paginate(10);
 
         return view('pages.admin.userManagement.currentUsers', compact('users'));
     }
     public function technicians()
     {
         $users = User::where('role_id', '=', 3)
-            ->paginate(9);
+            ->paginate(10);
         return view('pages.admin.userManagement.currentUsers', compact('users'));
     }
     public function users()
     {
         $users = User::where('role_id', '=', 1)
-            ->paginate(9);
+            ->paginate(10);
         return view('pages.admin.userManagement.currentUsers', compact('users'));
     }
 
@@ -180,7 +180,7 @@ class PagesController extends Controller
                        ->select('users.*', 'authentication_log.login_at')
                        ->whereDate('login_at', '=', now())
                        ->orderBy('login_at', 'desc')
-                       ->paginate(9);
+                       ->paginate(10);
 
         return view('pages.admin.userManagement.loginHistory', compact('users'));
     }
@@ -192,7 +192,7 @@ class PagesController extends Controller
             ->select('users.*', 'authentication_log.login_at')
             ->whereBetween('login_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
             ->orderBy('login_at', 'desc')
-            ->paginate(9);
+            ->paginate(10);
 
         return view('pages.admin.userManagement.loginHistory', compact('users'));
     }

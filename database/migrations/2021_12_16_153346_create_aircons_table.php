@@ -15,12 +15,12 @@ class CreateAirconsTable extends Migration
     {
         Schema::create('aircons', function (Blueprint $table) {
             $table->id();
-            $table->string('model_number')->nullable();
-            $table->string('serial_number')->nullable();
-            $table->string('equipment_type')->nullable();
+            $table->string('model_number');
+            $table->string('serial_number');
+            $table->string('equipment_type');
             $table->string('other_type')->nullable();
-            $table->string('domestic_commercial')->nullable();
-            $table->string('install_address')->nullable();
+            $table->string('domestic_commercial');
+            $table->string('install_address');
             $table->string('issue')->nullable();
             $table->timestamps();
         });

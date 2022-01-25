@@ -44,14 +44,12 @@ class AirConController extends Controller
      */
     public function store(Request $request, Order $order)
     {
-
-        $order = Order::find($order->id);
-
-        $airconAtrr = $this->validateAirCon();
+        $airconAttr = $this->validateAirCon();
         $jobAttr = $this->validateJob();
+        $order = Order::findOrFail($order->id);
 
         /* create aircon */
-        $order->aircons()->create($airconAtrr);
+        $order->aircons()->create($airconAttr);
 
         /* create job */
         $latestAircon = $order->aircons()->latest()->first();
@@ -157,6 +155,8 @@ class AirConController extends Controller
             'install_address' => 'required|string',
             'issue' => 'nullable',
         ]);
+
+
     }
 
     protected function validateJob()
