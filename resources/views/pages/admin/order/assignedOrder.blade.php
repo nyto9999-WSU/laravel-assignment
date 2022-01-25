@@ -36,6 +36,7 @@
                             <th>Unit Address</th>
                             <th>Requested Date</th>
                             <th>Assigned Date</th>
+                            <th>Start Date</th>
                             <th>Type</th>
                             <th>Customer</th>
                             <th>Phone</th>
@@ -84,6 +85,9 @@
 
                                         {{-- assigned_date --}}
                                         <td>{{ date('d - M - Y h:iA', strtotime($job->assigned_at)) }}</td>
+
+                                        {{-- start date --}}
+                                        <td>{{ date('d - M - Y h:iA', strtotime($job->start_date)) }}</td>
 
                                         {{-- domestic_commercial --}}
                                         <td>{{ $job->domestic_commercial }}</td>
