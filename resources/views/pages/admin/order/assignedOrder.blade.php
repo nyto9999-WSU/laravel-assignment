@@ -3,35 +3,22 @@
 @section('content')
 
     <div class="container-fluid">
-      <form class="" action="{{route('order.print-all-order')}}" method="post" target="_blank">
-        @csrf
         <!-- <h1>Role: {{ Auth::user()->getRole() }}</h1> -->
         <!-- <h1>currentOrder.blade(admin)</h1> -->
 
         <div class="row g-2  mx-2">
 
-            <div class="col-4">
+            <div class="col-3">
                 <h2>Assigned Jobs</h1>
                     <small>All assigned service requests are shown in this page</small>
             </div>
 
-            <div class="col-2">
-              Start Date
-              <select class="form-control" name="start_date" id="start_date" onchange="mySearch()">
-                <option value="">All</option>
-                @if(!empty($start_date))
-                  @foreach($start_date as $s)
-                    <option value="{{$s}}">{{date('d - M - Y', strtotime($s))}}</option>
-                  @endforeach
-                @endif
-              </select>
-            </div>
-            <div class="col-2">
-              <button type="submit" style="margin-top:24px;" class="btn btn-success" name="button">Print All</button>
+            <div class="col-6">
+
             </div>
 
             <div class="col-3 mt-3">
-                <input type="text" class="form-control" onkeyup="mySearch()" id="search" placeholder="Search past request">
+                <input type="text" class="form-control" id="search" placeholder="Search past request">
                 <hr>
             </div>
 
@@ -64,7 +51,6 @@
                                     <tr>
                                         {{-- complete button --}}
                                         <td>
-                                          <input type="hidden" name="job_id[]" value="{{$order->id}}">
                                             <a href="{{ route('order.actions', [$order, 'job' => $job]) }}" id="blue"
                                               onclick="return confirm('Are you sure ? You want to mark this as completed?')"
                                                 class="btn text-white">
@@ -101,7 +87,7 @@
                                         <td>{{ date('d - M - Y h:iA', strtotime($job->assigned_at)) }}</td>
 
                                         {{-- start date --}}
-                                        <td>{{ date('d - M - Y', strtotime($job->start_date)) }}</td>
+                                        <td>{{ date('d - M - Y h:iA', strtotime($job->start_date)) }}</td>
 
                                         {{-- domestic_commercial --}}
                                         <td>{{ $job->domestic_commercial }}</td>
@@ -131,7 +117,7 @@
 
                         @empty
                             <tr>
-                                <td colspan="12" class=" text-center fw-bold">
+                                <td colspan="11" class=" text-center fw-bold">
                                     No Result
                                 </td>
                             </tr>
@@ -146,30 +132,27 @@
             </div>
 
         </div>
-  </form>
+
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script>
-        function mySearch()
-        {
-          var value = $("#search").val();
-          var start_date = $("#start_date option:selected").val();
-          $.ajax({
-              type: 'get',
-              url: '/pages/order/search-requested-jobs',
-              data: {
-                  s: value,
-                  start_date:start_date,
-                  status: 'assigned'
-              },
-              success: function(data) {
-                  // console.log(data);
-                  $('#current_orders').html(data.html);
-              }
-          });
-        }
+        $('#search').on('keyup', function() {
+            $value = $(this).val();
+            $.ajax({
+                type: 'get',
+                url: '/pages/order/search-requested-jobs',
+                data: {
+                    's': $value,
+                    status: 'assigned'
+                },
+                success: function(data) {
+                    // console.log(data);
+                    $('#current_orders').html(data.html);
+                }
+            });
+        })
     </script>
     <script type="text/javascript">
         $.ajaxSetup({
