@@ -24,21 +24,18 @@
                 {{-- model_number --}}
                 <div class="col-md-12">
                     <label for="model_number" class="form-label">Model Number</label>
-                    <input type="text" oninvalid="setCustomValidity('Model number is required');" required
-                        class="form-control" name="model_number" id="model_number">
+                    <input type="text" class="form-control" name="model_number" id="model_number" required>
                 </div>
 
                 {{-- serial_number --}}
                 <div class="col-md-12">
-                    <label for="serial_number" oninvalid="setCustomValidity('Serial number is required');" required
-                        class="form-label">Serial Number</label>
+                    <label for="serial_number" required class="form-label">Serial Number</label>
                     <input type="text" class="form-control" name="serial_number" id="serial_number"
-                        placeholder="eg: XGD78IJD7">
+                        placeholder="eg: XGD78IJD7" required>
                 </div>
                 {{-- equipment_type --}}
                 <div class="col-md-6">
-                    <label for="equipment_type" oninvalid="setCustomValidity('Equipment type is required');" required
-                        class="form-label">Equipment type</label>
+                    <label for="equipment_type" required class="form-label">Equipment type</label>
                     <select class="form-select" name="equipment_type" id="equipment_type">
                         <option value="">Choose...</option>
                         <option>Spilt System</option>
@@ -55,19 +52,17 @@
                     <input type="text" class="form-control" name="other_type" id="other_type" placeholder="Other....">
                 </div>
 
-                {{-- FIXME: --}}
                 {{-- prefer_date --}}
                 <div class="col-md-4">
                     <label for="prefer_date" class="form-label">Prefer Date</label>
-                    <input type="text" class="form-control" id="datepicker" name="prefer_date">
+                    <input type="text" class="form-control" id="datepicker" name="prefer_date" required>
                 </div>
 
 
                 {{-- prefer_time --}}
                 <div class="col-md-4">
                     <label for="prefer_time" class="form-label">Prefer Time</label>
-                    <select class="form-select" oninvalid="setCustomValidity('Prefer Time is required');" required
-                        name="prefer_time" id="prefer_time">
+                    <select class="form-select" name="prefer_time" id="prefer_time" required>
                         <option value="">Choose...</option>
                         <option>Morning</option>
                         <option>Afternoon</option>
@@ -79,8 +74,7 @@
                 {{-- domestic_commercial --}}
                 <div class="col-md-4">
                     <label for="domestic_commercial" class="form-label">Domestic / Commercial</label>
-                    <select class="form-select" oninvalid="setCustomValidity('this field is required');" required
-                        name="domestic_commercial" id="domestic_commercial">
+                    <select class="form-select" required name="domestic_commercial" id="domestic_commercial">
                         <option value="">Choose...</option>
                         <option>Domestic</option>
                         <option>Commercial</option>
@@ -90,8 +84,8 @@
                 {{-- install_address --}}
                 <div class="col-md-12">
                     <label for="install_address" class="form-label">Install Address</label>
-                    <input type="text" oninvalid="setCustomValidity('install address is required');" required
-                        class="form-control" name="install_address" id="install_address" placeholder="eg: king st.">
+                    <input type="text" required class="form-control" name="install_address" id="install_address"
+                        placeholder="eg: king st.">
                 </div>
 
                 {{-- issue --}}
@@ -100,7 +94,7 @@
                 <div class="description mb-1">
                     <label for="issue" class="form-label">What is wrong with the air conditioner?</label>
 
-                    <textarea oninvalid="setCustomValidity('issue is required');" required class="form-control"
+                    <textarea required class="form-control"
                         name="issue" id="issue" cols="30" rows="2"
                         placeholder="eg: It only works for 30 mins, and it gets hot again."></textarea>
                 </div>

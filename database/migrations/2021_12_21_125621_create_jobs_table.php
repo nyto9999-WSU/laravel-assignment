@@ -21,7 +21,7 @@ class CreateJobsTable extends Migration
                 ->constrained()
                 ->onDelete('cascade');
 
-            $table->date('prefer_date')->nullable();
+            $table->date('prefer_date');
             $table->string('prefer_time')->nullable();
             $table->date('start_date')->nullable();
             $table->string('start_time')->nullable();
@@ -30,13 +30,13 @@ class CreateJobsTable extends Migration
             $table->dateTime('assigned_at')->nullable();
 
             /* aircon attrs */
-            $table->string('aircon_id')->nullable();
-            $table->string('model_number')->nullable();
-            $table->string('serial_number')->nullable();
-            $table->string('equipment_type')->nullable();
+            $table->string('aircon_id');
+            $table->string('model_number');
+            $table->string('serial_number');
+            $table->string('equipment_type');
             $table->string('other_type')->nullable();
-            $table->string('domestic_commercial')->nullable();
-            $table->string('install_address')->nullable();
+            $table->string('domestic_commercial');
+            $table->string('install_address');
             $table->text('issue')->nullable();
 
             $table->timestamps();

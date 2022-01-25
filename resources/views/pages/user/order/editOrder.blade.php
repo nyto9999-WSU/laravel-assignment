@@ -20,12 +20,21 @@
             </div>
         </div>
 
+        {{-- msg --}}
+        @if (session()->has('message'))
+            <div class="col-md-12 alert alert-success">
+                <p class="msg"> {{ session()->get('message') }}</p>
+            </div>
+        @endif
+
         <form action="{{ route('order.update', [$order, $job]) }}" method="post">
             <div class="row g-2 mx-2 shadow-sm rounded border border-2 mt-2">
                 @csrf
                 @method('PATCH')
                 <div class="col-md-12 mt-1">
-                    <h6 id="aircon" class="ps-2 text-white fw-bold" style="height: 51px; padding-bottom:15px; padding-top:15px;">Aircon ID : {{ $job->aircon_id }}</h6>
+                    <h6 id="aircon" class="ps-2 text-white fw-bold"
+                        style="height: 51px; padding-bottom:15px; padding-top:15px;">Aircon ID : {{ $job->aircon_id }}
+                    </h6>
                 </div>
 
                 {{-- model --}}
@@ -50,7 +59,7 @@
                 <div class="col-md-6">
                     <label for="equipment_type">Equipment Type</label>
                     <select class="form-select" name="equipment_type">
-                        <option value="{{ $job->equipment_type }}">{{ $job->equipment_type }}</option>
+                        <option value="{{ $job->equipment_type }}">Current : {{ $job->equipment_type }}</option>
                         <option>Spilt System</option>
                         <option>Ducted System</option>
                         <option>Package unit</option>
@@ -63,7 +72,7 @@
                 <div class="col-md-6">
                     <label for="domestic_commercial" class="form-label m-0">Domestic / Commercial</label>
                     <select class="form-select" name="domestic_commercial" id="domestic_commercial">
-                        <option value="{{ $job->domestic_commercial }}">{{ $job->domestic_commercial }}</option>
+                        <option value="{{ $job->domestic_commercial }}">Current : {{ $job->domestic_commercial }}</option>
                         <option>Domestic</option>
                         <option>Commercial</option>
                     </select>
@@ -87,7 +96,7 @@
                 <div class="col-md-6">
                     <label for="prefer_time">Client {{ $order->name }} Prefer Time</label>
                     <select class="form-select w-100" name="prefer_time">
-                        <option value="{{ $job->prefer_time }}">{{ $job->prefer_time }}</option>
+                        <option value="{{ $job->prefer_time }}">Current : {{ $job->prefer_time }}</option>
                         <option>Morning</option>
                         <option>Afternoon</option>
                         <option>Evening</option>
@@ -103,7 +112,8 @@
                 @if ($job->status != 'booked')
                     {{-- title 2 --}}
                     <div class="col-md-12 m-0">
-                        <h6 id="job" class="ps-2 mt-2 text-white fw-bold" style="height: 51px; padding-bottom:15px; padding-top:15px;">Job ID : {{ $job->id }}</h6>
+                        <h6 id="job" class="ps-2 mt-2 text-white fw-bold"
+                            style="height: 51px; padding-bottom:15px; padding-top:15px;">Job ID : {{ $job->id }}</h6>
                     </div>
 
                     <div class="col-md-6">
@@ -220,5 +230,10 @@
                 break
         }
     </script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.alert-success').fadeIn().delay(1000).fadeOut();
+        });
+    </script>
 @endpush
