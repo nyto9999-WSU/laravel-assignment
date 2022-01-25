@@ -197,6 +197,12 @@ class OrderController extends Controller
         return view('pages.admin.order.print-order', compact('order', 'technician'));
     }
 
+    public function printAllOrder(Request $request)
+    {
+        $order_p = Order::whereIn('id', $request->job_id)->get();
+        return view('pages.admin.order.print-all-order', compact('order_p'));
+    }
+
 
 
     public function edit(Order $order, Job $job)
