@@ -117,7 +117,7 @@
 
                                         {{-- TODO: Print --}}
                                         <td>
-                                            <a href="{{ route('order.printOrder', $order->id) }}" id="blue"
+                                            <a href="{{ route('order.printOrder', [$order, $job]) }}" id="blue"
                                                 class="btn btn-primary">
                                                 <i class="bi bi-printer"></i>
                                             </a>

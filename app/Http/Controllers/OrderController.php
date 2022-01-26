@@ -189,14 +189,11 @@ class OrderController extends Controller
     }
 
 
-    public function printOrder($order)
+    public function printOrder(Order $order, Job $job)
     {
         abort_unless(auth()->user()->isAdmin(), 403);
 
-        $order = Order::find($order);
-        $technician = $order->getTechnician();
-
-        return view('pages.admin.order.print-order', compact('order', 'technician'));
+        return view('pages.admin.order.print-order', compact('order', 'job'));
     }
 
 

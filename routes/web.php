@@ -42,7 +42,7 @@ Route::resource('order', OrderController::class)->except(['edit', 'update']);
 
 
 // print order route
-Route::get('/print-order/{id?}', [OrderController::class, 'printOrder'])->name('order.printOrder');
+Route::get('/print-order/{order}/job{job}', [OrderController::class, 'printOrder'])->name('order.printOrder');
 Route::post('/print-all', [OrderController::class, 'printAllOrder'])->name('order.print-all-order');
 
 
