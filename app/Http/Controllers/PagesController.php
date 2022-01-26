@@ -22,6 +22,7 @@ class PagesController extends Controller
     // function for search admin jobs
     public function searchRequestedJobs(Request $attr)
     {
+
         if (auth()->user()->isAdmin()) {
 
           if($attr->status == 'booked')
@@ -52,24 +53,39 @@ class PagesController extends Controller
 
           if($attr->status == 'assigned')
           {
-            $value = $attr->s;
-            $aircons = Aircon::where('model_number', 'like', "%$value%")->pluck('id');
-            $order_ids = AirconOrder::wherein('aircon_id', $aircons)->pluck('order_id');
-            $orders = Order::with('aircons', 'user');
-
-            $job_order = Job::where('id', $value)->orWhere('tech_name', 'like', "%$value%")->pluck('order_id');
-            if(!empty($job_order))
+            $start_date = $attr->start_date;
+            if(!empty($start_date))
             {
-              for($x=0;$x<count($job_order); $x++)
-              {
-                $order_ids->push($job_order);
-              }
+              $orders = Order::with('aircons', 'user');
+              $order_ids = Job::where('start_date', 'like', "%$start_date%")->pluck('order_id');
+              $orders =  $orders->where(function ($query2) use ($order_ids) {
+                  $query2->whereIn('id', $order_ids);
+              })->orderBy('created_at', 'desc')->get();
             }
-            $orders =  $orders->where(function ($query2) use ($value, $order_ids) {
-                $query2->where('name', 'like', "%$value%")
-                    ->orWhereIn('id', $order_ids)
-                    ->orWhere('mobile_number', 'like', "%$value%");
-            })->orderBy('created_at', 'desc')->get();
+            else
+            {
+              $value = $attr->s;
+              $aircons = Aircon::where('model_number', 'like', "%$value%")->pluck('id');
+              $order_ids = AirconOrder::wherein('aircon_id', $aircons)->pluck('order_id');
+              $orders = Order::with('aircons', 'user');
+
+              $job_order = Job::where('id', 'like', "%$value%")->orWhere('tech_name', 'like', "%$value%")->pluck('order_id');
+              // dd($job_order);
+              if(!empty($job_order))
+              {
+                for($x=0;$x<count($job_order); $x++)
+                {
+                  $order_ids->push($job_order);
+                }
+              }
+              // dd($order_ids);
+              $orders =  $orders->where(function ($query2) use ($value, $order_ids) {
+                  $query2->where('name', 'like', "%$value%")
+                      ->orWhereIn('id', $order_ids)
+                      ->orWhere('mobile_number', 'like', "%$value%");
+              })->orderBy('created_at', 'desc')->get();
+            }
+
 
             return response()->json([
                 'statusCode' => 200,
@@ -137,7 +153,8 @@ class PagesController extends Controller
             $orders = Order::with('aircons', 'user')
                 ->orderBy('created_at', 'desc')
                 ->paginate(10);
-            return view('pages.admin.order.assignedOrder', compact('orders'));
+                $start_date = Job::distinct()->where('status', 'assigned')->pluck('start_date');
+          return view('pages.admin.order.assignedOrder', compact(['orders', 'start_date']));
         }
     }
 

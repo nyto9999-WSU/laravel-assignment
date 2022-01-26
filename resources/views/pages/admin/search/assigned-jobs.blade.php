@@ -4,6 +4,7 @@
             <tr>
                 {{-- complete button --}}
                 <td>
+                  <input type="hidden" name="job_id[]" value="{{$order->id}}">
                     <a href="{{ route('order.actions', [$order, 'job' => $job]) }}" id="blue"
                       onclick="return confirm('Are you sure ? You want to mark this as completed?')"
                         class="btn text-white">
@@ -38,6 +39,9 @@
 
                 {{-- assigned_date --}}
                 <td>{{ date('d - M - Y h:iA', strtotime($job->assigned_at)) }}</td>
+
+                {{-- start date --}}
+                <td>{{ date('d - M - Y', strtotime($job->start_date)) }}</td>
 
                 {{-- domestic_commercial --}}
                 <td>{{ $job->domestic_commercial }}</td>
