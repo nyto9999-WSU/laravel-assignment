@@ -31,7 +31,7 @@ class JobController extends Controller
     }
 
     /* Assign button in Assign job to technician */
-    public function store(Order $order, Job $job)
+    public function store(Job $job, Order $order)
     {
 
         $jobAttributes = $this->validateJob();
