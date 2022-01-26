@@ -38,6 +38,7 @@ class OrderController extends Controller
 
     public function actions(Order $order, Job $job)
     {
+
         switch ($job->status) {
 
             case 'booked':
@@ -73,11 +74,11 @@ class OrderController extends Controller
                 }
 
                 /* Requested Job */
-                foreach ($requestedJob as $job) {
+                foreach ($requestedJob as $j) {
 
                     // $created = $order->created_at->format('d-M');
-                    $p_date = $job->prefer_date;
-                    switch ($job->prefer_time) {
+                    $p_date = $j->prefer_date;
+                    switch ($j->prefer_time) {
                         case 'Morning':
                             $s = "09:00:00";
                             $e = "12:00:00";
@@ -96,21 +97,21 @@ class OrderController extends Controller
                             $e = "18:00:00";
                             break;
                     }
-                    $requested_id[] = $job->id;
-                    $r_model[] = $job->model_number;
-                    $r_serial[] = $job->serial_number;
-                    $r_mobile[] = $job->mobile_number;
-                    $r_install_address[] = $job->install_address;
-                    $r_dc[] = $job->domestic_commercial;
+                    $requested_id[] = $j->id;
+                    $r_model[] = $j->model_number;
+                    $r_serial[] = $j->serial_number;
+                    $r_mobile[] = $j->mobile_number;
+                    $r_install_address[] = $j->install_address;
+                    $r_dc[] = $j->domestic_commercial;
                     $prefer_start[] = "${p_date}T${s}";
                     $prefer_end[] = "${p_date}T${e}";
                     // $created_at[] = "${created}";
                 }
 
-                /* Assigned Job */
-                foreach ($assignedJob as $job) {
-                    $j_date = $job->start_date;
-                    switch ($job->start_time) {
+                /* Assigned j */
+                foreach ($assignedJob as $j) {
+                    $j_date = $j->start_date;
+                    switch ($j->start_time) {
                         case 'Morning':
                             $js = "09:00:00";
                             $je = "12:00:00";
@@ -129,16 +130,18 @@ class OrderController extends Controller
                             $je = "18:00:00";
                             break;
                     }
-                    $assigned_id[] = $job->id;
-                    $a_model[] = $job->model_number;
-                    $a_serial[] = $job->serial_number;
-                    $a_mobile[] = $job->mobile_number;
-                    $a_install_address[] = $job->install_address;
-                    $tech_name[] = $job->tech_name;
-                    $a_dc[] = $job->domestic_commercial;
+                    $assigned_id[] = $j->id;
+                    $a_model[] = $j->model_number;
+                    $a_serial[] = $j->serial_number;
+                    $a_mobile[] = $j->mobile_number;
+                    $a_install_address[] = $j->install_address;
+                    $tech_name[] = $j->tech_name;
+                    $a_dc[] = $j->domestic_commercial;
                     $job_start[] = "${j_date}T${js}";
                     $job_end[] = "${j_date}T${je}";
                 }
+
+
                 return view('pages.admin.job.assignJobToTechnician', compact('order', 'job', 'technicians', 'aircon',
                 'requested_id','r_model', 'r_serial','prefer_start','prefer_end','r_install_address', 'r_mobile', 'r_dc',
                 'assigned_id','a_model','a_serial','job_start', 'job_end', 'a_install_address', 'tech_name','a_mobile', 'a_dc'));
