@@ -158,7 +158,6 @@
                                     {{ $note->description }}
                                 </li>
                             @empty
-                                N/A
                             @endforelse
                         @empty
 
