@@ -48,7 +48,7 @@
                                     <tr>
                                         {{-- assign button --}}
                                         <td>
-                                            <a href="{{ route('order.actions', [$order, 'job' => $job]) }}" id="red"
+                                            <a href="{{ route('order.actions', [$order, $job]) }}" id="red"
                                                 class="btn text-white">
                                                 <i id="id=" blue"" class="bi bi-pen"></i>
                                             </a>
