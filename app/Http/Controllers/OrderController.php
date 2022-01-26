@@ -180,9 +180,7 @@ class OrderController extends Controller
 
     public function show($id, Job $job)
     {
-        // abort_unless($order->user_id == auth()->id() || auth()->user()->isAdmin(), 403);
-
-        // $technician = $order->getTechnician();
+        abort_unless($order->user_id == auth()->id() || auth()->user()->isAdmin(), 403);
 
         return view('pages.user.order.showOrder', compact('order', 'technician'));
     }
@@ -190,7 +188,8 @@ class OrderController extends Controller
 
     public function printOrder($order)
     {
-        // abort_unless($order->user_id == auth()->id() || auth()->user()->isAdmin(), 403);
+        abort_unless(auth()->user()->isAdmin(), 403);
+
         $order = Order::find($order);
         $technician = $order->getTechnician();
 
@@ -226,18 +225,7 @@ class OrderController extends Controller
      */
     public function destroy(Order $order)
     {
-        // if($order->relation)
-        // {
 
-        //     $order->job()->delete();
-        // }
-
-        // $order->aircons->each->delete();
-
-        // $order->delete();
-
-
-        // return back();
     }
 
     protected function validateOrder()
