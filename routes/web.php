@@ -42,6 +42,7 @@ Route::resource('order', OrderController::class)->except(['edit', 'update']);
 
 // print order route
 Route::get('/print-order/{order}/job{job}', [OrderController::class, 'printOrder'])->name('order.printOrder');
+
 Route::post('/print-all', [OrderController::class, 'printAllOrder'])->name('order.print-all-order');
 
 
@@ -90,4 +91,3 @@ Route::resource('note', NoteController::class)->except(['store']);
 
 // search route for roles and permission on the admin side
 Route::get('/admin/role-permission-search', [UserController::class, 'SearchUser']);
-

@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
     <div class="container-fluid">
         <div class="row g-2 mx-2">
 
@@ -164,12 +165,10 @@
 
                         {{-- delete button --}}
                         <td>
-                            <form action="{{ route('user.destroy', $user->id) }}" method="post">
+                            <form id="delete-form_{{$user->id}}" action="{{ route('user.destroy', $user->id) }}" method="post">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" id="red"
-                                    onclick="return confirm('Are you sure ? You want to delete this?')"
-                                    class="btn text-white"><i class="bi bi-trash"></i></button>
+                                <button type="button" user="{{$user->id}}" id="red" class="twitter btn text-white"><i class="bi bi-trash"></i></button>
                             </form>
                         </td>
 
@@ -195,9 +194,9 @@
 
 
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script>
         $('#search').on('keyup', function() {
             $value = $(this).val();
@@ -221,5 +220,23 @@
                 'csrftoken': '{{ csrf_token() }}'
             }
         });
+    </script>
+
+    <script type="text/javascript">
+    $('.twitter').confirm({
+      title: 'Are you sure?',
+      content: 'Do you want to delete this user?',
+      buttons: {
+        Yes: function(){
+          var user = this.$target.attr('user');
+          $("#delete-form_"+user).submit();
+        },
+        No: {
+          text: 'No', // With spaces and symbols
+          action: function () {
+          }
+        }
+      }
+    });
     </script>
 @endsection

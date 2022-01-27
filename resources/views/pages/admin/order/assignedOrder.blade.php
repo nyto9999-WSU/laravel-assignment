@@ -2,6 +2,7 @@
 
 @section('content')
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
     <div class="container-fluid" id="current_orders">
 
 
@@ -21,7 +22,7 @@
                         @csrf
                     <div class="input-group mt-2">
 
-                        <select class="form-select" name="start_date" id="start_date" onchange="mySearch()">
+                        <select class="form-select" name="start_date" id="start_date">
                             <option value="">All</option>
                             @if (!empty($start_date))
                                 @foreach ($start_date as $s)
@@ -81,8 +82,8 @@
                                     <td>
                                         <input type="hidden" name="job_id[]" value="{{ $job->order->id }}">
                                         <a href="{{ route('order.actions', [$job->order, 'job' => $job]) }}" id="blue"
-                                            onclick="return confirm('Are you sure ? You want to mark this as completed?')"
-                                            class="btn text-white">
+
+                                            class="twitter btn text-white">
                                             <i class="bi bi-check2"></i>
                                         </a>
                                     </td>
@@ -160,4 +161,22 @@
             </div>
         </form>
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+    <script type="text/javascript">
+    $('a.twitter').confirm({
+      title: 'Are you sure?',
+         content: 'Do you want to complete this job?',
+        buttons: {
+            Yes: function(){
+                location.href = this.$target.attr('href');
+            },
+            No: {
+            text: 'Cancel', // With spaces and symbols
+            action: function () {
+            }
+        }
+        }
+    });
+    </script>
 @endsection
