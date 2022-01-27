@@ -40,14 +40,13 @@ Route::patch('order/{order}/job/{job}/update', [OrderController::class, 'update'
 Route::resource('order', OrderController::class)->except(['edit', 'update']);
 
 
-
 // print order route
 Route::get('/print-order/{order}/job{job}', [OrderController::class, 'printOrder'])->name('order.printOrder');
 Route::post('/print-all', [OrderController::class, 'printAllOrder'])->name('order.print-all-order');
 
 
 /* Aircon */
-Route::get('/aircon/{id}/order{order}', [AirConController::class, 'show'])->name('aircon.show');
+Route::get('/aircon/{id}/job{job}', [AirConController::class, 'show'])->name('aircon.show');
 Route::get('/airconall/order{order}/', [AirConController::class, 'showAll'])->name('aircon.showAll');
 Route::post('/aircon/order/{order}', [AirConController::class, 'store'])->name('aircon.store');
 Route::delete('/aircon/delete/{aircon}/order{order}', [AirConController::class, 'destroy'])->name('aircon.destroy');
@@ -55,6 +54,10 @@ Route::resource('aircon', AirConController::class)->except(['store', 'show', 'de
 Route::get('/aircon/order{order}/email', [AirConController::class, 'sendMail'])->name('aircon.mail');
 /* Job */
 Route::post('/job/{job}/order/{order}', [JobController::class, 'store'])->name('job.store');
+Route::get('/job/current-job-search', [JobController::class, 'currentJobSearch']);
+Route::get('/job/assigned-job-search', [JobController::class, 'assignedJobSearch']);
+Route::get('/job/completed-job-search', [JobController::class, 'completedJobSearch']);
+Route::get('/job/customer-job-search', [JobController::class, 'customerJobSearch']);
 Route::resource('job', JobController::class)->except(['store']);
 
 /* User */
@@ -75,12 +78,9 @@ Route::get('/pages/order/assigned', [PagesController::class, 'orderAssigned'])->
 Route::get('/pages/order/completed', [PagesController::class, 'orderCompleted'])->name('pages.orderCompleted');
 Route::get('/pages/login-history', [PagesController::class, 'loginHistory'])->name('pages.loginHistory');
 Route::get('/pages/login-history/search', [PagesController::class, 'loginSearch'])->name('pages.loginSearch');
+Route::get('/pages/success-msg-page,', [PagesController::class, 'successPage'])->name('pages.successPage');
 
-// search  route for all 3 jobs for admin
-Route::get('/pages/order/search-requested-jobs', [PagesController::class, 'searchRequestedJobs']);
 
-// search route for requested history for user
-Route::get('/pages/order/search-request-history', [PagesController::class, 'searchRequesteHistory']);
 
 
 /* Admin Extra note */
@@ -91,4 +91,3 @@ Route::resource('note', NoteController::class)->except(['store']);
 // search route for roles and permission on the admin side
 Route::get('/admin/role-permission-search', [UserController::class, 'SearchUser']);
 
-/* login history */

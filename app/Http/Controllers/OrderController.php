@@ -2,15 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Aircon;
+use App\Models\Job;
 use App\Models\Order;
 use App\Models\User;
-use App\Models\Job;
-use DB;
+use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
-
-use function PHPUnit\Framework\isNull;
 
 class OrderController extends Controller
 {
@@ -23,18 +20,20 @@ class OrderController extends Controller
     {
 
         if (auth()->user()->isAdmin()) {
-            $orders = Order::with('aircons', 'user')->paginate(10);
+            $jobs = Job::paginate(10);
 
-            return view('pages.admin.order.currentOrder', compact('orders'));
+            return view('pages.admin.order.currentOrder', compact('jobs'));
         }
 
         //role user
-        $orders = Order::with('aircons', 'user')
-            ->where('user_id', auth()->id())
-            ->paginate(10);
-        return view('pages.user.order.currentOrder', compact('orders'));
-    }
+        $jobs = Job::join('orders', 'jobs.order_id', '=', 'orders.id')
+                    ->select('jobs.*', 'orders.user_id')
+                    ->where('user_id', '=', auth()->user()->id)
+                    ->orderBy('created_at', 'desc')
+                    ->paginate(2);
 
+        return view('pages.user.order.currentOrder', compact('jobs'));
+    }
 
     public function actions(Order $order, Job $job)
     {
@@ -141,16 +140,15 @@ class OrderController extends Controller
                     $job_end[] = "${j_date}T${je}";
                 }
 
-
                 return view('pages.admin.job.assignJobToTechnician', compact('order', 'job', 'technicians', 'aircon',
-                'requested_id','r_model', 'r_serial','prefer_start','prefer_end','r_install_address', 'r_mobile', 'r_dc',
-                'assigned_id','a_model','a_serial','job_start', 'job_end', 'a_install_address', 'tech_name','a_mobile', 'a_dc'));
+                    'requested_id', 'r_model', 'r_serial', 'prefer_start', 'prefer_end', 'r_install_address', 'r_mobile', 'r_dc',
+                    'assigned_id', 'a_model', 'a_serial', 'job_start', 'job_end', 'a_install_address', 'tech_name', 'a_mobile', 'a_dc'));
 
             case 'assigned':
 
                 $job->update([
-                    "status" =>  'completed',
-                    "end_date" => now()
+                    "status" => 'completed',
+                    "end_date" => now(),
                 ]);
 
                 return back();
@@ -180,14 +178,12 @@ class OrderController extends Controller
         return view('pages.user.order-aircons.addAircon', compact('order'));
     }
 
-
     public function show($id, Job $job)
     {
         abort_unless($order->user_id == auth()->id() || auth()->user()->isAdmin(), 403);
 
         return view('pages.user.order.showOrder', compact('order', 'technician'));
     }
-
 
     public function printOrder(Order $order, Job $job)
     {
@@ -196,20 +192,17 @@ class OrderController extends Controller
         return view('pages.admin.order.print-order', compact('order', 'job'));
     }
 
-
     public function printAllOrder(Request $request)
-       {
-           $order_p = Order::whereIn('id', $request->job_id)->get();
-           return view('pages.admin.order.print-all-order', compact('order_p'));
-       }
-
+    {
+        $order_p = Order::whereIn('id', $request->job_id)->get();
+        return view('pages.admin.order.print-all-order', compact('order_p'));
+    }
 
     public function edit(Order $order, Job $job)
     {
         $technicians = User::technicians()->get();
         return view('pages.user.order.editOrder', compact('order', 'job', 'technicians'));
     }
-
 
     public function update(Request $request, Order $order, Job $job)
     {
@@ -246,7 +239,7 @@ class OrderController extends Controller
             'postcode' => 'required|string',
             'extra_note' => 'nullable|string',
         ],
-    );
+        );
     }
 
     protected function validateUpdateJob()
@@ -288,7 +281,6 @@ class OrderController extends Controller
             'status' => 'nullable|string',
         ]);
     }
-
 
     protected function validateUpdateAircon()
     {

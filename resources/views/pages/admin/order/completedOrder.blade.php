@@ -3,8 +3,6 @@
 @section('content')
 
     <div class="container-fluid">
-        <!-- <h1>Role: {{ Auth::user()->getRole() }}</h1> -->
-        <!-- <h1>currentOrder.blade(admin)</h1> -->
 
         <div class="row g-2  mx-2">
 
@@ -18,7 +16,14 @@
             </div>
 
             <div class="col-3 mt-3">
-                <input type="text" class="form-control" id="search" placeholder="Search past request">
+                {{-- Search bar --}}
+                <form type="get" action="/job/completed-job-search">
+                    <div class="input-group mb-3">
+                        <input type="search" class="form-control mr-2" name="query" placeholder="Recipient's username"
+                            aria-label="Recipient's username" aria-describedby="button-addon2" value="">
+                        <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Search</button>
+                    </div>
+                </form>
                 <hr>
             </div>
 
@@ -41,58 +46,52 @@
                         </tr>
                     </thead>
                     <tbody id="current_orders">
-                        @forelse ($orders as $order)
-                            @forelse ($order->jobs as $job)
-                                @if ($job->status == 'completed')
-                                    <tr>
+                        @forelse ($jobs as $job)
+                            @if ($job->status == 'completed')
+                                <tr>
+                                    {{-- job->id --}}
+                                    <td>
+                                        <a href="{{ route('job.show', $job) }}">{{ $job->id }}</a>
+                                    </td>
 
-                                        {{-- order_id --}}
-                                        <td>
-                                            <a href="{{ route('job.show', $job) }}">{{ $job->id }}</a>
-                                        </td>
+                                    {{-- model_number --}}
+                                    <td>
+                                        <li>
+                                            <a href={{ route('aircon.show', ['id' => $job->aircon_id, $job->order]) }}>
+                                                Model: {{ $job->model_number }}
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href={{ route('aircon.show', ['id' => $job->aircon_id, $job->order]) }}>
+                                                Serial: {{ $job->serial_number }}
+                                            </a>
+                                        </li>
+                                    </td>
 
-                                        {{-- model_number --}}
-                                        <td>
-                                            <li>
-                                                <a href={{ route('aircon.show', ['id' => $job->aircon_id, $order]) }}>
-                                                    Model: {{ $job->model_number }}
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href={{ route('aircon.show', ['id' => $job->aircon_id, $order]) }}>
-                                                    Serial: {{ $job->serial_number }}
-                                                </a>
-                                            </li>
-                                        </td>
+                                    {{-- install_address --}}
+                                    <td>{{ $job->order->address }}</td>
 
-                                        {{-- install_address --}}
-                                        <td>{{ $order->address }}</td>
+                                    {{-- assigned_at --}}
+                                    <td class="">
+                                        {{ date('d - M - Y h:iA', strtotime($job->assigned_at)) }}</td>
 
-                                        {{-- assigned_at --}}
-                                        <td class="">
-                                            {{ date('d - M - Y h:iA', strtotime($job->assigned_at)) }}</td>
+                                    {{-- end_date --}}
+                                    <td class="text-success fw-bold">
+                                        {{ date('d - M - Y h:iA', strtotime($job->end_date)) }}</td>
 
-                                        {{-- end_date --}}
-                                        <td class="text-success fw-bold">
-                                            {{ date('d - M - Y h:iA', strtotime($job->end_date)) }}</td>
+                                    {{-- domestic_commercial --}}
+                                    <td>{{ $job->domestic_commercial }}</td>
 
-                                        {{-- domestic_commercial --}}
-                                        <td>{{ $job->domestic_commercial }}</td>
+                                    {{-- name --}}
+                                    <td>{{ $job->order->name }}</td>
 
-                                        {{-- name --}}
-                                        <td>{{ $order->name }}</td>
+                                    {{-- mobile_number --}}
+                                    <td>{{ $job->order->mobile_number }}</td>
 
-                                        {{-- mobile_number --}}
-                                        <td>{{ $order->mobile_number }}</td>
-
-                                        {{-- technician name --}}
-                                        <td>{{ $job->tech_name }}</td>
-                                    </tr>
-                                @endif
-
-                            @empty
-
-                            @endforelse
+                                    {{-- technician name --}}
+                                    <td>{{ $job->tech_name }}</td>
+                                </tr>
+                            @endif
 
                         @empty
                             <tr>
@@ -101,48 +100,19 @@
                                 </td>
                             </tr>
                         @endforelse
+
                     </tbody>
 
                 </table>
 
             </div>
             <div class="d-flex flex-row-reverse">
-                {!! $orders->links() !!}
+                {!! $jobs->links() !!}
             </div>
 
         </div>
 
     </div>
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    <script>
-        $('#search').on('keyup', function() {
-            $value = $(this).val();
-            $.ajax({
-                type: 'get',
-                url: '/pages/order/search-requested-jobs',
-                data: {
-                    's': $value,
-                    status: 'completed'
-                },
-                success: function(data) {
-                    // console.log(data);
-                    $('#current_orders').html(data.html);
-                }
-            });
-        })
-    </script>
-    <script type="text/javascript">
-        $.ajaxSetup({
-            headers: {
-                'csrftoken': '{{ csrf_token() }}'
-            }
-        });
-    </script>
-
-
-
 @endsection
 
 
