@@ -12,16 +12,85 @@ use Illuminate\Support\Carbon;
 class JobController extends Controller
 {
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    { }
+    public function currentJobSearch(Request $request)
+    {
+        $data = $request->all();
+        $query = $data['query'];
+        $jobs = Job::join('orders', 'jobs.order_id', '=', 'orders.id')
+                    ->select('jobs.*', 'orders.name')
+                    ->where('model_number', 'like', "%$query%")
+                    ->orWhere('serial_number', 'like', "%$query%")
+                    ->orWhere('name', 'like', "%$query%")
+                    ->orWhere('jobs.id', '=', $query)
+                    ->orderBy('created_at', 'desc')
+                    ->paginate(10);
+                    $jobs->appends(['query' => $query]);
+                    return view('pages.admin.order.currentOrder', compact(['jobs', 'query']));
+                }
 
-    /**
-     * Show the form for creating a new resource.
+                public function assignedJobSearch(Request $request)
+                {
+                    $data = $request->all();
+                    $query = $data['query'];
+                    $jobs = Job::join('orders', 'jobs.order_id', '=', 'orders.id')
+                    ->select('jobs.*', 'orders.name')
+                    ->where('model_number', 'like', "%$query%")
+                    ->orWhere('serial_number', 'like', "%$query%")
+                    ->orWhere('name', 'like', "%$query%")
+                    ->orWhere('tech_name', 'like', "%$query%")
+                    ->orWhere('jobs.id', '=', $query)
+                    ->orderBy('assigned_at', 'desc')
+                    ->paginate(10);
+
+                    $jobs->appends(['query' => $query]);
+                    return view('pages.admin.order.assignedOrder', compact(['jobs', 'query']));
+                }
+
+                public function completedJobSearch(Request $request)
+                {
+                    $data = $request->all();
+                    $query = $data['query'];
+                    $jobs = Job::join('orders', 'jobs.order_id', '=', 'orders.id')
+                    ->select('jobs.*', 'orders.name')
+                    ->where('model_number', 'like', "%$query%")
+                    ->orWhere('serial_number', 'like', "%$query%")
+                    ->orWhere('name', 'like', "%$query%")
+                    ->orWhere('tech_name', 'like', "%$query%")
+                    ->orWhere('jobs.id', '=', $query)
+                    ->orderBy('end_date', 'desc')
+                    ->paginate(10);
+                    $jobs->appends(['query' => $query]);
+                    return view('pages.admin.order.completedOrder', compact(['jobs', 'query']));
+                }
+
+                public function customerJobSearch(Request $request)
+                {
+                    $data = $request->all();
+                    $query = $data['query'];
+
+                    $jobs = Job::join('orders', 'jobs.order_id', '=', 'orders.id')
+                    ->select('jobs.*', 'orders.name', 'orders.user_id')
+                    ->where('model_number', 'like', "%$query%")
+                    ->orWhere('serial_number', 'like', "%$query%")
+                    ->orWhere('name', 'like', "%$query%")
+                    ->orWhere('tech_name', 'like', "%$query%")
+                    ->orWhere('jobs.id', '=', $query)
+                    ->orderBy('created_at', 'desc')
+                    ->paginate(10);
+                    $jobs->appends(['query' => $query]);
+                    return view('pages.user.order.currentOrder', compact(['jobs', 'query']));
+                }
+
+                /**
+                 * Display a listing of the resource.
+                 *
+                 * @return \Illuminate\Http\Response
+                 */
+                public function index()
+                { }
+
+                /**
+                 * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */

@@ -50,9 +50,14 @@
             <footer class="my-5 pt-5 text-muted text-center text-small">
                 <p class="mb-1">&copy; 2017–2022 Pioneer International</p>
                 <ul class="list-inline">
-                    <li class="list-inline-item"><a href="#">Privacy</a></li>
-                    <li class="list-inline-item"><a href="#">Terms</a></li>
-                    <li class="list-inline-item"><a href="#">About us</a></li>
+
+                    {{-- FIXME:  --}}
+                    <li class="list-inline-item"><a href="http://pioneerair.com.au/customercare/faq.php
+                        ">FAQ</a></li>
+                    <li class="list-inline-item"><a href="http://pioneerair.com.au/customercare/register.php
+                        ">Warranty</a></li>
+                    <li class="list-inline-item"><a href="http://pioneerair.com.au/customercare/index.php
+                        ">Contact us</a></li>
 
                 </ul>
             </footer>

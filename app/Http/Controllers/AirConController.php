@@ -3,17 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Mail\OrderMail;
-use Illuminate\Http\Request;
 use App\Models\Aircon;
 use App\Models\Job;
 use App\Models\Order;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\App;
-use PDF;
-use Illuminate\Support\Facades\Storage;
-
+use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
-use function Symfony\Component\String\b;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
+use PDF;
 
 class AirConController extends Controller
 {
@@ -44,21 +41,42 @@ class AirConController extends Controller
      */
     public function store(Request $request, Order $order)
     {
-        $airconAttr = $this->validateAirCon();
-        $jobAttr = $this->validateJob();
-        $order = Order::findOrFail($order->id);
 
-        /* create aircon */
-        $order->aircons()->create($airconAttr);
+        /* first aircon */
+        if ($order->jobs()->count() == 0) {
 
-        /* create job */
-        $latestAircon = $order->aircons()->latest()->first();
+            $airconAttr = $this->validateAirCon();
+            $jobAttr = $this->validateJob();
 
-        $job = $order->jobs()->create($jobAttr);
-        $job->update([
-            "aircon_id" => $latestAircon->id
-        ]);
+            /* create aircon */
+            $order->aircons()->create($airconAttr);
+            /* create job */
+            $latestAircon = $order->aircons()->latest()->first();
+            $job = $order->jobs()->create($jobAttr);
+            $job->update([
+                "aircon_id" => $latestAircon->id,
+            ]);
+        }
+        else {
+            $latestJob = $order->jobs()->latest()->first();
 
+            /* prevent resubmittion */
+            if ($request->model_number != $latestJob->model_number || $request->serial_number != $latestJob->serial_number) {
+                $airconAttr = $this->validateAirCon();
+                $jobAttr = $this->validateJob();
+
+                /* create aircon */
+                $order->aircons()->create($airconAttr);
+
+                /* create job */
+                $latestAircon = $order->aircons()->latest()->first();
+
+                $job = $order->jobs()->create($jobAttr);
+                $job->update([
+                    "aircon_id" => $latestAircon->id,
+                ]);
+            }
+        }
 
         return view('pages.user.order-aircons.addAircon', compact('order'));
     }
@@ -71,7 +89,7 @@ class AirConController extends Controller
 
         Mail::to('nyto9999@gmail.com')->send(new OrderMail($order, $filename));
 
-        return (new OrderController)->index();
+        return (new PagesController)->successPage();
     }
 
     /**
@@ -80,16 +98,13 @@ class AirConController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id, Order $order)
+    public function show($id, Job $job)
     {
-
-        abort_unless($order->user_id == auth()->id() || auth()->user()->isAdmin(), 403);
 
         $job = Job::find($id);
         return view('pages.user.order-aircons.showAirconDetails', compact('job'));
     }
 
-    /* TODO:Show all aircons details */
     public function showAll(Order $order)
     {
         $jobs = $order->jobs;
@@ -155,7 +170,6 @@ class AirConController extends Controller
             'install_address' => 'required|string',
             'issue' => 'nullable',
         ]);
-
 
     }
 

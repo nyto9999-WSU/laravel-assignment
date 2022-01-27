@@ -2,15 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Aircon;
-use App\Models\User;
-use App\Models\Role;
 use App\Models\Job;
-use App\Models\Order;
+use App\Models\Role;
+use App\Models\User;
 use Carbon\Carbon;
 use DB;
-use Rappasoft\LaravelAuthenticationLog\Models\AuthenticationLog;
+use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
@@ -32,8 +30,7 @@ class HomeController extends Controller
 
     public function index(Request $request)
     {
-        if(!auth()->user()->isAdmin())
-        {
+        if (!auth()->user()->isAdmin()) {
             return view('pages.user.order.addOrder');
         }
 
@@ -56,13 +53,12 @@ class HomeController extends Controller
         return view('home', compact('roles', 'monthlyJobChart', 'equipmentChart', 'todayJobChart', 'weeklyEffortChart'));
     }
 
-
-
     protected function getEquipmentQuantity($currentYear)
     {
         $type = array('ducted system', 'mini VRF', 'package unit', 'spilt system', 'watercool unit');
-        $equipmentChart = array();
+        $equipmentChart = null;
 
+        /* current year +- 1 */
         for ($y = $currentYear; $y >= $currentYear - 2; $y--) {
             $equipmentChart[] = $y;
 
@@ -80,7 +76,6 @@ class HomeController extends Controller
             $equipmentChart[] = $otherCount;
         }
 
-
         return $equipmentChart;
     }
 
@@ -89,13 +84,14 @@ class HomeController extends Controller
         $name = array();
 
         $job = DB::table('jobs')
-                ->whereBetween('jobs.assigned_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
-                ->where('status', '=', 'assigned')
-                ->get()
-                ->toArray();
+            ->whereBetween('jobs.assigned_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
+            ->where('status', '=', 'assigned')
+            ->orWhere('status', '=', 'completed')
+            ->get()
+            ->toArray();
 
         foreach ($job as $j) {
-            array_push($name,$j->tech_name);
+            array_push($name, $j->tech_name);
         }
 
         $weeklyEffort = array_count_values($name);
@@ -103,8 +99,7 @@ class HomeController extends Controller
 
         $weeklyEffortChart = array();
 
-        foreach($weeklyEffort as $key => $value)
-        {
+        foreach ($weeklyEffort as $key => $value) {
             $weeklyEffortChart[] = $key;
             $weeklyEffortChart[] = $value;
         }
@@ -115,7 +110,7 @@ class HomeController extends Controller
     protected function getMonthlyOrders($currentYear)
     {
 
-        $monthlyOrders = array();
+        $monthlyOrders = null;
         for ($m = 1; $m <= 12; $m++) {
             $count = Job::whereMonth('created_at', '=', $m)
                 ->whereYear('created_at', '=', $currentYear)
@@ -127,18 +122,17 @@ class HomeController extends Controller
     }
 
     protected function getOrderAssigneQuantity()
-    {   $orderAssignedRate = array();
+    {
+        $orderAssignedRate = null;
 
         $orderAssignedRate[] = Job::where('status', '=', 'booked')
-                                    ->count();
+            ->whereDate('created_at', Carbon::today())
+            ->count();
 
         $orderAssignedRate[] = Job::where('status', '=', 'assigned')
-                                    ->count();
+            ->whereDate('assigned_at', Carbon::today())
+            ->count();
 
-        if($orderAssignedRate[0] == 0 && $orderAssignedRate[1] == 0)
-        {
-            $orderAssignedRate = null;
-        }
         return $orderAssignedRate;
     }
 }

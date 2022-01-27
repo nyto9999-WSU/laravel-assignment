@@ -94,8 +94,7 @@
                 <div class="description mb-1">
                     <label for="issue" class="form-label">What is wrong with the air conditioner?</label>
 
-                    <textarea required class="form-control"
-                        name="issue" id="issue" cols="30" rows="2"
+                    <textarea required class="form-control" name="issue" id="issue" cols="30" rows="2"
                         placeholder="eg: It only works for 30 mins, and it gets hot again."></textarea>
                 </div>
             </div>
@@ -135,7 +134,9 @@
                 @endforelse
             </table>
             <small>Pioneer International Pty. Ltd. will contact you to confirm the service booking.</small>
-            <a href="{{ route('aircon.mail', $order) }}" type="button" id="blue" class="w-100 btn btn-primary">Submit</a>
+            <a href="{{ route('aircon.mail', $order) }}" type="button" id="blue"
+                class="sub w-100 btn btn-primary">Submit</a>
+
         @endif
     </div>
 
@@ -153,6 +154,13 @@
         $("#datepicker").datepicker({
             dateFormat: "dd-mm-yy",
             minDate: '0'
+        });
+    </script>
+    <script>
+        $(".sub").on("click", function() {
+            $(this).text("Processing");
+            $(this).addClass("disabled").prop("disabled", true);
+            $(this).append("<div class='spinner-border ms-2' style='width: 1rem; height: 1rem;'>")
         });
     </script>
 

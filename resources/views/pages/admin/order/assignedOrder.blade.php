@@ -2,9 +2,8 @@
 
 @section('content')
 
-    <div class="container-fluid">
-        <form class="" action="{{ route('order.print-all-order') }}" method="post" target="_blank">
-            @csrf
+    <div class="container-fluid" id="current_orders">
+
 
             <div class="row g-2  mx-2">
 
@@ -18,7 +17,10 @@
 
                 </div>
                 <div class="col-3">
+                    <form class="" action="{{ route('order.print-all-order') }}" method="post" target="_blank">
+                        @csrf
                     <div class="input-group mt-2">
+
                         <select class="form-select" name="start_date" id="start_date" onchange="mySearch()">
                             <option value="">All</option>
                             @if (!empty($start_date))
@@ -28,15 +30,23 @@
                             @endif
                         </select>
                         <div class="input-group-append">
-                                <button class="btn btn-outline-secondary"type="submit">Print</button>
+                            <button class="btn btn-outline-secondary" type="submit">Print</button>
                         </div>
                     </div>
+                    </form>
                 </div>
 
 
                 <div class="col-3 mt-3">
-                    <input type="text" class="form-control" onkeyup="mySearch()" id="search"
-                        placeholder="Search past request">
+                    {{-- Search bar --}}
+                    <form type="get" action="/job/assigned-job-search">
+                        <div class="input-group mb-3">
+                            <input type="search" class="form-control mr-2" name="query" placeholder="Recipient's username"
+                                aria-label="Recipient's username" aria-describedby="button-addon2"
+                                value="">
+                            <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Search</button>
+                        </div>
+                    </form>
                     <hr>
                 </div>
 
@@ -62,78 +72,73 @@
                                 <th>Print</th>
                             </tr>
                         </thead>
-                        <tbody id="current_orders">
-                            @forelse ($orders as $order)
-                                @forelse ($order->jobs as $job)
-                                    @if ($job->status == 'assigned')
-                                        <tr>
-                                            {{-- complete button --}}
-                                            <td>
-                                                <input type="hidden" name="job_id[]" value="{{ $order->id }}">
-                                                <a href="{{ route('order.actions', [$order, 'job' => $job]) }}" id="blue"
-                                                    onclick="return confirm('Are you sure ? You want to mark this as completed?')"
-                                                    class="btn text-white">
-                                                    <i class="bi bi-check2"></i>
-                                                </a>
-                                            </td>
+                        <tbody>
+                            @forelse ($jobs as $job)
+                                @if ($job->status == 'assigned')
 
-                                            {{-- job_id --}}
-                                            <td>
-                                                <a href="{{ route('job.show', $job) }}">{{ $job->id }}</a>
-                                            </td>
+                                <tr>
+                                    {{-- complete button --}}
+                                    <td>
+                                        <input type="hidden" name="job_id[]" value="{{ $job->order->id }}">
+                                        <a href="{{ route('order.actions', [$job->order, 'job' => $job]) }}" id="blue"
+                                            onclick="return confirm('Are you sure ? You want to mark this as completed?')"
+                                            class="btn text-white">
+                                            <i class="bi bi-check2"></i>
+                                        </a>
+                                    </td>
 
-                                            {{-- model_number --}}
-                                            <td>
-                                                <li>
-                                                    <a href={{ route('aircon.show', ['id' => $job->aircon_id, $order]) }}>
-                                                        Model: {{ $job->model_number }}
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a
-                                                        href={{ route('aircon.show', ['id' => $job->aircon_id, $order]) }}>
-                                                        Serial: {{ $job->serial_number }}
-                                                    </a>
-                                                </li>
-                                            </td>
+                                    {{-- job_id --}}
+                                    <td>
+                                        <a href="{{ route('job.show', $job) }}">{{ $job->id }}</a>
+                                    </td>
 
-                                            {{-- install_address --}}
-                                            <td>{{ $job->install_address }}</td>
+                                    {{-- model_number --}}
+                                    <td>
+                                        <li>
+                                            <a href={{ route('aircon.show', ['id' => $job->aircon_id, $job->order]) }}>
+                                                Model: {{ $job->model_number }}
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href={{ route('aircon.show', ['id' => $job->aircon_id, $job->order]) }}>
+                                                Serial: {{ $job->serial_number }}
+                                            </a>
+                                        </li>
+                                    </td>
 
-                                            {{-- requested_date --}}
-                                            <td>{{ date('d - M - Y h:iA', strtotime($order->created_at)) }}</td>
+                                    {{-- install_address --}}
+                                    <td>{{ $job->install_address }}</td>
 
-                                            {{-- assigned_date --}}
-                                            <td>{{ date('d - M - Y h:iA', strtotime($job->assigned_at)) }}</td>
+                                    {{-- requested_date --}}
+                                    <td>{{ date('d - M - Y h:iA', strtotime($job->order->created_at)) }}</td>
 
-                                            {{-- start date --}}
-                                            <td>{{ date('d - M - Y', strtotime($job->start_date)) }}</td>
+                                    {{-- assigned_date --}}
+                                    <td>{{ date('d - M - Y h:iA', strtotime($job->assigned_at)) }}</td>
 
-                                            {{-- domestic_commercial --}}
-                                            <td>{{ $job->domestic_commercial }}</td>
+                                    {{-- start date --}}
+                                    <td>{{ date('d - M - Y', strtotime($job->start_date)) }}</td>
 
-                                            {{-- name --}}
-                                            <td>{{ $order->name }}</td>
+                                    {{-- domestic_commercial --}}
+                                    <td>{{ $job->domestic_commercial }}</td>
 
-                                            {{-- mobile_number --}}
-                                            <td>{{ $order->mobile_number }}</td>
+                                    {{-- name --}}
+                                    <td>{{ $job->order->name }}</td>
 
-                                            {{-- extra_note --}}
-                                            <td>{{ $job->tech_name }}</td>
+                                    {{-- mobile_number --}}
+                                    <td>{{ $job->order->mobile_number }}</td>
 
-                                            {{-- TODO: Print --}}
-                                            <td>
-                                                <a href="{{ route('order.printOrder', [$order, $job]) }}" id="blue"
-                                                    class="btn btn-primary">
-                                                    <i class="bi bi-printer"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    @endif
+                                    {{-- extra_note --}}
+                                    <td>{{ $job->tech_name }}</td>
 
-                                @empty
-
-                                @endforelse
+                                    {{-- TODO: Print --}}
+                                    <td>
+                                        <a href="{{ route('order.printOrder', [$job->order, $job]) }}" id="blue"
+                                            class="btn btn-primary">
+                                            <i class="bi bi-printer"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                @endif
 
                             @empty
                                 <tr>
@@ -142,45 +147,17 @@
                                     </td>
                                 </tr>
                             @endforelse
+
                         </tbody>
 
                     </table>
 
                 </div>
                 <div class="d-flex flex-row-reverse">
-                    {!! $orders->links() !!}
+                    {!! $jobs->links() !!}
                 </div>
 
             </div>
         </form>
     </div>
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    <script>
-        function mySearch() {
-            var value = $("#search").val();
-            var start_date = $("#start_date option:selected").val();
-            $.ajax({
-                type: 'get',
-                url: '/pages/order/search-requested-jobs',
-                data: {
-                    s: value,
-                    start_date: start_date,
-                    status: 'assigned'
-                },
-                success: function(data) {
-                    // console.log(data);
-                    $('#current_orders').html(data.html);
-                }
-            });
-        }
-    </script>
-    <script type="text/javascript">
-        $.ajaxSetup({
-            headers: {
-                'csrftoken': '{{ csrf_token() }}'
-            }
-        });
-    </script>
 @endsection

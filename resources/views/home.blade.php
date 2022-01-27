@@ -28,7 +28,7 @@
                                 <div class="card-header">
                                     Weekly Completed Job
                                 </div>
-                                @if (count($weeklyEffortChart) != 0)
+                                @if ($weeklyEffortChart != null)
                                     <div id="weekly_completed_job" class=""></div>
                                 @else
                                     <div class="bg-white text-center" style="height: 199px">
@@ -143,7 +143,7 @@
             ]);
 
             var options = {
-                title:'test',
+                title:'',
                 colors : ['#EB9E00', '5F7C9E'],
                 pieHole: 0.4,
                 pieSliceText: 'none',
