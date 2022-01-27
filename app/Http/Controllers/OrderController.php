@@ -194,8 +194,15 @@ class OrderController extends Controller
 
     public function printAllOrder(Request $request)
     {
-        $order_p = Order::whereIn('id', $request->job_id)->get();
-        return view('pages.admin.order.print-all-order', compact('order_p'));
+      if(empty($request->start_date))
+      {
+        $jobs = Job::with('order')->where('status', 'assigned')->get();
+      }
+      else
+      {
+        $jobs = Job::with('order')->where('start_date', $request->start_date)->where('status', 'assigned')->get();
+      }
+        return view('pages.admin.order.print-all-order', compact('jobs'));
     }
 
     public function edit(Order $order, Job $job)
