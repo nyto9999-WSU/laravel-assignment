@@ -14,10 +14,7 @@
 
         </div>
 
-        <div class="col-3 mt-3">
-            <input type="text" class="form-control" id="search" placeholder="Search past request">
-            <hr>
-        </div>
+        
 
 
         <div class="col-12 shadow-sm rounded border border-2">
