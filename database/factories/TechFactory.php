@@ -14,12 +14,7 @@ class TechFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->name(),
-            'email' => $this->faker->unique()->safeEmail(),
-            'role_id' => 3,
-            'email_verified_at' => now(),
-            'password' => Hash::make('aaaa1111'),
-            'remember_token' => Str::random(10),
+            //
         ];
     }
 }

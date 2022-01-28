@@ -86,6 +86,7 @@ class AirConController extends Controller
         $filename = "order_" . time() . ".pdf";
         Storage::disk('public_pdf')->put($filename, $pdf->output());
 
+        $email = $order->user->email;
         Mail::to($email)->send(new OrderMail($order, $filename));
 
         return (new PagesController)->successPage();
@@ -99,7 +100,8 @@ class AirConController extends Controller
      */
     public function show($id, Job $job)
     {
-        abort_unless($id == auth()->id() || auth()->user()->isAdmin(), 403);
+        $userid = $job->order->user_id;
+        abort_unless($userid == auth()->id() || auth()->user()->isAdmin(), 403);
         return view('pages.user.order-aircons.showAirconDetails', compact('job'));
     }
 
