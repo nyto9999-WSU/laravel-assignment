@@ -44,12 +44,12 @@
                                                 <div class="row">
                                                     <div class="col-md-12">
                                                         <label for="name" class="col-form-label">User Name:</label>
-                                                        <input type="text" class="form-control" name="name" oninvalid="setCustomValidity('User name is required');" required>
+                                                        <input type="text" class="form-control" name="name" placeholder="" oninvalid="setCustomValidity('User name is required');" required>
                                                     </div>
                                                     <div class="col-md-12">
                                                         <label for="role_id" class="col-form-label">Role:</label>
                                                         <select class="form-control" name="role_id">
-                                                            <option disabled selected value>Role</option>
+                                                            <option disabled selected value>Required</option>
                                                             <option value="1">User</option>
                                                             <option value="3">Technician</option>
                                                             <option value="2">Admin</option>
@@ -188,39 +188,9 @@
         </div>
 
     </div>
-    </div>
 
-    </div>
-
-
-    </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
-
-    <script>
-        $('#search').on('keyup', function() {
-            $value = $(this).val();
-            $.ajax({
-                type: 'get',
-                url: '/pages/order/search-requested-jobs',
-                data: {
-                    's': $value,
-                    status: 'Booked'
-                },
-                success: function(data) {
-                    // console.log(data);
-                    $('#current_orders').html(data.html);
-                }
-            });
-        })
-    </script>
-    <script type="text/javascript">
-        $.ajaxSetup({
-            headers: {
-                'csrftoken': '{{ csrf_token() }}'
-            }
-        });
-    </script>
 
     <script type="text/javascript">
     $('.twitter').confirm({

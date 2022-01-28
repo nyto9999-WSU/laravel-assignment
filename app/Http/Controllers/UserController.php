@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Faker\Factory as Faker;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
+use Session;
 class UserController extends Controller
 {
     /**
@@ -75,7 +76,7 @@ class UserController extends Controller
 
         $user->update($attributes);
 
-        return back()->with('message', 'Updated successfull');
+        return $this->edit($user)->with('message', 'Updated successfull');
     }
     public function updateRole(Request $request, User $user)
     {

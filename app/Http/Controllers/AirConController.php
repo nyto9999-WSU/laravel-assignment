@@ -41,7 +41,6 @@ class AirConController extends Controller
      */
     public function store(Request $request, Order $order)
     {
-
         /* first aircon */
         if ($order->jobs()->count() == 0) {
 
@@ -87,7 +86,7 @@ class AirConController extends Controller
         $filename = "order_" . time() . ".pdf";
         Storage::disk('public_pdf')->put($filename, $pdf->output());
 
-        Mail::to('nyto9999@gmail.com')->send(new OrderMail($order, $filename));
+        Mail::to($email)->send(new OrderMail($order, $filename));
 
         return (new PagesController)->successPage();
     }
@@ -100,8 +99,7 @@ class AirConController extends Controller
      */
     public function show($id, Job $job)
     {
-
-        $job = Job::find($id);
+        abort_unless($id == auth()->id() || auth()->user()->isAdmin(), 403);
         return view('pages.user.order-aircons.showAirconDetails', compact('job'));
     }
 
@@ -147,9 +145,7 @@ class AirConController extends Controller
 
     public function destroy(Aircon $aircon, Order $order)
     {
-
-        $job_aircon = Aircon::find($aircon->id);
-        $job = Job::where('id', '=', $job_aircon->id);
+        $job = Job::where('id', '=', $aircon->id);
         $aircon->delete();
         $job->delete();
         return view('pages.user.order-aircons.addAircon', compact('order'));

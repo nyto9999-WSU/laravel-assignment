@@ -58,7 +58,7 @@ class HomeController extends Controller
         $type = array('ducted system', 'mini VRF', 'package unit', 'spilt system', 'watercool unit');
         $equipmentChart = null;
 
-        /* current year +- 1 */
+        /* current year and last two years */
         for ($y = $currentYear; $y >= $currentYear - 2; $y--) {
             $equipmentChart[] = $y;
 

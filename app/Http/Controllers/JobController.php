@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Job;
 use App\Models\Order;
 use App\Models\User;
-use App\Models\Job;
 use Illuminate\Http\Request;
-use DB;
 use Illuminate\Support\Carbon;
 
 class JobController extends Controller
@@ -17,80 +16,80 @@ class JobController extends Controller
         $data = $request->all();
         $query = $data['query'];
         $jobs = Job::join('orders', 'jobs.order_id', '=', 'orders.id')
-                    ->select('jobs.*', 'orders.name')
-                    ->where('model_number', 'like', "%$query%")
-                    ->orWhere('serial_number', 'like', "%$query%")
-                    ->orWhere('name', 'like', "%$query%")
-                    ->orWhere('jobs.id', '=', $query)
-                    ->orderBy('created_at', 'desc')
-                    ->paginate(10);
-                    $jobs->appends(['query' => $query]);
-                    return view('pages.admin.order.currentOrder', compact(['jobs', 'query']));
-                }
+            ->select('jobs.*', 'orders.name')
+            ->where('model_number', 'like', "%$query%")
+            ->orWhere('serial_number', 'like', "%$query%")
+            ->orWhere('name', 'like', "%$query%")
+            ->orWhere('jobs.id', '=', $query)
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+        $jobs->appends(['query' => $query]);
+        return view('pages.admin.order.currentOrder', compact(['jobs', 'query']));
+    }
 
-                public function assignedJobSearch(Request $request)
-                {
-                    $data = $request->all();
-                    $query = $data['query'];
-                    $jobs = Job::join('orders', 'jobs.order_id', '=', 'orders.id')
-                    ->select('jobs.*', 'orders.name')
-                    ->where('model_number', 'like', "%$query%")
-                    ->orWhere('serial_number', 'like', "%$query%")
-                    ->orWhere('name', 'like', "%$query%")
-                    ->orWhere('tech_name', 'like', "%$query%")
-                    ->orWhere('jobs.id', '=', $query)
-                    ->orderBy('assigned_at', 'desc')
-                    ->paginate(10);
+    public function assignedJobSearch(Request $request)
+    {
+        $data = $request->all();
+        $query = $data['query'];
+        $jobs = Job::join('orders', 'jobs.order_id', '=', 'orders.id')
+            ->select('jobs.*', 'orders.name')
+            ->where('model_number', 'like', "%$query%")
+            ->orWhere('serial_number', 'like', "%$query%")
+            ->orWhere('name', 'like', "%$query%")
+            ->orWhere('tech_name', 'like', "%$query%")
+            ->orWhere('jobs.id', '=', $query)
+            ->orderBy('assigned_at', 'desc')
+            ->paginate(10);
 
-                    $jobs->appends(['query' => $query]);
-                    return view('pages.admin.order.assignedOrder', compact(['jobs', 'query']));
-                }
+        $jobs->appends(['query' => $query]);
+        return view('pages.admin.order.assignedOrder', compact(['jobs', 'query']));
+    }
 
-                public function completedJobSearch(Request $request)
-                {
-                    $data = $request->all();
-                    $query = $data['query'];
-                    $jobs = Job::join('orders', 'jobs.order_id', '=', 'orders.id')
-                    ->select('jobs.*', 'orders.name')
-                    ->where('model_number', 'like', "%$query%")
-                    ->orWhere('serial_number', 'like', "%$query%")
-                    ->orWhere('name', 'like', "%$query%")
-                    ->orWhere('tech_name', 'like', "%$query%")
-                    ->orWhere('jobs.id', '=', $query)
-                    ->orderBy('end_date', 'desc')
-                    ->paginate(10);
-                    $jobs->appends(['query' => $query]);
-                    return view('pages.admin.order.completedOrder', compact(['jobs', 'query']));
-                }
+    public function completedJobSearch(Request $request)
+    {
+        $data = $request->all();
+        $query = $data['query'];
+        $jobs = Job::join('orders', 'jobs.order_id', '=', 'orders.id')
+            ->select('jobs.*', 'orders.name')
+            ->where('model_number', 'like', "%$query%")
+            ->orWhere('serial_number', 'like', "%$query%")
+            ->orWhere('name', 'like', "%$query%")
+            ->orWhere('tech_name', 'like', "%$query%")
+            ->orWhere('jobs.id', '=', $query)
+            ->orderBy('end_date', 'desc')
+            ->paginate(10);
+        $jobs->appends(['query' => $query]);
+        return view('pages.admin.order.completedOrder', compact(['jobs', 'query']));
+    }
 
-                public function customerJobSearch(Request $request)
-                {
-                    $data = $request->all();
-                    $query = $data['query'];
+    public function customerJobSearch(Request $request)
+    {
+        $data = $request->all();
+        $query = $data['query'];
 
-                    $jobs = Job::join('orders', 'jobs.order_id', '=', 'orders.id')
-                    ->select('jobs.*', 'orders.name', 'orders.user_id')
-                    ->where('model_number', 'like', "%$query%")
-                    ->orWhere('serial_number', 'like', "%$query%")
-                    ->orWhere('name', 'like', "%$query%")
-                    ->orWhere('tech_name', 'like', "%$query%")
-                    ->orWhere('jobs.id', '=', $query)
-                    ->orderBy('created_at', 'desc')
-                    ->paginate(10);
-                    $jobs->appends(['query' => $query]);
-                    return view('pages.user.order.currentOrder', compact(['jobs', 'query']));
-                }
+        $jobs = Job::join('orders', 'jobs.order_id', '=', 'orders.id')
+            ->select('jobs.*', 'orders.name', 'orders.user_id')
+            ->where('model_number', 'like', "%$query%")
+            ->orWhere('serial_number', 'like', "%$query%")
+            ->orWhere('name', 'like', "%$query%")
+            ->orWhere('tech_name', 'like', "%$query%")
+            ->orWhere('jobs.id', '=', $query)
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+        $jobs->appends(['query' => $query]);
+        return view('pages.user.order.currentOrder', compact(['jobs', 'query']));
+    }
 
-                /**
-                 * Display a listing of the resource.
-                 *
-                 * @return \Illuminate\Http\Response
-                 */
-                public function index()
-                { }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {}
 
-                /**
-                 * Show the form for creating a new resource.
+    /**
+     * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
@@ -143,7 +142,7 @@ class JobController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    { }
+    {}
 
     /**
      * Remove the specified resource from storage.
@@ -158,15 +157,13 @@ class JobController extends Controller
 
     protected function validateJob()
     {
-        if(isset(request()->start_date))
-        {
+        if (isset(request()->start_date)) {
             $start_date = Carbon::createFromFormat('d-m-Y', request()->start_date)->format('Y-m-d');
             request()->merge(['start_date' => $start_date]);
         }
 
         request()->merge(['status' => 'assigned']);
         request()->merge(['assigned_at' => now()]);
-
 
         return request()->validate([
             'start_date' => 'required|',

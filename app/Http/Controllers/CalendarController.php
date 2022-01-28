@@ -48,7 +48,6 @@ class CalendarController extends Controller
             $a_dc = null;
             $job_start = null;
             $job_end = null;
-
         }
 
         /* Requested Job */

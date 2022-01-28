@@ -6,7 +6,7 @@
         <div class="row g-2 mx-2">
             <div class="col-3 mb-3">
                 <h2 class="pb-0">User Profile</h2>
-                    <small>xxxxxxxxxxxxxxxxxx</small>
+                    <small>the user information is shown in this page</small>
             </div>
 
             <div class="col-6">

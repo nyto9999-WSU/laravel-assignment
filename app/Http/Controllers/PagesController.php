@@ -22,7 +22,7 @@ class PagesController extends Controller
     {
         if (auth()->user()->isAdmin()) {
 
-            $jobs = Job::where('status', '=', 'booked')->orderBy('created_at', 'desc')->paginate(2);
+            $jobs = Job::where('status', '=', 'booked')->orderBy('created_at', 'desc')->paginate(10);
 
             return view('pages.admin.order.currentOrder', compact('jobs'));
         }
@@ -31,7 +31,7 @@ class PagesController extends Controller
     public function orderAssigned()
     {
         if (auth()->user()->isAdmin()) {
-            $jobs = Job::where('status', '=', 'assigned')->orderBy('created_at', 'desc')->paginate(2);
+            $jobs = Job::where('status', '=', 'assigned')->orderBy('created_at', 'desc')->paginate(10);
             $start_date = Job::distinct()->where('status', 'assigned')->pluck('start_date');
             return view('pages.admin.order.assignedOrder', compact(['jobs', 'start_date']));
         }
@@ -40,12 +40,12 @@ class PagesController extends Controller
     public function orderCompleted()
     {
         if (auth()->user()->isAdmin()) {
-            $jobs = Job::where('status', '=', 'completed')->orderBy('created_at', 'desc')->paginate(2);
-
+            $jobs = Job::where('status', '=', 'completed')->orderBy('created_at', 'desc')->paginate(10);
             return view('pages.admin.order.completedOrder', compact('jobs'));
         }
     }
 
+    /* search admin, tech and user */
     public function admins()
     {
         $users = User::where('role_id', '=', 2)

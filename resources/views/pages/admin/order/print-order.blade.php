@@ -2,6 +2,8 @@
 
 @section('content')
     <div class="container">
+        <input style="display:block; margin:0 auto;" type="button" class="btn text-white fw-bold" id="blue" onclick="printDiv('my_table')" value="Click to Print"/>
+
         <div class="row justify-content-center">
             <div class="col-md-8" id="my_table">
                 <img src='http://pioneerair.com.au/img/pioneer/pioneer-logo.png' alt="" width="250">
@@ -136,15 +138,12 @@
                 <tr style="background:aliceblue;">
                     <td>Aircon Issue</td>
                     <td>
-                      @forelse ($order->jobs as $job)
                       @if (!empty($job->issue))
                           {{ $job->issue }}
                           <br/>
                       @else
                           N/A
                       @endif
-                      @empty
-                      @endforelse
                     </td>
                 </tr>
 
@@ -169,7 +168,6 @@
                 {{-- edit button --}}
             </div>
         </div>
-        <input style="display:block; margin:0 auto;" type="button" class="btn btn-success" onclick="printDiv('my_table')" value="Click to Print"/>
     </div>
     </div>
     </div>

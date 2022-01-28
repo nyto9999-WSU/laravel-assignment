@@ -30,7 +30,7 @@ class OrderController extends Controller
                     ->select('jobs.*', 'orders.user_id')
                     ->where('user_id', '=', auth()->user()->id)
                     ->orderBy('created_at', 'desc')
-                    ->paginate(2);
+                    ->paginate(10);
 
         return view('pages.user.order.currentOrder', compact('jobs'));
     }
@@ -44,6 +44,7 @@ class OrderController extends Controller
                 $technicians = User::technicians()->get();
                 $aircon = Aircon::find($job->aircon_id);
 
+                /* calendar */
                 $requestedJob = Job::join('orders', 'jobs.order_id', '=', 'orders.id')
                     ->select('jobs.*', 'orders.mobile_number')
                     ->where('status', '=', 'booked')->get();
